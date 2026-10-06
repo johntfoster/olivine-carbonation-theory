@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite this theory repository; it is an unreviewed working formulation."
+type: software
+title: "Compressible reactive poromechanics of olivine carbonation"
+authors:
+  - family-names: Foster
+    given-names: John T.
+repository-code: "https://github.com/johntfoster/olivine-carbonation-theory"
+url: "https://johntfoster.github.io/olivine-carbonation-theory/"
+license: Apache-2.0

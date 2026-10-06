@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+git submodule update --init --recursive
+tools/agentctl hooks install
+git config research.manuscriptFreeze true
+for harness in codex claude copilot opencode; do
+    tools/agentctl activate "$harness" --profile all
+done
+tools/agentctl check

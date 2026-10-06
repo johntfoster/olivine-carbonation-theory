@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "olivine-carbonation-theory",
+  "title": "Compressible reactive poromechanics of olivine carbonation",
+  "repository": "https://github.com/johntfoster/olivine-carbonation-theory",
+  "default_branch": "main",
+  "status": "incubating",
+  "authority": {
+    "instructions": "AGENTS.md",
+    "profile": "agent-profile.json",
+    "manuscript": "paper/main.tex"
+  },
+  "workflow": {
+    "repository": "https://github.com/johntfoster/research-agent-workflows",
+    "path": ".agent/shared",
+    "revision": "74309a56c009d65aa83f7729e6775fb8fea340ce",
+    "release": "v0.3.1"
+  },
+  "maintenance": {
+    "manuscript_edits": true,
+    "protected_paths": [
+      "*.tex",
+      "*.bib",
+      "*.sty",
+      "*.cls",
+      "*.bst",
+      "*.pdf",
+      "*.png",
+      "*.svg",
+      "*.eps",
+      "*.jpg",
+      "*.jpeg",
+      "paper/*",
+      "sections/*",
+      "figures/*",
+      "implementation_paper/*",
+      "submission/*",
+      "submissions/*"
+    ],
+    "objective": "Author-authorized scaffold and theory formulation only; no implementation."
+  },
+  "publication": {
+    "site": {
+      "url": "https://johntfoster.github.io/olivine-carbonation-theory/",
+      "status": "pending-deployment"
+    },
+    "codespace": {
+      "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
+      "verification": "not-run",
+      "configuration": ".devcontainer/devcontainer.json",
+      "image": "mcr.microsoft.com/devcontainers/python@sha256:ca7b20585cf65295cd0cef8ae8f02a008c1c85e83909d1e2af8d19706d3f34ee"
+    },
+    "citation": "CITATION.cff",
+    "license": {
+      "path": "LICENSES.md",
+      "status": "licensed",
+      "code": "Apache-2.0",
+      "manuscript": "CC-BY-4.0"
+    },
+    "release": {
+      "status": "not-created"
+    }
+  },
+  "verification": {
+    "infrastructure": "not-run",
+    "implementation": "Not implemented; outside authorized scope.",
+    "analytical": "Theory development in progress; independent checks pending.",
+    "convergence": "Not applicable yet: no numerical implementation.",
+    "finite_deformation": "Formulation in progress; no numerical validation.",
+    "physical_validation": "Not performed."
+  },
+  "next_milestone": "Complete and independently check the theory formulation; no MOOSE implementation is authorized.",
+  "scientific_scope": "Theory-only finite-deformation reactive poromechanics: three compressible elastic solids (olivine, magnesite, silica) and one CO2 phase; no plasticity or MOOSE implementation."
+}

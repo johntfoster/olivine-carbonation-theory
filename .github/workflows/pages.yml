@@ -1,0 +1,19 @@
+name: Companion website
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  site:
+    uses: johntfoster/research-agent-workflows/.github/workflows/research-site.yml@74309a56c009d65aa83f7729e6775fb8fea340ce
+    with:
+      build-argv: '["python3", ".agent/shared/tools/research_project.py", "site"]'
+      deploy: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}

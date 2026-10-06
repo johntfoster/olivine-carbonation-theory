@@ -1,0 +1,8 @@
+.agent-runtime/
+build/
+__pycache__/
+*.pyc
+.agents/skills/
+.claude/skills/
+.github/skills/
+.opencode/skills/
