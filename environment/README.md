@@ -82,7 +82,10 @@ installed base lock; a mismatch requires a new base build. Codespaces startup
 rejects an image for a different workspace toolchain rather than compiling
 against an outdated environment.
 
-The base includes OpenSSH for Codespaces CLI access. Post-create generates the
-container's SSH host keys, checks its configuration and starts the server on
-port 2222 before source-matched startup. Resume repeats the idempotent server
-start and source check; host private keys are absent from the published image.
+The base includes OpenSSH. The application entrypoint generates container host
+keys and starts the listener before remote attachment. Port 22 serves the
+standard Codespaces CLI; port 2222 supports private port forwarding. Concurrent
+entrypoint and workspace setup share a runtime lock. Creation and resume repeat
+the idempotent server start and source check; host private keys are absent from
+the published image. Hosted setup can continue after the first connection, as
+[GitHub documents](https://docs.github.com/en/codespaces/about-codespaces/deep-dive).

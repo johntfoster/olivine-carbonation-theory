@@ -53,3 +53,7 @@ alone does not prove a hosted Codespace has started.
   matched committed bytes. Actual hosted creation/resume remains pending;
   early entrypoint and serialized setup pass local Dev Container creation
   and resume after SSH RPC/port failures. Latest image publication is active.
+
+- Hosted diagnostic run reproduced all 61 checks with source/artifact hashes
+  matching and manuscript bytes unchanged. Standard CLI requires port 22; the
+  image correction and pristine rebuild/resume verification remain pending.

@@ -57,7 +57,7 @@ jobs:
           REVISION: ${{ github.sha }}
         run: |
           mkdir -p .agent-runtime/image-evidence
-          docker run --rm "olivine-app:$REVISION" bash -c 'bash /opt/olivine/.devcontainer/start-sshd.sh && sudo /usr/sbin/sshd -t && pgrep -x sshd'
+          docker run --rm "olivine-app:$REVISION" bash -c 'bash /opt/olivine/.devcontainer/start-sshd.sh && sudo /usr/sbin/sshd -t && sudo /usr/sbin/sshd -T | grep -qx "port 22" && sudo /usr/sbin/sshd -T | grep -qx "port 2222" && pgrep -x sshd'
           docker run --rm --entrypoint bash "olivine-app:$REVISION" -euc 'bash /opt/olivine/.devcontainer/start-sshd.sh & first=$!; bash /opt/olivine/.devcontainer/start-sshd.sh & second=$!; wait "$first"; wait "$second"; sudo /usr/sbin/sshd -t; pgrep -x sshd'
           docker run --rm --user "$(id -u):$(id -g)" --entrypoint bash -v "$PWD:/workspaces/olivine" "olivine-app:$REVISION" -c 'cd /workspaces/olivine && with-moose python3 scripts/prebuilt_app.py startup && with-moose ./moose_app/olivine_carbonation-opt --help'
           container=$(docker create "olivine-app:$REVISION")
