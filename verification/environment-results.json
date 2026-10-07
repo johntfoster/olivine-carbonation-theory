@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded_at_utc": "2026-10-07T18:41:58.560309+00:00",
+  "recorded_at_utc": "2026-10-07T18:50:05.506037+00:00",
   "scope": "Infrastructure and synthetic numerical verification; no physical validation.",
   "local_base": {
     "status": "passed",
@@ -242,8 +242,8 @@
   },
   "live_site": {
     "status": "passed",
-    "recorded_at_utc": "2026-10-07T18:31:31.793540+00:00",
-    "source_revision": "582101cd3a27f35d94e2a67c8099fffb5f151ec7",
+    "recorded_at_utc": "2026-10-07T18:47:01.874157+00:00",
+    "source_revision": "3abebd7349b9eb5d06d293011de969b2c8a4e433",
     "site": "https://johntfoster.github.io/olivine-carbonation-theory/",
     "pages": [
       {
@@ -271,14 +271,14 @@
         "status": 200
       }
     ],
-    "source_count": 101,
+    "source_count": 102,
     "sources": [
       {
         "path": ".devcontainer/Dockerfile",
         "raw_url_path": "raw/.devcontainer/Dockerfile",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "0401a79dfef73f021d67a32e01653560862d725657ff2042e7de0de437209f26",
+        "sha256": "ffd627109c629de250efaa4ae0f326d8b35a7046fbaac9ec7f739b0270bbd270",
         "committed_bytes_match": true
       },
       {
@@ -287,6 +287,14 @@
         "raw_status": 200,
         "viewer_status": 200,
         "sha256": "b3740a7d7f96a117bc286b7a037c1f00f3f5829b999f2d52d32efb2756427feb",
+        "committed_bytes_match": true
+      },
+      {
+        "path": ".devcontainer/container-entrypoint.sh",
+        "raw_url_path": "raw/.devcontainer/container-entrypoint.sh",
+        "raw_status": 200,
+        "viewer_status": 200,
+        "sha256": "9bfe367930c913d60b71bcde1b80908d193f59ca37f644b81b6e0c746b5ef257",
         "committed_bytes_match": true
       },
       {
@@ -366,7 +374,7 @@
         "raw_url_path": "raw/github/workflows/devcontainer.yml",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "c04c3fa3b10b2e1e6270a8c09108a7bba1019f0ea8567f3f62c3ea998a7ab6ec",
+        "sha256": "9a14305d38006be79fafe337ba68bdbdc669d63a23e974e936f00b57d1b328e2",
         "committed_bytes_match": true
       },
       {
@@ -390,7 +398,7 @@
         "raw_url_path": "raw/PLAN.md",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "25fb076b4aaa8b502605f28346f46da778ce3e2cc5a9fc9cba6a8eb0e7b49191",
+        "sha256": "1a0ef96a4f6b5575d4cfd0dc4d648504d2ede4972377320e96fa8b92165c98fd",
         "committed_bytes_match": true
       },
       {
@@ -398,7 +406,7 @@
         "raw_url_path": "raw/docs/implementation-status.md",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "fa2d565766e735aa7c57f840766f1b339a01b53d80377e36c963276f7685e8e7",
+        "sha256": "3be1125aeb91a63b80ebb4d399ca56074d74669b107ec17fdf83a0e14a6c0c70",
         "committed_bytes_match": true
       },
       {
@@ -982,7 +990,7 @@
         "raw_url_path": "raw/research-project.yml",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "25f3213988e405868fda5e6f453e2bf4df3b8e82a8d3cce7599511aff0b91e47",
+        "sha256": "96f7443292324ff8b9d15e633bec02d3fb875c081bb23048861ea7fd2ae702ce",
         "committed_bytes_match": true
       },
       {
@@ -1054,7 +1062,7 @@
         "raw_url_path": "raw/verification/environment-results.json",
         "raw_status": 200,
         "viewer_status": 200,
-        "sha256": "e3b702c1e1e1816147fd406b63cc0f6c3daf5441a4b8c1008f8ae4854f8ccbe1",
+        "sha256": "38a96812875463c4a6f329ea886561d28a2a3c3bef510bb0fbb4af297a3a1e57",
         "committed_bytes_match": true
       },
       {
@@ -1277,5 +1285,19 @@
       "workspace_state": "Available",
       "error": "Current CLI SSH RPC repeatedly timed out after provisioning; hosted scientific tests did not execute. Explicit server start and resume source guard being added."
     }
-  ]
+  ],
+  "local_devcontainer_lifecycle": {
+    "status": "passed",
+    "scope": "SSH entrypoint and workspace lifecycle fixture using the pinned local numerical base; no hosted scientific execution",
+    "cli_version": "0.89.0",
+    "cli_package_integrity": "sha512-LzaoOGKQ/Zql6PsiZ4hVIYVZagzWkD65aG/1ou5/Kly5Y1PtjLg1yn7qu+LZCzVoAl6DZZ/pbz8qOO4RLNlqMg==",
+    "image_id": "sha256:c8e4d4d4698f36a4c1b422930355132a14591539ba852daab91676c8d3a76792",
+    "creation": "passed; entrypoint and postCreate overlap during fresh runtime host key generation; serialized startup produces a running SSH daemon and successful scientific imports",
+    "resume": "passed in the same stopped container; postStart verifies running SSH daemon",
+    "input_hashes": {
+      ".devcontainer/container-entrypoint.sh": "9bfe367930c913d60b71bcde1b80908d193f59ca37f644b81b6e0c746b5ef257",
+      ".devcontainer/start-sshd.sh": "b6ddb6e0f874712ff2bbb74e1efe5d04fd3b7ee3f09fde282fbec873ef668f37"
+    },
+    "cleanup": "temporary fixture scheduled for removal after evidence capture"
+  }
 }

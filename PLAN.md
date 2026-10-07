@@ -51,4 +51,5 @@ alone does not prove a hosted Codespace has started.
 - SSH-ready base and exact 582101c application images published from Actions
   after 61 numerical and startup checks. All 101 site source/viewer pairs
   matched committed bytes. Actual hosted creation/resume remains pending;
-  an early image entrypoint is being verified after SSH RPC/port failures.
+  early entrypoint and serialized setup pass local Dev Container creation
+  and resume after SSH RPC/port failures. Latest image publication is active.

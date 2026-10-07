@@ -10,8 +10,8 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
 | Base/application image build | SSH-ready base run 37660466019 and exact 582101c application run 37665985954 published immutable digests after required smoke and 61 numerical checks |
-| GitHub Pages deployment | Run 37665986917 succeeded; all 101 raw sources/viewers match committed 582101c bytes; six main pages/assets returned HTTP 200 |
-| Hosted Codespaces | Exact 582101c environment Available but SSH RPC timed out; private tunnel connected while port 2222 refused connections. Scientific tests have not executed. Early image entrypoint startup is being verified |
+| GitHub Pages deployment | Run 37669035471 succeeded; all 102 raw sources/viewers match committed 3abebd7 bytes; six main pages/assets returned HTTP 200 |
+| Hosted Codespaces | Exact 582101c environment Available but SSH RPC timed out; private tunnel connected while port 2222 refused connections. Scientific tests have not executed. Early image entrypoint and serialized SSH setup pass local Dev Container creation/resume; exact-image publication and hosted verification remain pending |
 | Physical validation | Not performed |
 
 The requested sibling `finite-deformation-biot-poromechanics` is absent. The
