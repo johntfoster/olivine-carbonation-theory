@@ -48,5 +48,7 @@ alone does not prove a hosted Codespace has started.
 - Equation contract, kernels/materials and 61 quantitative checks complete.
 - Native TestHarness and six startup-integrity tests pass.
 - Companion site deployed and representative source/assets verified live.
-- Base and 8c4c3e3 application images published from Actions. SSH-ready image
-  publication and actual hosted startup remain active goal gates.
+- SSH-ready base and exact 582101c application images published from Actions
+  after 61 numerical and startup checks. All 101 site source/viewer pairs
+  matched committed bytes. Actual hosted creation/resume remains pending;
+  an early image entrypoint is being verified after SSH RPC/port failures.

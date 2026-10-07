@@ -62,7 +62,7 @@
     }
   },
   "verification": {
-    "infrastructure": "SSH-ready base and exact 62e9d2e application images passed and published; six source/artifact/toolchain guards and local key-authenticated SSH pass. All 98 deployed sources/viewers match committed bytes. Fresh hosted SSH RPC timed out while Available; explicit service start and resume source guard are being published.",
+    "infrastructure": "Base and exact 582101c application images passed and published with 61 checks; six source/artifact/toolchain guards and local SSH pass. All 101 deployed source/viewer pairs match committed bytes. Hosted RPC timed out and remote SSH port refused connections; early image entrypoint startup is being verified.",
     "implementation": "61 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
     "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
     "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 orders approximately 2; nonlinear mass temporal orders approximately 1 for backward Euler and 2 for BDF2.",
