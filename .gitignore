@@ -21,3 +21,4 @@ out_*.csv
 moose_app/**/.libs/
 moose_app/**/*.lo
 moose_app/**/*.lo.d
+moose_app/.previous_test_results.json

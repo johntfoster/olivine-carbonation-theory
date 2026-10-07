@@ -45,8 +45,8 @@ alone does not prove a hosted Codespace has started.
 
 ## Recorded progress
 
-- Equation contract, kernels/materials and 42 quantitative checks complete.
-- Native TestHarness and five startup-integrity tests pass.
+- Equation contract, kernels/materials and 59 quantitative checks complete.
+- Native TestHarness and six startup-integrity tests pass.
 - Companion site deployed and representative source/assets verified live.
 - Base image building locally and in Actions; application-image publication and
   hosted startup remain active goal gates.

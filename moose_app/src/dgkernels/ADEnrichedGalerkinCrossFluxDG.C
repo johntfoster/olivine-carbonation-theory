@@ -1,5 +1,6 @@
 // Adapted from John T. Foster, multicomponent_reactive_flow. Apache-2.0.
 #include "ADEnrichedGalerkinCrossFluxDG.h"
+#include "MooseVariableFE.h"
 
 #include <algorithm>
 
@@ -35,6 +36,8 @@ ADEnrichedGalerkinCrossFluxDG::ADEnrichedGalerkinCrossFluxDG(
     _epsilon(getParam<Real>("epsilon")),
     _sigma(getParam<Real>("sigma"))
 {
+  if (_var.feType().family!=libMesh::MONOMIAL || _var.feType().order!=libMesh::CONSTANT)
+    paramError("variable", "EG enrichment must use constant MONOMIAL basis");
 }
 
 ADReal

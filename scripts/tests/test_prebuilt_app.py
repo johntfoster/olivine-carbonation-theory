@@ -14,6 +14,7 @@ class GuardTests(unittest.TestCase):
    (root/'moose_app/include/a.h').write_text('header\n')
    (root/'environment').mkdir(); (root/'environment/moose-linux-64.lock').write_text('locked toolchain\n')
   (self.image/'moose_app/lib').mkdir(); (self.image/'moose_app/lib/libapp.so').write_bytes(b'library')
+  (self.image/'moose_app/test/lib').mkdir(parents=True); (self.image/'moose_app/test/lib/libtest.so').write_bytes(b'test library')
   (self.image/'moose_app/olivine_carbonation-opt').write_bytes(b'executable')
   prebuilt.BASE_LOCK=self.image/'environment/moose-linux-64.lock'
   prebuilt.ROOT=self.image; prebuilt.record('a'*40,'ghcr.io/example/base@sha256:'+'b'*64)
@@ -31,5 +32,8 @@ class GuardTests(unittest.TestCase):
   with self.assertRaises(RuntimeError): prebuilt.reuse(self.image)
  def test_changed_shared_library_rejects_binary(self):
   (self.image/'moose_app/lib/libapp.so').write_bytes(b'corrupt library')
+  self.assertFalse(prebuilt.reuse(self.image))
+ def test_changed_test_library_rejects_binary(self):
+  (self.image/'moose_app/test/lib/libtest.so').write_bytes(b'corrupt test library')
   self.assertFalse(prebuilt.reuse(self.image))
 if __name__=='__main__': unittest.main()

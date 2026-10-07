@@ -37,13 +37,13 @@
     "moose_app/src/bcs/ADEnrichedGalerkinPenaltyBC.C": "ca327ce5aa45ee4594f2ffe5789c5cd29b3d9a66e92f02569645961141a6a1c4",
     "moose_app/src/bcs/ADReferenceOutwardFlux.C": "27db306f401509e584ed94332c9f6a8a0cf9146e4eb18b765a61714d9d960f0f",
     "moose_app/src/bcs/ADReferenceTraction.C": "f0f7a3ffe371e84632f618e2cdbb5225ed24b1c1567204a330aa11d6ea4f90ee",
-    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C": "fe35572aaf8e9e25894b419ca35d6cd7b0e69cd3bf5c5a52b1a488dd81a3c796",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C": "de901e1b754bd30643bec1537bd7fab24d3295ad149e3ee7113d9d53dbc9840f",
     "moose_app/src/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.C": "3344297bd23a3ee5d40e02bd484cb75a2b0a1b03b85973626fadcce645ff4924",
-    "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C": "dac4a7547f4de6a6eb6625be9e1c393e4f44cbc9f29b30e954417325141780c2",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C": "8a0747d86c9fe086436910cc4f17552723d7f2b5addbee50863066c138459c3b",
     "moose_app/src/dgkernels/ADEnrichedGalerkinSymmetryDG.C": "9c530423ff6df4b55a79e359baffcd73306d757052ee4896f7c08e46ec7b2972",
     "moose_app/src/kernels/ADCarbonationMomentum.C": "430d6fe5b65e3ec2cbfc02be0930bf835c771ff759dc5480fc2a06a52ffd244d",
     "moose_app/src/kernels/ADEnrichedGalerkinScalarBalance.C": "cb495a5aafd74acb1c26cfa80b6f279aa1d5cc0a88e534a01ae52a5ed9c852a4",
-    "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C": "1a6e7bbb730b15576731d3e475783edcf2375fea4e3f9e950ac366f164af223d",
+    "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C": "2c6a24159f0caac6bffc15572eb2088e5b1f8df951c986b8b2c4d289d93dc967",
     "moose_app/src/kernels/ADReferenceGauss.C": "ecf040f51e1f3ebbe708f01410576f9771eecc939628af638906a3becc8d491e",
     "moose_app/src/kernels/ADReferenceMassStorage.C": "dae16db0d73c49638cf6d91b33ada4d4151a52abadf68c06db059e22c176f734",
     "moose_app/src/kernels/ADReferenceSpeciesBalance.C": "f6769826857a12fdbc0595e60303f0297cc5ca7424037854e469581ae0cf83e6",
@@ -51,7 +51,7 @@
     "moose_app/src/main.C": "29b2614bd0dd20d114cbdd035bf836ff714c5ee36af742bf5d5f0adfdb78a90d",
     "moose_app/src/materials/ADCrossDiffusionVerification.C": "89d3ad018219db21b5481543d841bcbdcde7ce290b28497e0c652dd202c1ce50",
     "moose_app/src/materials/ADLogarithmicMinerals.C": "b13603ac2af20a1997aa25329b40934d39c10087e90c8565827c5f4474c81699",
-    "moose_app/src/materials/ADOlivineReconstruction.C": "bd68c4c3f77d36ebc3410666b7789079ccbb4f10d60b85b55f10d7b336526a61",
+    "moose_app/src/materials/ADOlivineReconstruction.C": "6e0c92f15b109d8e2bf3b9c1c01d0e228c3835639de52cd10f4dd2b884c05808",
     "moose_app/src/materials/ADReferenceMass.C": "501e38281869a60aaba77db6dccb50b65031586eb9f166642f6852a7812594af",
     "moose_app/src/materials/ADReferencePullback.C": "2ea412f66542a3215315b3d8b56278c1d4750836380b11276c2be62f485947d7",
     "moose_app/src/materials/ADScalarDiffusionReferenceFluxMaterial.C": "6e2edbc1e661c0ff1f6b328bdd33a09ce94b5d6ac3b0dde03c3f0e56f4f484bc",
@@ -64,13 +64,14 @@
     "moose_app/test/tests/eg/poisson_3d.i": "b3973db3da92f1896e025d574858e3dad489fef6e3f2d24aa1c1a01e8d99a306",
     "moose_app/test/tests/residuals/bdf2_mass.i": "a75bc672f05fb13638ccd608f4681860f204b56251a5b11002307ccf36096be7",
     "moose_app/test/tests/residuals/gauss_flux.i": "a50d26a130c2fda9238dedef3c79ec0ae660724e6c63088ab292f2dd0941b24d",
+    "moose_app/test/tests/residuals/maxwell_traction.i": "f459e8afa11c0c26bc7945a5f7d975a53468dac3b61f1ef1fde55e7137ce1254",
     "moose_app/test/tests/residuals/mechanics.i": "fae03dae7197cea70749336dd23f1cfe0ab52b698f59ff4e2be94d72e6a6d65e",
     "moose_app/test/tests/residuals/nonlinear_mass.i": "d26d3c3904d149886f25d1e0b80d0c30e06420dd23d07899208743def6d9b5a9",
     "moose_app/test/tests/residuals/three_minerals.i": "2dd80211713cff8fb23d04a2cdcf14a6dad4934c9de088d95951d79dc71a6472",
-    "moose_app/test/tests/residuals/traction_insertion.i": "bd36f1d20d713620f838fa0039893dc2395c2fb9496343d20e42e9bf07888803",
-    "scripts/check_implementation.py": "51acc794d3523de94784e44a4b961a5624e5b035559b11b45cb0daa85b0a6e82"
+    "moose_app/test/tests/residuals/traction_insertion.i": "586cc478f76b28052cf78e8124792c2293ed99913ae7a9794b42310b499d408c",
+    "scripts/check_implementation.py": "81792022e31be653c1ab8ea5c23df3205782960406a523e71eaeab3cc3df3e05"
   },
-  "executable_sha256": "92adafa639646827a7c936d40ddb4f459edc433c0f9a32e56a0fe77067eb8e18",
+  "executable_sha256": "e7dd797846556bd0b65630a65df4d712fe026552f63504ee77a1d59cc20a41d3",
   "commands": [
     {
       "command": [
@@ -121,6 +122,15 @@
       "command": [
         "moose_app/olivine_carbonation-opt",
         "-i",
+        "moose_app/test/tests/residuals/maxwell_traction.i",
+        "Outputs/file_base=.agent-runtime/implementation-tests/maxwell_traction"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
         "moose_app/test/tests/residuals/nonlinear_mass.i",
         "Outputs/file_base=.agent-runtime/implementation-tests/mass_jacobian",
         "-snes_test_jacobian",
@@ -145,6 +155,17 @@
         "-i",
         "moose_app/test/tests/residuals/traction_insertion.i",
         "Outputs/file_base=.agent-runtime/implementation-tests/insertion_jacobian",
+        "-snes_test_jacobian",
+        "-snes_force_iteration"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/test/tests/residuals/three_minerals.i",
+        "Outputs/file_base=.agent-runtime/implementation-tests/three_minerals_jacobian",
         "-snes_test_jacobian",
         "-snes_force_iteration"
       ],
@@ -265,7 +286,18 @@
         "moose_app/olivine_carbonation-opt",
         "-i",
         "moose_app/test/tests/residuals/three_minerals.i",
-        "Outputs/file_base=.agent-runtime/implementation-tests/three_minerals"
+        "Outputs/file_base=.agent-runtime/implementation-tests/three_minerals",
+        "Variables/p/initial_condition=0.2"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/test/tests/residuals/three_minerals.i",
+        "Outputs/file_base=.agent-runtime/implementation-tests/three_minerals_tension",
+        "Variables/p/initial_condition=-0.2"
       ],
       "exit_code": 0
     },
@@ -390,6 +422,27 @@
       "passed": true
     },
     {
+      "name": "maxwell_traction_u_l2",
+      "category": "finite_deformation",
+      "error": 1.9578284959189e-16,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "maxwell_traction_tau_l2",
+      "category": "implementation",
+      "error": 1.2590258068794e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "maxwell_traction_electric_l2",
+      "category": "implementation",
+      "error": 8.7677852968916e-16,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
       "name": "mass_jacobian_relative_fd",
       "category": "implementation",
       "error": 1.51726e-08,
@@ -407,6 +460,13 @@
       "name": "insertion_jacobian_relative_fd",
       "category": "implementation",
       "error": 3.44012e-08,
+      "tolerance": 2e-07,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_jacobian_relative_fd",
+      "category": "implementation",
+      "error": 2.89655e-08,
       "tolerance": 2e-07,
       "passed": true
     },
@@ -631,6 +691,90 @@
       "passed": true
     },
     {
+      "name": "three_minerals_tension_root_A_t0.1",
+      "category": "finite_deformation",
+      "error": 3.6193270602780103e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_B_t0.1",
+      "category": "finite_deformation",
+      "error": 4.973799150320701e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_C_t0.1",
+      "category": "finite_deformation",
+      "error": 3.26405569239796e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_biot_t0.1",
+      "category": "finite_deformation",
+      "error": 4.3298697960381105e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_A_t0.2",
+      "category": "finite_deformation",
+      "error": 8.881784197001252e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_B_t0.2",
+      "category": "finite_deformation",
+      "error": 4.6629367034256575e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_C_t0.2",
+      "category": "finite_deformation",
+      "error": 4.218847493575595e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_biot_t0.2",
+      "category": "finite_deformation",
+      "error": 7.771561172376096e-16,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_A_t0.3",
+      "category": "finite_deformation",
+      "error": 1.709743457922741e-14,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_B_t0.3",
+      "category": "finite_deformation",
+      "error": 6.217248937900877e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_root_C_t0.3",
+      "category": "finite_deformation",
+      "error": 9.325873406851315e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
+      "name": "three_minerals_tension_biot_t0.3",
+      "category": "finite_deformation",
+      "error": 1.6653345369377348e-15,
+      "tolerance": 1e-10,
+      "passed": true
+    },
+    {
       "name": "eg_cross_p_order",
       "category": "convergence",
       "error": 0,
@@ -667,6 +811,13 @@
       "category": "implementation",
       "error": 2.91393e-16,
       "tolerance": 2e-07,
+      "passed": true
+    },
+    {
+      "name": "reject_nonconstant_eg_enrichment",
+      "category": "infrastructure",
+      "error": 0.0,
+      "tolerance": 0,
       "passed": true
     }
   ],

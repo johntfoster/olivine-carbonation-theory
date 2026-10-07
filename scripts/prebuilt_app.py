@@ -10,7 +10,8 @@ def sources(root):
  return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(files)}
 def artifacts(root):
  files=[root/'moose_app/olivine_carbonation-opt']
- files.extend(p for p in (root/'moose_app/lib').rglob('*.so*') if p.is_file() and not p.is_symlink())
+ for directory in ('moose_app/lib','moose_app/test/lib'):
+  files.extend(p for p in (root/directory).rglob('*.so*') if p.is_file() and not p.is_symlink())
  return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(files)}
 def record(revision,base_image):
  binary=ROOT/'moose_app/olivine_carbonation-opt'

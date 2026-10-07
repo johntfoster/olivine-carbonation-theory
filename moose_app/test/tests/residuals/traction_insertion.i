@@ -9,7 +9,7 @@
 [Functions]
  [traction_exact]
   type := ParsedFunction
-  expression := '0.3/(1+0.1*t)*(4/3*(1+0.1*t)^(-2/3)*((1+0.1*t)^2-1)+10/3*log(1+0.1*t))'
+  expression = '0.3/(1+0.1*t)*(4/3*(1+0.1*t)^(-2/3)*((1+0.1*t)^2-1)+10/3*log(1+0.1*t))'
  []
 []
 [Materials]

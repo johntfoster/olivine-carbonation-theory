@@ -24,10 +24,10 @@ def verify(binary,output):
   # Initial complete mass 0.25*(1+0.25), constant source 1, closed boundaries.
   error=max(abs(float(r['p_average'])*(1+float(r['p_average']))-0.3125-float(r['time'])) for r in rows[1:])
   check(name+'_conservation',error,1e-10)
- for deck,name in [('residuals/mechanics.i','mechanics'),('residuals/gauss_flux.i','gauss_outward'),('residuals/traction_insertion.i','traction_insertion')]:
+ for deck,name in [('residuals/mechanics.i','mechanics'),('residuals/gauss_flux.i','gauss_outward'),('residuals/traction_insertion.i','traction_insertion'),('residuals/maxwell_traction.i','maxwell_traction')]:
   rows,_=run(deck,name)
   for quantity in ('u_l2','tau_l2','electric_l2'): check(name+'_'+quantity,max(float(r[quantity]) for r in rows[1:]),1e-10,'finite_deformation' if quantity=='u_l2' else 'implementation')
- for deck,name in [('residuals/nonlinear_mass.i','mass_jacobian'),('residuals/mechanics.i','coupled_jacobian'),('residuals/traction_insertion.i','insertion_jacobian'),('eg/poisson_1d.i','eg_jacobian')]:
+ for deck,name in [('residuals/nonlinear_mass.i','mass_jacobian'),('residuals/mechanics.i','coupled_jacobian'),('residuals/traction_insertion.i','insertion_jacobian'),('residuals/three_minerals.i','three_minerals_jacobian'),('eg/poisson_1d.i','eg_jacobian')]:
   _,log=run(deck,name,['-snes_test_jacobian','-snes_force_iteration'])
   ratios=[float(v) for v in re.findall(r'\|\|J - Jfd\|\|_F/\|\|J\|\|_F\s*=\s*([0-9.eE+\-]+)',log)]
   if not ratios: raise RuntimeError('Missing PETSc finite-difference Jacobian evidence: '+name)
@@ -43,7 +43,6 @@ def verify(binary,output):
   rates=[math.log(a/b,2) for a,b in zip(errors,errors[1:])]
   check(f'eg_{dim}d_l2_order',max(0,1.7-min(rates)),0,'convergence')
   results[-1].update({'mesh_sizes':list(sizes),'l2_errors':errors,'observed_orders':rates,'minimum_order':1.7})
- rows,_=run('residuals/three_minerals.i','three_minerals')
  def mineral_root(J,p,K,Ks,phi0):
   lo,hi=-100.0,1.0
   for _ in range(150):
@@ -52,13 +51,15 @@ def verify(binary,output):
    if f>0: hi=y
    else: lo=y
   return math.exp((lo+hi)/2)
- for r in rows[1:]:
-  J=1+0.1*float(r['time']); B=1.0
-  for label,K,Ks,phi0 in [('A',0.5,20,0.15),('B',0.3,30,0.1),('C',0.1,40,0.05)]:
-   b=mineral_root(J,0.2,K,Ks,phi0); b0=mineral_root(1,0.2,K,Ks,phi0)
-   check('three_minerals_root_'+label+'_t'+r['time'],abs(float(r['root'+label])-b),1e-10,'finite_deformation')
-   phi=phi0*b/(b0*J); B-=phi*K/phi0/(Ks+(1-K/(phi0*Ks))*0.2*b)
-  check('three_minerals_biot_t'+r['time'],abs(float(r['biot'])-B),1e-10,'finite_deformation')
+ for pressure,case in [(0.2,'three_minerals'),(-0.2,'three_minerals_tension')]:
+  rows,_=run('residuals/three_minerals.i',case,[f'Variables/p/initial_condition={pressure}'])
+  for r in rows[1:]:
+   J=1+0.1*float(r['time']); B=1.0
+   for label,K,Ks,phi0 in [('A',0.5,20,0.15),('B',0.3,30,0.1),('C',0.1,40,0.05)]:
+    b=mineral_root(J,pressure,K,Ks,phi0); b0=mineral_root(1,pressure,K,Ks,phi0)
+    check(case+'_root_'+label+'_t'+r['time'],abs(float(r['root'+label])-b),1e-10,'finite_deformation')
+    phi=phi0*b/(b0*J); B-=phi*K/phi0/(Ks+(1-K/(phi0*Ks))*pressure*b)
+   check(case+'_biot_t'+r['time'],abs(float(r['biot'])-B),1e-10,'finite_deformation')
  cross_errors=[]
  for n in (4,8,16):
   rows,_=run('eg/cross_diffusion.i',f'cross_{n}',[f'Mesh/nx={n}'])
@@ -71,6 +72,10 @@ def verify(binary,output):
  ratios=[float(v) for v in re.findall(r'\|\|J - Jfd\|\|_F/\|\|J\|\|_F\s*=\s*([0-9.eE+\-]+)',log)]
  if not ratios: raise RuntimeError('Missing cross-component FD evidence')
  check('eg_cross_jacobian_relative_fd',max(ratios),2e-7)
+ command=[str(binary),'-i',str(ROOT/'moose_app/test/tests/eg/poisson_1d.i'),'Variables/e/order=FIRST']
+ invalid=subprocess.run(command,cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60)
+ (output/'invalid_enrichment.log').write_text(invalid.stdout)
+ check('reject_nonconstant_eg_enrichment',0.0 if invalid.returncode and 'constant MONOMIAL' in invalid.stdout else 1.0,0,'infrastructure')
  framework=Path(os.environ.get('MOOSE_DIR', ROOT/'.agent-runtime/moose'))
  revision=subprocess.check_output(['git','-C',str(framework),'rev-parse','HEAD'],text=True).strip()
  if revision!='abafb58b67a6037c6723ffeb19647c84484466da': raise RuntimeError('Unexpected MOOSE revision '+revision)

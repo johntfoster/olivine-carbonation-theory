@@ -2,7 +2,7 @@
   "repository": "https://github.com/johntfoster/multicomponent_reactive_flow",
   "revision": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
   "license": "Apache-2.0",
-  "modifications": "Application registration; kinematics mesh-dimension check and positive-J guard. No sibling modified.",
+  "modifications": "Application registration; kinematics mesh-dimension check and positive-J guard; require constant MONOMIAL enrichment in P0-only operators. No sibling modified.",
   "inputs": [
     {
       "path": "moose_app/include/dgkernels/ADEnrichedGalerkinFluxDG.h",

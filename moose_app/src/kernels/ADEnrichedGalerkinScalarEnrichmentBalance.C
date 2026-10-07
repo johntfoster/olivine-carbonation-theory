@@ -1,5 +1,6 @@
 // Adapted from John T. Foster, multicomponent_reactive_flow. Apache-2.0.
 #include "ADEnrichedGalerkinScalarEnrichmentBalance.h"
+#include "MooseVariableFE.h"
 
 #include "Function.h"
 
@@ -53,6 +54,8 @@ ADEnrichedGalerkinScalarEnrichmentBalance::ADEnrichedGalerkinScalarEnrichmentBal
     _anchor_coefficient(getParam<Real>("anchor_coefficient")),
     _anchor_value(getParam<Real>("anchor_value"))
 {
+  if (_var.feType().family!=libMesh::MONOMIAL || _var.feType().order!=libMesh::CONSTANT)
+    paramError("variable", "EG enrichment must use constant MONOMIAL basis");
   if (_reference_component_storage_rate &&
       (isParamSetByUser("time_coefficient") || isParamSetByUser("time_coefficient_name")))
     paramError("reference_component_storage_rate_name",

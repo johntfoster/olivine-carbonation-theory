@@ -6,7 +6,7 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | Gate | Evidence |
 |---|---|
 | Equation contract | Completed; actual objects mapped to labeled weak forms |
-| MOOSE build and residual tests | 42 executable checks passed |
+| MOOSE build and residual tests | 59 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
 | Base/application image build | Local framework compilation and Actions base run 37649110949 in progress. Initial application run awaits the first published base |
@@ -21,10 +21,14 @@ reference, with attribution and inspected-byte hashes recorded separately.
 
 The mineral root follows the author-requested finite-strain companion Newton/AD
 helper. Three mineral roots and the aggregate Biot coefficient are compared
-against an independent scalar bisection calculation. Five infrastructure tests
+against an independent scalar bisection calculation under compression and tension. A uniform-field Maxwell traction case verifies the optional electrical stress. Six infrastructure tests
 check source-matched binary reuse and rejection of changed headers, new source
-files, corrupted application shared libraries and a changed toolchain lock.
+files, corrupted application and test shared libraries and a changed toolchain lock.
 
 The native MOOSE TestHarness ran the quantitative suite successfully (1 harness
-test, 42 internal checks, zero skipped/failed). The pinned framework has no
+test, 59 internal checks, zero skipped/failed). The pinned framework has no
 tracked local modifications. Desktop and mobile site layouts were inspected.
+
+The copied local framework’s generated libtool paths were relocated into this
+repository before the final run. The application executable now resolves its
+framework libraries inside this repository. No sibling repository was modified.
