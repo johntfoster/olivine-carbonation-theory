@@ -52,7 +52,7 @@ and exact compiled-source hashes. Failed tests prevent publication.
 The `main` alias is a convenience for normal Codespaces startup; immutable
 reproduction uses the digest listed in the image-evidence Actions artifact.
 The optional `.devcontainer/reproducible/devcontainer.json` pins the published
-62e9d2e runtime snapshot by digest. Select that configuration to fix the numerical
+f2133b3 runtime snapshot by digest. Select that configuration to fix the numerical
 environment. Its provenance records the exact image source revision; use that
 revision in a separate checkout for the corresponding complete source tree.
 The default configuration follows tested main builds. Image and hosted evidence is recorded in
@@ -89,3 +89,11 @@ entrypoint and workspace setup share a runtime lock. Creation and resume repeat
 the idempotent server start and source check; host private keys are absent from
 the published image. Hosted setup can continue after the first connection, as
 [GitHub documents](https://docs.github.com/en/codespaces/about-codespaces/deep-dive).
+
+The published f2133b3 snapshot passed a full hosted Codespaces rebuild and a
+stop/resume cycle through the standard CLI without manual configuration.
+Creation and resume reused the source-matched executable; all 61 quantitative
+checks passed, source/artifact hashes matched and manuscript bytes stayed
+unchanged. The temporary verification environment is removed after evidence
+archival. These numerical checks are synthetic verification, not physical
+validation.

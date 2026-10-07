@@ -1,7 +1,7 @@
 # Implementation status
 
-The platform goal is active. MOOSE implementation, tests, site and container
-publishing were authorized on 7 October 2026. PLAN.md is the current plan.
+MOOSE implementation, tests, site and container publishing were authorized on
+7 October 2026. PLAN.md records the implementation and delivery plan.
 
 | Gate | Evidence |
 |---|---|
@@ -9,9 +9,9 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | MOOSE build and residual tests | 61 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | SSH-ready base run 37660466019 and exact 582101c application run 37665985954 published immutable digests after required smoke and 61 numerical checks |
-| GitHub Pages deployment | Run 37669035471 succeeded; all 102 raw sources/viewers match committed 3abebd7 bytes; six main pages/assets returned HTTP 200 |
-| Hosted Codespaces | Standard CLI access, automatic workspace setup, exact source/binary integrity and all 61 numerical checks passed after a diagnostic runtime port correction; paper bytes unchanged. Publish the port-22 image correction and verify pristine rebuild/resume before completion |
+| Base/application image build | SSH-ready base run 37660466019 and exact f2133b3 application run 37677303026 published immutable digests after required smoke and 61 numerical checks |
+| GitHub Pages deployment | Run 37677304226 succeeded; all 102 raw sources/viewers match committed f2133b3 bytes; six main pages/assets returned HTTP 200 |
+| Hosted Codespaces | Full rebuild and same-environment stop/resume passed using the published f2133b3 image without manual configuration. Standard CLI, automatic source guards, exact source/artifact integrity and all 61 numerical checks passed; paper bytes unchanged |
 | Physical validation | Not performed |
 
 The requested sibling `finite-deformation-biot-poromechanics` is absent. The

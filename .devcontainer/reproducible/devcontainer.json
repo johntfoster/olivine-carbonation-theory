@@ -1,6 +1,6 @@
 {
-  "name": "Olivine carbonation — published runtime snapshot 62e9d2e",
-  "image": "ghcr.io/johntfoster/olivine-carbonation-theory@sha256:d3978e1e03e46b2f6ea2263f078dad9f07155f17ec367a5845afef1a71729098",
+  "name": "Olivine carbonation — published runtime snapshot f2133b3",
+  "image": "ghcr.io/johntfoster/olivine-carbonation-theory@sha256:6350bd312e30c9d591026a9f9b7fc5eecbf9fb0754e63d0ee6eea735f566c48f",
   "remoteUser": "vscode",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postStartCommand": "bash .devcontainer/post-start.sh",

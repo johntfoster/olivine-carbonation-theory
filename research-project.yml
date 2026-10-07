@@ -46,7 +46,7 @@
     },
     "codespace": {
       "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
-      "verification": "failed",
+      "verification": "hosted-verified",
       "configuration": ".devcontainer/devcontainer.json",
       "image": "ghcr.io/johntfoster/olivine-carbonation-theory:main"
     },
@@ -62,13 +62,13 @@
     }
   },
   "verification": {
-    "infrastructure": "Exact 3ac9b34 image passed and published with 61 checks and actual/concurrent startup smoke. All 102 deployed source/viewer pairs match committed bytes. Actual hosted standard CLI, automatic workspace setup and 61 numerical checks passed after diagnostic runtime port 22 correction; paper unchanged. Pristine corrected-image startup/resume remains pending.",
+    "infrastructure": "SSH-ready base and exact f2133b3 image published by Actions; 61 checks and actual/concurrent startup smoke pass. All 102 deployed source/viewer pairs match committed bytes. Pristine full hosted rebuild, standard CLI access, automatic creation/resume guards and same-environment stop/resume pass; exact source/artifact hashes match, all 61 numerical checks pass and manuscript bytes are unchanged.",
     "implementation": "61 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
     "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
     "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 orders approximately 2; nonlinear mass temporal orders approximately 1 for backward Euler and 2 for BDF2.",
     "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
-  "next_milestone": "Publish standard Codespaces port-22 startup correction, verify pristine exact-image rebuild/resume and deliver final evidence.",
+  "next_milestone": "Maintain quantitative verification and exact-revision image provenance for subsequent source changes.",
   "scientific_scope": "Theory and MOOSE implementation of finite-deformation reactive poromechanics: three compressible elastic solids (forsterite, magnesite, silica) and one aqueous CO2-bearing multicomponent fluid; no separate gas phase or plasticity."
 }

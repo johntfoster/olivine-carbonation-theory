@@ -1,6 +1,7 @@
 # Implementation plan — authorized 7 October 2026
 
-This is the durable `/plan` for the active platform goal. The author's request
+This is the durable `/plan` for the platform goal requested by the author.
+The request
 explicitly lifts the earlier MOOSE deferral. The compositional special-case
 source contract still controls; plasticity and a separate gas phase remain
 outside scope. Existing manuscript/review changes are preserved.
@@ -45,15 +46,17 @@ alone does not prove a hosted Codespace has started.
 
 ## Recorded progress
 
-- Equation contract, kernels/materials and 61 quantitative checks complete.
+- Equation contract, 24 registered MOOSE objects and 61 quantitative checks
+  complete. The mineral volume follows the
+  companion Newton AD solve.
 - Native TestHarness and six startup-integrity tests pass.
-- Companion site deployed and representative source/assets verified live.
-- SSH-ready base and exact 582101c application images published from Actions
-  after 61 numerical and startup checks. All 101 site source/viewer pairs
-  matched committed bytes. Actual hosted creation/resume remains pending;
-  early entrypoint and serialized setup pass local Dev Container creation
-  and resume after SSH RPC/port failures. Latest image publication is active.
-
-- Hosted diagnostic run reproduced all 61 checks with source/artifact hashes
-  matching and manuscript bytes unchanged. Standard CLI requires port 22; the
-  image correction and pristine rebuild/resume verification remain pending.
+- Companion site deployed; all 102 raw source/viewer pairs match f2133b3.
+- SSH-ready base run 37660466019 and exact f2133b3 application run
+  37677303026 published immutable digests after numerical and startup checks.
+- The corrected published image passed a full hosted rebuild and all 61
+  numerical checks without manual SSH configuration. Automatic creation and
+  resume source guards ran; the same stopped Codespace resumed with unchanged
+  source/artifact hashes, prebuilt executable and manuscript bytes.
+- The optional reproducible configuration pins that verified f2133b3 image.
+  Final documentation publication is checked through the same per-push image
+  and Pages workflows. Evidence is in verification/environment-results.json.

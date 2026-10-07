@@ -1,6 +1,6 @@
-# Active implementation goal — 7 October 2026
+# Implementation goal — 7 October 2026
 
-The author explicitly authorizes MOOSE kernels and tests, enriched Galerkin as needed, a completed companion website, a manually triggered base MOOSE/scientific-Python image and exact-revision application images on every push for Codespaces. This supersedes every earlier implementation deferral below. Plasticity remains excluded. The current manuscript and compositional source contract control implementation. See PLAN.md and docs/implementation-status.md. Native platform goal tools are available in this session; the active goal contains the full author request. Historical platform/tool and scope statements below describe earlier work only.
+The author explicitly authorizes MOOSE kernels and tests, enriched Galerkin as needed, a completed companion website, a manually triggered base MOOSE/scientific-Python image and exact-revision application images on every push for Codespaces. This supersedes every earlier implementation deferral below. Plasticity remains excluded. The current manuscript and compositional source contract control implementation. See PLAN.md and docs/implementation-status.md. The platform goal records the full author request. Implementation and hosted verification evidence is recorded in verification/environment-results.json. Historical platform/tool and scope statements below describe earlier work only.
 
 # Durable goal: olivine carbonation theory
 
