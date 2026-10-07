@@ -13,8 +13,12 @@ class Links(HTMLParser):
   attrs=dict(attrs)
   if 'id' in attrs: self.ids.add(attrs['id'])
   self.links.extend(attrs[a] for a in ('href','src') if a in attrs)
+def published_path(path):
+ # upload-pages-artifact excludes every .github directory, including raw code.
+ path=Path(path)
+ return Path('github',*path.parts[1:]) if path.parts[0]=='.github' else path
 def source_link(path,label=None):
- path=Path(path); return f'<a href="sources/{path.as_posix()}.html">{html.escape(label or str(path))}</a>'
+ path=Path(path); return f'<a href="sources/{published_path(path).as_posix()}.html">{html.escape(label or str(path))}</a>'
 def input_objects(deck,seen=None):
  seen=set() if seen is None else seen
  if deck in seen: return set()
@@ -66,7 +70,7 @@ def check(output):
    count+=1
  manifest=json.loads((output/'source-manifest.json').read_text())
  for path,digest in manifest.items():
-  if hashlib.sha256((output/'raw'/path).read_bytes()).hexdigest()!=digest: raise ValueError(f'Incorrect packaged bytes: {path}')
+  if hashlib.sha256((output/'raw'/published_path(path)).read_bytes()).hexdigest()!=digest: raise ValueError(f'Incorrect packaged bytes: {path}')
  return count
 def build(output):
  if output.exists(): shutil.rmtree(output)
@@ -80,11 +84,12 @@ def build(output):
   if not p.is_file(): continue
   rel=p.relative_to(ROOT)
   if not p.resolve().is_relative_to(ROOT): raise ValueError('External source rejected')
-  raw=output/'raw'/rel; raw.parent.mkdir(parents=True,exist_ok=True); raw.write_bytes(p.read_bytes()); manifest[str(rel)]=hashlib.sha256(p.read_bytes()).hexdigest()
-  dest=output/'sources'/(str(rel)+'.html'); dest.parent.mkdir(parents=True,exist_ok=True)
+  public=published_path(rel)
+  raw=output/'raw'/public; raw.parent.mkdir(parents=True,exist_ok=True); raw.write_bytes(p.read_bytes()); manifest[str(rel)]=hashlib.sha256(p.read_bytes()).hexdigest()
+  dest=output/'sources'/(str(public)+'.html'); dest.parent.mkdir(parents=True,exist_ok=True)
   prefix='../'*len(dest.relative_to(output).parts[:-1])
   lines='\n'.join(f'<span class="source-line" id="L{i}"><a class="line-number" href="#L{i}">{i}</a>{html.escape(line)}</span>' for i,line in enumerate(p.read_text().splitlines(),1))
-  dest.write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(str(rel))}</title><link rel="stylesheet" href="{prefix}assets/style.css"></head><body><main class="container"><p><a href="{prefix}kernels.html">← Object catalog</a> · <a href="{prefix}raw/{rel}">Raw source</a></p><h2>{html.escape(str(rel))}</h2><p>SHA-256: <code>{manifest[str(rel)]}</code></p><pre><code>{lines}</code></pre></main></body></html>')
+  dest.write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(str(rel))}</title><link rel="stylesheet" href="{prefix}assets/style.css"></head><body><main class="container"><p><a href="{prefix}kernels.html">← Object catalog</a> · <a href="{prefix}raw/{public}">Raw source</a></p><h2>{html.escape(str(rel))}</h2><p>SHA-256: <code>{manifest[str(rel)]}</code></p><pre><code>{lines}</code></pre></main></body></html>')
  (output/'source-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  objects={name:p for p in (ROOT/'moose_app/src').rglob('*.C') for name in re.findall(r'registerMooseObject\(\s*"OlivineCarbonationApp",\s*(\w+)\)',p.read_text())}
  catalog=['<main class="container"><h1>MOOSE object catalog</h1><p>Every local registered object links to the exact packaged source bytes. Constitutive and residual responsibilities follow the '+source_link('verification/implementation-map.md','equation contract')+'.</p><div class="grid">']
