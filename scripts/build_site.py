@@ -107,13 +107,13 @@ def build(output):
  results=ROOT/'verification/implementation-results.json'
  if results.exists():
   report=json.loads(results.read_text()); checks=report.get('checks',[])
-  evidence=f"<p><strong>{html.escape(report.get('status','pending').upper())}</strong> · {len(checks)} quantitative checks</p><table><thead><tr><th>Check</th><th>Error / tolerance</th><th>Result</th></tr></thead><tbody>"
+  evidence=f"<p><strong>{html.escape(report.get('status','pending').upper())}</strong> · {len(checks)} executable checks</p><table><thead><tr><th>Check</th><th>Error / tolerance</th><th>Result</th></tr></thead><tbody>"
   for item in checks:
    evidence+=f"<tr><td>{html.escape(item['name'])}</td><td>{item['error']:.3g} / {item['tolerance']:.3g}</td><td>{'Pass' if item['passed'] else 'Fail'}</td></tr>"
-  evidence+='</tbody></table><h2>Observed convergence</h2><table><thead><tr><th>Reduction</th><th>L2 errors</th><th>Orders</th></tr></thead><tbody>'
+  evidence+='</tbody></table><h2>Observed convergence</h2><table><thead><tr><th>Reduction</th><th>Errors</th><th>Orders</th></tr></thead><tbody>'
   for item in checks:
    if 'observed_orders' in item:
-    evidence+=f"<tr><td>{html.escape(item['name'])}</td><td>{', '.join(f'{v:.4g}' for v in item['l2_errors'])}</td><td>{', '.join(f'{v:.3f}' for v in item['observed_orders'])}</td></tr>"
+    evidence+=f"<tr><td>{html.escape(item['name'])}</td><td>{', '.join(f'{v:.4g}' for v in item.get('l2_errors',item.get('mass_errors',[])))}</td><td>{', '.join(f'{v:.3f}' for v in item['observed_orders'])}</td></tr>"
   evidence+='</tbody></table><p>'+source_link('verification/implementation-results.json','Complete hash-bound evidence and commands')+'</p>'
  else: evidence='<p>Numerical evidence pending.</p>'
  (output/'verification.html').write_text(page('Verification','<main class="container"><h1>Recorded verification</h1><p>Assembly tests, analytical identities, discretization convergence and physical validation are distinct gates. Test parameters are synthetic.</p><p>'+source_link('docs/implementation-status.md','Current status')+'</p>'+evidence+'<p>Physical validation has not been performed.</p></main>'))

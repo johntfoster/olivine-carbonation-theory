@@ -35,6 +35,7 @@ jobs:
         run: |
           docker run --rm olivine-base:candidate with-moose /opt/moose/test/moose_test-opt --help
           docker run --rm olivine-base:candidate with-moose python -c 'import numpy, scipy, pandas, matplotlib'
+          docker run --rm --user root olivine-base:candidate bash -c 'test -z "$(find /etc/ssh -name "ssh_host_*_key" -print -quit)" && ssh-keygen -A && mkdir -p /run/sshd && /usr/sbin/sshd -t'
       - name: Publish tested base
         env:
           IMAGE: ghcr.io/${{ github.repository }}

@@ -24,6 +24,14 @@ def verify(binary,output):
   # Initial complete mass 0.25*(1+0.25), constant source 1, closed boundaries.
   error=max(abs(float(r['p_average'])*(1+float(r['p_average']))-0.3125-float(r['time'])) for r in rows[1:])
   check(name+'_conservation',error,1e-10)
+ for scheme,label,minimum in [('implicit-euler','euler',0.9),('bdf2','bdf2',1.7)]:
+  errors=[]
+  for steps in (10,20,40):
+   rows,_=run('residuals/time_mms.i',f'time_{label}_{steps}',[f'Executioner/scheme={scheme}',f'Executioner/dt={1/steps}',f'Executioner/num_steps={steps}'])
+   p=float(rows[-1]['p_average']); errors.append(abs(p*(1+p)-0.3125-math.expm1(1)))
+  rates=[math.log(a/b,2) for a,b in zip(errors,errors[1:])]
+  check('reference_mass_'+label+'_time_order',max(0,minimum-min(rates)),0,'convergence')
+  results[-1].update({'time_steps':[0.1,0.05,0.025],'mass_errors':errors,'observed_orders':rates,'minimum_order':minimum})
  for deck,name in [('residuals/mechanics.i','mechanics'),('residuals/gauss_flux.i','gauss_outward'),('residuals/traction_insertion.i','traction_insertion'),('residuals/maxwell_traction.i','maxwell_traction')]:
   rows,_=run(deck,name)
   for quantity in ('u_l2','tau_l2','electric_l2'): check(name+'_'+quantity,max(float(r[quantity]) for r in rows[1:]),1e-10,'finite_deformation' if quantity=='u_l2' else 'implementation')

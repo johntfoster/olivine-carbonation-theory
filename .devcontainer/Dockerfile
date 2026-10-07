@@ -3,6 +3,7 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 ARG BASE_IMAGE
 USER root
+RUN test -x /usr/sbin/sshd
 RUN mkdir -p /opt/olivine && chown vscode:vscode /opt/olivine
 USER vscode
 WORKDIR /opt/olivine

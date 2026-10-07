@@ -6,12 +6,12 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | Gate | Evidence |
 |---|---|
 | Equation contract | Completed; actual objects mapped to labeled weak forms |
-| MOOSE build and residual tests | 59 executable checks passed |
+| MOOSE build and residual tests | 61 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | Local base and clean-clone tests passed. Hosted base run 37649110949 published the tested digest. The first application build identified a bare-shell Python PATH issue; recording/startup now activate Conda and publication is being retried |
+| Base/application image build | Local base and clean-clone tests passed. Hosted base run 37649110949 published the tested digest. Application run 37655593309 published the tested 8c4c3e3 image (59 checks). The updated local suite passes 61 checks; SSH-ready image publication remains pending |
 | GitHub Pages deployment | Actions run 37649097662 succeeded; seven deployed pages/assets/source targets returned HTTP 200, packaged kernel bytes matched |
-| Hosted Codespaces | Not run |
+| Hosted Codespaces | Existing environment available; current CLI found missing openssh-server. Hosted scientific tests did not run; SSH-ready base/startup repair in progress |
 | Physical validation | Not performed |
 
 The requested sibling `finite-deformation-biot-poromechanics` is absent. The
@@ -26,7 +26,7 @@ check source-matched binary reuse and rejection of changed headers, new source
 files, corrupted application and test shared libraries and a changed toolchain lock.
 
 The native MOOSE TestHarness ran the quantitative suite successfully (1 harness
-test, 59 internal checks, zero skipped/failed). The pinned framework has no
+test, 61 internal checks, zero skipped/failed). The pinned framework has no
 tracked local modifications. Desktop and mobile site layouts were inspected.
 
 The copied local framework’s generated libtool paths were relocated into this
@@ -36,3 +36,8 @@ framework libraries inside this repository. No sibling repository was modified.
 `verification/environment-results.json` records the independently built base
 image ID and clean-clone container results. This Docker image ID is distinct
 from a registry manifest digest.
+
+Temporal manufactured mass convergence verifies backward Euler (orders 1.012
+and 1.006) and BDF2 (1.981 and 1.990) using a time-varying source and nonlinear
+complete storage. The constant-source conservation test alone cannot
+distinguish those methods.

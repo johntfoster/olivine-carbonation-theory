@@ -25,6 +25,11 @@ RUN chmod +x /usr/local/bin/with-moose \
 ENV MOOSE_DIR=/opt/moose
 ENV MOOSE_CONDA_PREFIX=/opt/conda/envs/moose
 RUN chown -R vscode:vscode /opt/moose
+# Codespaces' SSH agent needs the server binary. Keep this after the expensive
+# framework layer, and generate machine-specific host keys only at startup.
+RUN apt-get update && apt-get install -y --no-install-recommends openssh-server \
+    && rm -f /etc/ssh/ssh_host_* \
+    && rm -rf /var/lib/apt/lists/*
 USER vscode
 LABEL org.opencontainers.image.source="https://github.com/johntfoster/olivine-carbonation-theory"
 LABEL org.opencontainers.image.description="Pinned MOOSE framework and scientific Python base"

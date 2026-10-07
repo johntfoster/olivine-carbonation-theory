@@ -62,10 +62,10 @@
     }
   },
   "verification": {
-    "infrastructure": "GitHub infrastructure and Pages workflows passed; seven live site targets returned HTTP 200 and kernel bytes matched. Six local startup guards passed. Numerical images are building; hosted Codespaces remains unverified.",
-    "implementation": "59 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
+    "infrastructure": "Pages deployed and source bytes verified; six local startup guards passed. Base and 8c4c3e3 application images published. Hosted Codespaces startup failed because openssh-server was absent; SSH-ready repair and publication pending.",
+    "implementation": "61 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
     "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
-    "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 convergence verified; observed orders approximately 2.",
+    "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 orders approximately 2; nonlinear mass temporal orders approximately 1 for backward Euler and 2 for BDF2.",
     "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
