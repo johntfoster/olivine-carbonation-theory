@@ -57,7 +57,7 @@ jobs:
           REVISION: ${{ github.sha }}
         run: |
           mkdir -p .agent-runtime/image-evidence
-          docker run --rm --entrypoint bash -v "$PWD:/workspaces/olivine" "olivine-app:$REVISION" -c 'cd /workspaces/olivine && python3 scripts/prebuilt_app.py startup && with-moose ./moose_app/olivine_carbonation-opt --help'
+          docker run --rm --user "$(id -u):$(id -g)" --entrypoint bash -v "$PWD:/workspaces/olivine" "olivine-app:$REVISION" -c 'cd /workspaces/olivine && python3 scripts/prebuilt_app.py startup && with-moose ./moose_app/olivine_carbonation-opt --help'
           container=$(docker create "olivine-app:$REVISION")
           docker cp "$container:/opt/olivine/verification/implementation-results.json" .agent-runtime/image-evidence/
           docker cp "$container:/opt/olivine/prebuilt-application.json" .agent-runtime/image-evidence/

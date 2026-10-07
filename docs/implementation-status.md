@@ -9,7 +9,7 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | MOOSE build and residual tests | 59 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | Local framework compilation and Actions base run 37649110949 in progress. Initial application run awaits the first published base |
+| Base/application image build | Local base and independent clean-clone application build/test passed. Actions base run 37649110949 is in progress; application publication awaits the base |
 | GitHub Pages deployment | Actions run 37649097662 succeeded; seven deployed pages/assets/source targets returned HTTP 200, packaged kernel bytes matched |
 | Hosted Codespaces | Not run |
 | Physical validation | Not performed |
@@ -32,3 +32,7 @@ tracked local modifications. Desktop and mobile site layouts were inspected.
 The copied local framework’s generated libtool paths were relocated into this
 repository before the final run. The application executable now resolves its
 framework libraries inside this repository. No sibling repository was modified.
+
+`verification/environment-results.json` records the independently built base
+image ID and clean-clone container results. This Docker image ID is distinct
+from a registry manifest digest.

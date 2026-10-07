@@ -33,8 +33,8 @@ intentionally exclude this submodule and harness copies; their scientific checks
 and manuscript build use the direct commands above. Hosted Codespaces and live
 site deployment require separate verification.
 
-The pinned `.devcontainer/devcontainer.json` provides Python tooling, not a claim
-that a scientific TeX installation or a hosted Codespace has been verified.
+The devcontainer provides the pinned MOOSE framework and scientific Python.
+A scientific TeX installation and hosted startup require separate evidence.
 
 ## MOOSE implementation and prebuilt images (authorized 7 October 2026)
 

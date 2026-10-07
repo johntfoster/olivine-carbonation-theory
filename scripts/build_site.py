@@ -15,6 +15,42 @@ class Links(HTMLParser):
   self.links.extend(attrs[a] for a in ('href','src') if a in attrs)
 def source_link(path,label=None):
  path=Path(path); return f'<a href="sources/{path.as_posix()}.html">{html.escape(label or str(path))}</a>'
+def input_objects(deck,seen=None):
+ seen=set() if seen is None else seen
+ if deck in seen: return set()
+ seen.add(deck); text=deck.read_text()
+ names=set(re.findall(r'^\s*type\s*(?::=|=)\s*(\w+)',text,re.M))
+ for include in re.findall(r'^\s*!include\s+([^\s#]+)',text,re.M):
+  parent=(deck.parent/include).resolve()
+  if not parent.is_relative_to(ROOT): raise ValueError('External input include rejected')
+  names.update(input_objects(parent,seen))
+ return names
+ROLES={
+ 'ADReferenceMassStorage':'Difference complete reference mass with backward Euler or variable-step BDF2.',
+ 'ADReferenceSpeciesBalance':'Assemble a component flux and reference reaction source; omit flux for pure solids.',
+ 'ADCarbonationMomentum':'Assemble nominal stress, gravity and fluid-production momentum in the solid reference.',
+ 'ADTransferPotential':'Advance the parent transfer-work field using the skeleton velocity.',
+ 'ADReferenceGauss':'Assemble electrostatics with the pulled-back dielectric and reference charge.',
+ 'ADReferenceOutwardFlux':'Apply prescribed outward reference mass flux or electric displacement.',
+ 'ADReferenceTraction':'Apply prescribed outward nominal traction.',
+ 'ADReferenceMass':'Form the conservative storage J phi rho-bar eta, including historical states.',
+ 'ADReferencePullback':'Pull current species flux, production, charge and dielectric into the solid reference.',
+ 'ADLogarithmicMinerals':'Solve each mineral volume by Newton in AD and assemble density, stress and the aggregate Biot coefficient.',
+ 'ADOlivineReconstruction':'Reconstruct a scalar from its continuous backbone and optional constant enrichment.',
+ 'ADSolidReferenceKinematics':'Compute finite-deformation kinematics on the undisplaced reference mesh.',
+ 'ADSkeletonVelocity':'Obtain skeleton velocity from the displacement time derivative.',
+ 'ADScalarDiffusionReferenceFluxMaterial':'Supply scalar diffusion properties for manufactured verification reductions.',
+ 'ADCrossDiffusionVerification':'Supply a synthetic SPD two-species mobility block for cross-diffusion verification.',
+ 'ADEnrichedGalerkinScalarBalance':'Assemble the continuous scalar volume row.',
+ 'ADEnrichedGalerkinScalarEnrichmentBalance':'Assemble the constant enrichment storage and source row.',
+ 'ADEnrichedGalerkinFluxDG':'Assemble conservative diagonal interior flux and penalty terms.',
+ 'ADEnrichedGalerkinSymmetryDG':'Assemble diagonal adjoint-consistency terms on interior faces.',
+ 'ADEnrichedGalerkinCrossFluxDG':'Assemble off-diagonal interior flux and penalty terms.',
+ 'ADEnrichedGalerkinCrossSymmetryDG':'Assemble off-diagonal adjoint-consistency terms on interior faces.',
+ 'ADEnrichedGalerkinPenaltyBC':'Apply weak diagonal Dirichlet data to the enrichment field.',
+ 'ADEnrichedGalerkinCrossPenaltyBC':'Apply weak off-diagonal Dirichlet coupling to the enrichment field.',
+ 'ADEnrichedGalerkinBoundaryFluxIntegral':'Measure the assembled outward numerical boundary flux.'
+}
 def page(title,body):
  return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} · Olivine carbonation</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="container"><a class="brand" href="index.html">Olivine carbonation<span class="tag">Compositional finite-deformation theory · MOOSE residuals</span></a><nav><a href="index.html">Home</a><a href="model.html">Model</a><a href="kernels.html">MOOSE catalog</a><a href="verification.html">Verification</a><a href="reproduction.html">Reproduce</a></nav></div></header>{body}<footer><div class="container">John T. Foster · Code: Apache-2.0 · Manuscript: CC BY 4.0 · <a href="https://github.com/johntfoster/olivine-carbonation-theory">Repository</a></div></footer></body></html>'''
 def check(output):
@@ -36,7 +72,7 @@ def build(output):
  if output.exists(): shutil.rmtree(output)
  output.mkdir(parents=True); shutil.copytree(ROOT/'site/assets',output/'assets'); (output/'.nojekyll').touch()
  allow=[]
- for directory,patterns in [('moose_app/src',['*.C']),('moose_app/include',['*.h']),('moose_app/test/tests',['*.i','tests']),('scripts',['*.py']),('.devcontainer',['Dockerfile*','*.json','*.sh']),('.github/workflows',['*.yml']),('environment',['*.json','*.md']),('verification',['implementation-map.md','implementation-results.json','eg-source-lineage.json','mineral-source-lineage.json'])]:
+ for directory,patterns in [('moose_app/src',['*.C']),('moose_app/include',['*.h']),('moose_app/test/tests',['*.i','tests']),('scripts',['*.py']),('.devcontainer',['Dockerfile*','*.json','*.sh']),('.github/workflows',['*.yml']),('environment',['*.json','*.md']),('verification',['implementation-map.md','implementation-results.json','environment-results.json','eg-source-lineage.json','mineral-source-lineage.json'])]:
   for pattern in patterns: allow.extend((ROOT/directory).rglob(pattern))
  allow.extend(ROOT/p for p in ['PLAN.md','GOAL.md','research-project.yml','paper/main.tex','paper/defs.tex','paper/references.bib','moose_app/Makefile','moose_app/run_tests','docs/implementation-status.md'])
  manifest={}
@@ -53,10 +89,14 @@ def build(output):
  objects={name:p for p in (ROOT/'moose_app/src').rglob('*.C') for name in re.findall(r'registerMooseObject\(\s*"OlivineCarbonationApp",\s*(\w+)\)',p.read_text())}
  catalog=['<main class="container"><h1>MOOSE object catalog</h1><p>Every local registered object links to the exact packaged source bytes. Constitutive and residual responsibilities follow the '+source_link('verification/implementation-map.md','equation contract')+'.</p><div class="grid">']
  for name,p in sorted(objects.items()):
-  rel=p.relative_to(ROOT); head=Path('moose_app/include')/rel.relative_to('moose_app/src').with_suffix('.h'); catalog.append(f'<article class="card"><h3>{html.escape(name)}</h3><p>{source_link(rel,"Implementation")} · {source_link(head,"Header")}</p><p>{html.escape(rel.parts[2])}</p></article>')
+  rel=p.relative_to(ROOT); head=Path('moose_app/include')/rel.relative_to('moose_app/src').with_suffix('.h')
+  inputs=[deck for deck in sorted((ROOT/'moose_app/test/tests').rglob('*.i')) if name in input_objects(deck)]
+  tests=' · '.join(source_link(deck.relative_to(ROOT),deck.name) for deck in inputs[:3])
+  display_name=re.sub(r'(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])','<wbr>',html.escape(name))
+  catalog.append(f'<article class="card"><h3>{display_name}</h3><p>{html.escape(ROLES[name])}</p><p>{source_link(rel,"Implementation")} · {source_link(head,"Header")}</p><p>Verification inputs: {tests or "See the equation contract"}</p></article>')
  catalog.append('</div><h2>Inputs and test specifications</h2><ul>')
  for deck in sorted((ROOT/'moose_app/test/tests').rglob('*.i')):
-  names=set(re.findall(r'^\s*type\s*=\s*(\w+)',deck.read_text(),re.M)); selected=[source_link(objects[n].relative_to(ROOT),n) for n in sorted(names) if n in objects]
+  names=input_objects(deck); selected=[source_link(objects[n].relative_to(ROOT),n) for n in sorted(names) if n in objects]
   spec=deck.parent/'tests'
   if spec.exists(): selected.append(source_link(spec.relative_to(ROOT),'Test specification'))
   catalog.append('<li>'+source_link(deck.relative_to(ROOT))+'<br>'+' · '.join(selected)+'</li>')
@@ -83,7 +123,7 @@ tools/setup-agent-workflows
 make check
 make moose
 make test
-make site</pre><p>Use the devcontainer for the pinned compiled MOOSE framework and scientific Python. Startup checks source hashes before reusing the prebuilt application. Edited source triggers a rebuild. Manuscript compilation remains explicit with <code>make paper</code>.</p><h2>Two image layers</h2><p>The manually dispatched base-image workflow builds the numerical toolchain once. Each push builds and tests an application image for that exact Git revision, then publishes its SHA tag to GitHub Container Registry. The base digest and compiled-source hashes are recorded in image provenance.</p><p>Hosted Codespaces prebuilds are configured in repository settings and are separate from GHCR publishing.</p><ul><li>'''+source_link('.devcontainer/Dockerfile.base','Base Dockerfile')+'</li><li>'+source_link('.devcontainer/Dockerfile','Application Dockerfile')+'</li><li>'+source_link('environment/README.md','Toolchain and startup instructions')+'</li><li><a href="https://github.com/johntfoster/olivine-carbonation-theory/actions">GitHub Actions</a></li></ul></main>'))
+make site</pre><p>Use the devcontainer for the pinned compiled MOOSE framework and scientific Python. Startup checks source hashes before reusing the prebuilt application. Edited source triggers a rebuild. Manuscript compilation remains explicit with <code>make paper</code>.</p><h2>Two image layers</h2><p>The manually dispatched base-image workflow builds the numerical toolchain once. Each push builds and tests an application image for that exact Git revision, then publishes its SHA tag to GitHub Container Registry. The base digest and compiled-source hashes are recorded in image provenance.</p><p>Hosted Codespaces prebuilds are configured in repository settings and are separate from GHCR publishing.</p><ul><li>'''+source_link('.devcontainer/Dockerfile.base','Base Dockerfile')+'</li><li>'+source_link('.devcontainer/Dockerfile','Application Dockerfile')+'</li><li>'+source_link('environment/README.md','Toolchain and startup instructions')+'</li><li>'+source_link('verification/environment-results.json','Recorded container and hosted-startup evidence')+'</li><li><a href="https://github.com/johntfoster/olivine-carbonation-theory/actions">GitHub Actions</a></li></ul></main>'))
  return {'objects':len(objects),'sources':len(manifest),'checked_links':check(output)}
 if __name__=='__main__':
  parser=argparse.ArgumentParser(); parser.add_argument('--output',type=Path,default=DEFAULT); parser.add_argument('--check',action='store_true'); args=parser.parse_args()
