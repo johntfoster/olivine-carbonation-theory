@@ -1,0 +1,179 @@
+% !TeX root = ../main.tex
+\section{Conservation of charge}
+\label{sec:conservation_of_charge}
+
+Electric charge is carried by the same phase/component material measures as
+mass.  Weighting each component balance by the charge carried per unit mass and
+summing gives the charge balance.  The field equation for the electric
+potential is introduced with the electrical variation; the electrochemical
+component potentials are identified later by the Coleman--Noll procedure.
+
+Let \(z_\xi^\alpha\) denote the charge carried per unit mass of component
+\(\alpha\) in phase \(\xi\).  The charge density per unit current mixture volume
+associated with that component is
+%
+\begin{equation}
+	\varrho_\xi^\alpha
+	=
+	z_\xi^\alpha\rho_\xi^\alpha
+	=
+	z_\xi^\alpha\phi_\xi\bar\rho_\xi\eta_\xi^\alpha .
+	\label{eq:component_charge_density_definition}
+\end{equation}
+%
+The coefficient \(z_\xi^\alpha\) may vanish for neutral components, may be a
+constant valence-to-mass ratio for a mobile ion, or may be an effective charge
+per mass for a solid component representing fixed surface or exchange-site
+charge.  Fixed surface or exchange-site charge and mobile ionic charge are
+represented by the same phase/component variables
+\cite{leroy2004triple,newman2004electrochemical}.  A charged component may
+belong to any phase; components treated as electrically neutral have
+\(z_\xi^\alpha=0\).  The total free charge density is
+%
+\begin{equation}
+	\varrho
+	=
+	\sum_\xi\sum_\alpha
+	z_\xi^\alpha\phi_\xi\bar\rho_\xi\eta_\xi^\alpha.
+	\label{eq:mixture_charge_density_definition}
+\end{equation}
+%
+Thus every free-charge contribution is carried by a component mass measure.
+The charge density \(\varrho\) is the field-source coefficient in the
+electrical virtual work and in Gauss' law, and it multiplies the rate of the
+electric potential in the bulk field-source power.  In particular, representing
+fixed charge as a solid component ties charge storage, deformation, reaction,
+and ion exchange to the same material measures used for mass.
+
+The material charge measure follows by multiplying the augmented component
+material measure \eqref{eq:augmented_component_material_measure} by
+\(z_\xi^\alpha\),
+%
+\begin{equation}
+	z_\xi^\alpha\rho_{\xi0}^\alpha
+	+
+	z_\xi^\alpha\mc C_\xi^\alpha
+	=
+	J_\xi\varrho_\xi^\alpha .
+	\label{eq:augmented_component_material_charge_measure}
+\end{equation}
+%
+For constant \(z_\xi^\alpha\), its material rate gives
+%
+\begin{align}
+	\frac{\partial\varrho_\xi^\alpha}{\partial t}
+	+
+	\nabla_{\mbf x}\cdot
+	\left(
+	\varrho_\xi^\alpha\mbf v_\xi
+	\right)
+	&=
+	\frac{
+	z_\xi^\alpha\dot{\mc C}_\xi^\alpha
+	}{J_\xi}.
+	\label{eq:component_charge_material_rate}
+\end{align}
+%
+Here and below, \(z_\xi^\alpha\) is constant.  A state-dependent effective
+charge requires additional material-rate and transport terms.
+
+Combining \eqref{eq:component_charge_material_rate} with
+\eqref{eq:reference_conversion_accumulation_rate} gives the charge balance for
+each charged component,
+%
+\begin{align}
+	\frac{\partial\varrho_\xi^\alpha}{\partial t}
+	+
+	\nabla_{\mbf x}\cdot
+	\left[
+	z_\xi^\alpha
+	\left(
+	\rho_\xi^\alpha\mbf v_\xi
+	+
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right)
+	\right]
+	&=
+	z_\xi^\alpha
+	\sum_m\nu_{\xi (m)}^\alpha r_{(m)} .
+	\label{eq:component_charge_balance}
+\end{align}
+%
+The current density carried by phase motion and relative component transport is
+%
+\begin{equation}
+	\mbf i
+	=
+	\sum_\xi\sum_\alpha
+	z_\xi^\alpha
+	\left(
+	\rho_\xi^\alpha\mbf v_\xi
+	+
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right).
+	\label{eq:charge_current_density_definition}
+\end{equation}
+%
+Summing \eqref{eq:component_charge_balance} over phases and components gives
+%
+\begin{align}
+	\frac{\partial}{\partial t}
+	\left(
+	\sum_\xi\sum_\alpha\varrho_\xi^\alpha
+	\right)
+	+
+	\nabla_{\mbf x}\cdot\mbf i
+	=
+	\sum_m
+	\left(
+	\sum_\xi\sum_\alpha
+	z_\xi^\alpha\nu_{\xi (m)}^\alpha
+	\right)
+	r_{(m)} .
+	\label{eq:mixture_charge_balance_with_sources}
+\end{align}
+%
+Local internal mechanisms must conserve electric charge,
+%
+\begin{equation}
+	\sum_\xi\sum_\alpha
+	z_\xi^\alpha\nu_{\xi (m)}^\alpha
+	=0,
+	\qquad
+	\text{for each mechanism }(m),
+	\label{eq:mechanism_charge_conservation}
+\end{equation}
+%
+so the total charge balance is
+%
+\begin{equation}
+	\frac{\partial\varrho}{\partial t}
+	+
+	\nabla_{\mbf x}\cdot\mbf i
+	= 0.
+	\label{eq:mixture_charge_balance}
+\end{equation}
+%
+Equation \eqref{eq:mechanism_charge_conservation} is the charge analogue of the
+mass-conservation restriction
+\(\sum_\xi\sum_\alpha\nu_{\xi (m)}^\alpha=0\).  As one example, an ion-exchange
+mechanism between an aqueous phase and charged solid sites may remove an aqueous
+component and a solid-site component while creating the exchanged aqueous and
+solid-site components.  This mechanism changes fluid composition and solid-site
+occupancy while satisfying both mass conservation and
+\eqref{eq:mechanism_charge_conservation}.  More generally, the phase/component
+formulation admits exchange among any represented phases and components whose
+stoichiometry satisfies these two conservation restrictions.  Thus charge
+attached to deforming solid sites is transported by the component current
+\(\mbf i\).
+
+Ion-exchange and surface-complexation models can be represented by retaining
+charged site components in the surface-bearing phase, imposing
+\eqref{eq:mechanism_charge_conservation} on the exchange stoichiometry, and
+choosing admissible kinetic or equilibrium closures for the corresponding
+mechanism rates.  The electrostatic field equation is Gauss' law, derived in
+\sref{virtual_power_derivation}.

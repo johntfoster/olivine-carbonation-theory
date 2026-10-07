@@ -1,9 +1,13 @@
-.PHONY: check paper site
+.PHONY: check paper site moose test
 check:
 	tools/agentctl check
 	python3 .agent/shared/tools/research_project.py check
 paper:
-	latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build paper/main.tex
+	python3 scripts/build_paper.py
 site:
-	python3 .agent/shared/tools/research_project.py site
-	python3 .agent/shared/tools/research_project.py links .agent-runtime/site
+	python3 scripts/build_site.py
+
+moose:
+	tools/moose-run make -C moose_app -j2
+test:
+	tools/moose-run python3 scripts/check_implementation.py

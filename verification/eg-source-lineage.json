@@ -1,0 +1,96 @@
+{
+  "repository": "https://github.com/johntfoster/multicomponent_reactive_flow",
+  "revision": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+  "license": "Apache-2.0",
+  "modifications": "Application registration; kinematics mesh-dimension check and positive-J guard. No sibling modified.",
+  "inputs": [
+    {
+      "path": "moose_app/include/dgkernels/ADEnrichedGalerkinFluxDG.h",
+      "sha256": "daf37d98755a7cd6f357961d02a17fdf9dc548e49e2e80ee54f1f8d5c6f81e18"
+    },
+    {
+      "path": "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C",
+      "sha256": "8a38d164455ab52ad94d568ff6f484d602ddf932fffd30324ab9af6597a03ae8"
+    },
+    {
+      "path": "moose_app/include/dgkernels/ADEnrichedGalerkinSymmetryDG.h",
+      "sha256": "ff984659b58a1429ba52aa2da12a20ce790fce50f4ad77cff0e3b8ba26cd2122"
+    },
+    {
+      "path": "moose_app/src/dgkernels/ADEnrichedGalerkinSymmetryDG.C",
+      "sha256": "1d276f7d72d86a111e8ae475b83f4c3b44153422f22020f63cb90f4a2491d345"
+    },
+    {
+      "path": "moose_app/include/dgkernels/ADEnrichedGalerkinCrossFluxDG.h",
+      "sha256": "25a339de037f5d93840890a28b3fec519cd03367f802ac13c917091c7589b35d"
+    },
+    {
+      "path": "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C",
+      "sha256": "93f6fb439a4d8bd74d3e85e546c4c13a03cc4fc3601113e916af3af18016f17b"
+    },
+    {
+      "path": "moose_app/include/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.h",
+      "sha256": "64912b5205b6b549aa1619f3b5b5e46f3c0a1de23ff1e7780851ec06d8584d58"
+    },
+    {
+      "path": "moose_app/src/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.C",
+      "sha256": "bb8cb5b271b812735c7be7c275655a5dd45a257a3c0eecf6eedd5c2239cdf53c"
+    },
+    {
+      "path": "moose_app/include/bcs/ADEnrichedGalerkinPenaltyBC.h",
+      "sha256": "c5136f725c846b4c5b720d5cd4c241a216ae3459487d566f39c0ec35a4a57f37"
+    },
+    {
+      "path": "moose_app/src/bcs/ADEnrichedGalerkinPenaltyBC.C",
+      "sha256": "dc715246f0d0c0258c59600c3e81eef9351a808d190b68ab976bd9fefa611d59"
+    },
+    {
+      "path": "moose_app/include/bcs/ADEnrichedGalerkinCrossPenaltyBC.h",
+      "sha256": "ac96c5d88ec02c7654c24613cfc68b9632633e004f87e04370ea85c2de750867"
+    },
+    {
+      "path": "moose_app/src/bcs/ADEnrichedGalerkinCrossPenaltyBC.C",
+      "sha256": "cc8d495893549076dca630adc5db794df6a5f643830b7d4058f3aac36a674e31"
+    },
+    {
+      "path": "moose_app/include/kernels/ADEnrichedGalerkinScalarBalance.h",
+      "sha256": "c2c960b2ff1e3c2fc3c392d4ba9c20878fec2f4b998aaed59780a688ecaa4f1d"
+    },
+    {
+      "path": "moose_app/src/kernels/ADEnrichedGalerkinScalarBalance.C",
+      "sha256": "c1ae5e93f6cca41d6abee513dc0a582b79f4632e6f0a9ed9dbdea98af40a74ac"
+    },
+    {
+      "path": "moose_app/include/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.h",
+      "sha256": "67328d9edbc2fb97ecc9e8ea99696e342031b3a166dbb60ebac5174cd9922752"
+    },
+    {
+      "path": "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C",
+      "sha256": "3feeed73395f454d366e56b1180f43a1576adcedadb16dc0111b09343b9aea95"
+    },
+    {
+      "path": "moose_app/include/materials/ADSolidReferenceKinematics.h",
+      "sha256": "20a7bad230f1d186d1429588f532422a6a3425be04a2784f872e5f438675036e"
+    },
+    {
+      "path": "moose_app/src/materials/ADSolidReferenceKinematics.C",
+      "sha256": "9e714d7b167412a16811a268703c99e4b4cec7e91fb8bd0d9396c1bf57c81b35"
+    },
+    {
+      "path": "moose_app/src/materials/ADScalarDiffusionReferenceFluxMaterial.C",
+      "sha256": "4670583ca03f9957db55a2fb403b1063494923f622671ff17b36c06b7da1a117"
+    },
+    {
+      "path": "moose_app/include/materials/ADScalarDiffusionReferenceFluxMaterial.h",
+      "sha256": "d2bd38e1deb63ff81b7d08d1e04aa5aeb1c5fb403b8307232338010b10e47f36"
+    },
+    {
+      "path": "moose_app/src/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.C",
+      "sha256": "7371839df53b47a216aedb3969152abae5b08c0050658121f55b19e3f1a9375d"
+    },
+    {
+      "path": "moose_app/include/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.h",
+      "sha256": "f3d0d347459b222341ad89686124941a1e4c7ea82101befb7fbeb496313f9f58"
+    }
+  ]
+}

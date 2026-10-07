@@ -1,0 +1,658 @@
+% !TeX root = ../main.tex
+\section{Material form of conservation of mass}
+%
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=0.65]
+		\tikzstyle{pt}=[circle, fill=black, inner sep=0pt, minimum size=5pt]
+		\draw [black, fill=black!20] plot [smooth cycle] coordinates {(-1.0,-1.0) (2,0) (2.5,2) (2,4) (-1,3)};
+		\draw [black, fill=black!20] plot [smooth cycle] coordinates {(7, 0) (10,0) (13.65, 4) (8,4.5)};
+		\draw (2,-4) node[fill=black, minimum size=3pt, inner sep=0pt, label={[label distance=3pt]180:$o$}] (O) {} ;
+		\draw (-0.5,2.8) node[pt] (Xf) {} ;
+		\draw (1.5,0.5) node[pt] (Xs) {} ;
+		\draw (9.0,2) node[pt] (x) {} ;
+		\draw[-latex] (O) -- (Xf) node[midway, fill=white, inner sep=1pt] {$\mbf{X}_\xi$} ;
+		\draw[-latex] (O) -- (Xs) node[midway, fill=white, inner sep=1pt] {$\mbf{X}_\zeta$} ;
+		\draw[-latex] (O) -- (x) node[midway, fill=white, inner sep=1pt] {$\mbf{x}$} ;
+		\draw[bend left, -latex] (Xs) to node[midway, fill=white, inner sep=1pt] {$\bs{\chi}_\zeta$} (x);
+		\draw[bend left, -latex] (Xf) to node[midway, fill=white, inner sep=1pt] {$\bs{\chi}_\xi$} (x);
+		\draw (1.3,1.8) node () {${\mc{B}_0}$} ;
+		\draw (11.1,2) node () {${\mc{B}}$} ;
+		\draw (3.5,-4) node (xaxis) {} ;
+		\draw (2,-2.5) node (yaxis) {} ;
+		\draw (1.0,-5.0) node (zaxis) {} ;
+		\draw[-latex, line width=2pt] (O) -- (xaxis)  {} ;
+		\draw[-latex, line width=2pt] (O) -- (yaxis)  {} ;
+		\draw[-latex, line width=2pt] (O) -- (zaxis)  {} ;
+	\end{tikzpicture}
+	\caption{Schematic description of mixture kinematics showing the deformation maps, $\bs\chi_\xi$, linking phase reference configurations, $\mbf{X}_\xi$, to the common current configuration, $\mbf{x}$.}
+	\label{fig:component_kinematics}
+\end{figure}
+%
+The derivation begins with component mass because every later force, multiplier,
+and closure is tied to how mass is stored, converted, and transported.  The
+mixture phases occupy a common current configuration \(\mc B\)
+(\fref{component_kinematics}).  A phase label
+\(\xi\) identifies material that moves with one motion \(\bs\chi_\xi\), while a
+superscript \(\alpha\) distinguishes chemical species or constituents within that
+phase.
+Liquids, gases, and solids are therefore described by the same phase/component
+notation: a phase is the collection of components sharing the trajectory
+\(\bs\chi_\xi\).  Given a differential mass \({\rm d}m^\al_\xi\) of
+component \(\alpha\) in phase \(\xi\), define the component partial density per
+current mixture volume by
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\rho^\al_\xi(\mbf{x}, t) = \frac{{\rm d}m^\al_\xi}{\dv},
+	\label{eq:component_partial_density_definition}
+\end{equation}
+% AGENT-LOCK-END
+%
+where $\dv = {\rm d}x_1 {\rm d}x_2 {\rm d}x_3$ is a current-configuration volume
+element of the mixture.  Each phase is tracked from its own reference
+coordinates $\mbf X_\xi$ and reference volume element
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\dVxi = ({\rm d}X_1)_\xi({\rm d}X_2)_\xi({\rm d}X_3)_\xi.
+	\label{eq:phase_reference_volume_element}
+\end{equation}
+% AGENT-LOCK-END
+%
+The phase reference coordinates are related to the common current coordinates by
+a one-to-one, invertible, and continuously differentiable map on the region where
+that phase is present,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\mbf{x} = \bs{\chi}_\xi(\mbf{X}_\xi,t),
+	\label{eq:phase_motion_map}
+\end{equation}
+% AGENT-LOCK-END
+%
+The associated phase deformation gradient $\mbf{F}_\xi$ maps differential
+vectors from the phase reference coordinates to the current coordinates, and
+its determinant \(J_\xi\) is the phase Jacobian.
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\mathbf{F}_\xi & = \p{\bs{\chi}_\xi}{\mbf{X}_\xi} \notag       \\
+	               & = \nabla_{\mbf{X}_\xi} \mbf{u}_\xi + \mbf{I}.
+	\label{eq:phase_deformation_gradient_definition}
+\end{align}
+% AGENT-LOCK-END
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	J_\xi & =  \det\left(\mbf{F}_\xi\right).
+	\label{eq:phase_jacobian_definition}
+\end{align}
+% AGENT-LOCK-END
+Here $\mbf{u}_\xi = \mbf{u}_\xi(\mbf{X}_\xi, t)$ is the phase displacement
+field, with $\mbf{u}_\xi = \mbf{x} - \mbf{X}_\xi$, and
+$\nabla_{\mbf{X}_\xi}$ is the gradient operator taken with respect to the phase reference
+coordinates $\mbf{X}_\xi$.
+
+Let \(\rho_{\xi0}^\al(\mbf X_\xi)\) denote the initial component partial
+density, evaluated at \(\mbf x(\mbf{X}_\xi,t=0)=\mbf X_\xi\).  Let
+\(\mathcal{C}^\al_\xi(\mbf X_\xi,t)\) denote the increment of mass of component \(\alpha\)
+added to phase \(\xi\) per unit phase reference volume by internal conversion.
+Internal conversion includes chemical reactions, sorption/desorption, and pure
+phase transformations.  The first material statement isolates this
+conversion-only subproblem; relative component transport is added in
+\sref{averaged_component_transport_extension}.  The component mass balance in
+integral form is
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\int_{\mc{B}_{\xi 0}} \left(\rho_{\xi 0}^\al + \mc{C}^\al_\xi\right)\dVxi
+	 & = \int_{\mc{B}} \rho_\xi^\al \dv                     \\
+	 & = \int_{\mc{B}_{\xi 0}} \rho_{\xi}^\al J_\xi \dVxi .
+	\label{eq:material_mass}
+\end{align}
+% AGENT-LOCK-END
+%
+Here, the last equality pulls the current integral back to the phase reference
+configuration $\mc B_{\xi0}$.  The Jacobian $J_\xi$ accounts for the change in
+volume between the phase reference configuration and the common current
+configuration.
+%
+
+Since \eqref{eq:material_mass} must hold for arbitrary $\mc{B}_{\xi0}$,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\rho_{\xi 0}^\alpha + \mc{C}^\alpha_\xi = \rho_\xi^\alpha J_\xi.
+	\label{eq:material_mass_2}
+\end{equation}
+% AGENT-LOCK-END
+%
+The material time derivative of a quantity $\square_\xi$ observed along the
+velocity $\mbf v_\zeta$ of phase $\zeta$ is
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\frac{D_\zeta \square_\xi}{Dt}
+	= \frac{\partial \square_\xi}{\partial t}
+	+ \mbf{v}_\zeta \cdot\nabla_{\mbf{x}}\square_\xi,
+	\label{eq:phase_material_time_derivative_definition}
+\end{equation}
+% AGENT-LOCK-END
+%
+Here, $\nabla_{\mbf x}$ is the spatial gradient operator.  The dot
+shorthand
+$\dot{\square}_\xi = D_\xi \square_\xi/Dt$ denotes the material time
+derivative following phase $\xi$.  Taking the material time derivative of
+\eqref{eq:material_mass_2} following phase $\xi$ and using the identity
+$\dot{J}_\xi = J_\xi \nabla_{\mbf x}\cdot\mbf v_\xi$ gives
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\frac{D_\xi \rho_\xi^\alpha}{Dt}
+	+ \rho_\xi^\alpha \nabla_\mbf{x}\cdot\mbf{v}_\xi
+	 & = \frac{\dot{\mc C}^\alpha_\xi}{J_\xi} .
+	\label{eq:component_material_mass}
+\end{align}
+% AGENT-LOCK-END
+%
+The rate of component mass addition per current mixture volume is defined by
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\dot{c}^\al_\xi(\mbf{x},t) \equiv \frac{\dot{\mc C}^\al_\xi}{J_\xi}.
+	\label{eq:current_conversion_rate_definition}
+\end{equation}
+% AGENT-LOCK-END
+%
+Substituting \eqref{eq:current_conversion_rate_definition} into \eqref{eq:component_material_mass} and expanding the material time derivative gives the spatial component mass
+balance for phase $\xi$,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\frac{\partial \rho_\xi^\alpha}{\partial t}
+	+ \nabla_\mbf{x}\cdot\left(\rho_\xi^\alpha\mbf{v}_\xi\right)
+	= \dot{c}^\alpha_\xi .
+	\label{eq:component_spatial_mass}
+\end{align}
+% AGENT-LOCK-END
+%
+Introduce the phase partial density
+$\rho_\xi = \sum_\alpha \rho_\xi^\alpha$ and the mass fraction of component
+$\alpha$ in phase $\xi$,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\eta^\alpha_\xi = \frac{\rho^\alpha_\xi}{\rho_\xi},
+	\label{eq:phase_mass_fraction}
+\end{equation}
+% AGENT-LOCK-END
+%
+Summing \eqref{eq:phase_mass_fraction} over $\al$ gives the mass-fraction
+constraint within phase $\xi$,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\sum_\alpha \eta_\xi^\alpha = 1.
+	\label{eq:mass_fraction_constraint}
+\end{equation}
+% AGENT-LOCK-END
+The phase volume fraction is defined as
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\phi_\xi = \frac{\dv_\xi}{\dv},
+	\label{eq:phase_volume_fraction}
+\end{equation}
+% AGENT-LOCK-END
+and summing over $\xi$ gives the volume-fraction constraint,
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\sum_\xi \phi_\xi  = 1.
+	\label{eq:volume_fraction_constraint}
+\end{equation}
+% AGENT-LOCK-END
+%
+The phase intrinsic density is
+$\bar\rho_\xi = {\rm d}m_\xi/\dv_\xi$, so that
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{subequations}
+	\begin{align}
+		\rho_\xi        & = \phi_\xi \bar\rho_\xi,
+		\label{eq:phase_partial_density_representation}            \\
+		\rho_\xi^\alpha & = \phi_\xi \bar\rho_\xi \eta^\alpha_\xi.
+		\label{eq:component_partial_density_representation}
+	\end{align}
+\end{subequations}
+% AGENT-LOCK-END
+%
+Substituting \eqref{eq:component_partial_density_representation} into
+\eqref{eq:component_spatial_mass} and summing over phases gives the global
+component mass balance,
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\frac{\partial}{\partial t}\left(\sum_\xi \phi_\xi \bar\rho_\xi \eta^\al_\xi\right)
+	+ \nabla_\mbf{x}\cdot\left( \sum_\xi \phi_\xi \bar\rho_\xi \eta^\al_\xi \mbf{v}_\xi\right)
+	= \sum_\xi \dot{c}^\alpha_\xi .
+	\label{eq:spatial_mass_2}
+\end{align}
+% AGENT-LOCK-END
+%
+Let \(r_{(m)}\) be the current progress rate of internal mechanism
+\((m)\).  Its mass-based stoichiometric coefficient for component \(\alpha\) in
+phase \(\xi\) is \(\nu_{\xi (m)}^\alpha\).  The product
+\(\nu_{\xi (m)}^\alpha r_{(m)}\) is therefore the component mass-production
+rate per unit current mixture volume.  Equivalently, a molar progress rate may
+be used if \(\nu_{\xi (m)}^\alpha\) is the signed molar stoichiometric
+coefficient multiplied by component molar mass.  Before unresolved relative transport is
+introduced, this rate is generated only by conversion, so that
+%
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{equation}
+	\dot{c}_\xi^\alpha = \sum_m \nu_{\xi (m)}^\alpha r_{(m)} .
+	\label{eq:unified_stoich_current}
+\end{equation}
+% AGENT-LOCK-END
+%
+The mechanism index $(m)$ includes chemical reactions, sorption/desorption, and
+pure phase transformations.  Sorption/desorption and pure phase transformations
+of component $\alpha$ from phase $\xi$ to phase $\zeta$ have the one-to-one stoichiometry
+$\nu_{\xi (m)}^\alpha=-1$, $\nu_{\zeta (m)}^\alpha=+1$, with all other entries
+zero.  A chemical reaction may change both component identity and phase label.
+Substituting \eqref{eq:unified_stoich_current} into \eqref{eq:spatial_mass_2}
+and summing over $\al$ gives the overall mass balance
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\frac{\partial}{\partial t}\left(\sum_\xi \sum_\al \phi_\xi \bar\rho_\xi \eta^\al_\xi\right)
+	+ \nabla_\mbf{x}\cdot\left( \sum_\xi \sum_\al \phi_\xi \bar\rho_\xi \eta^\al_\xi \mbf{v}_\xi\right)
+	 & = \sum_m \sum_\xi \sum_\al \nu^\alpha_{\xi (m)} r_{(m)},
+	\label{eq:spatial_mass_3}
+\end{align}
+% AGENT-LOCK-END
+or equivalently,
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\frac{\partial\rho}{\partial t} + \nabla_\mbf{x} \cdot \left( \rho \mbf{v} \right) & = 0.
+	\label{eq:spatial_mass_4}
+\end{align}
+% AGENT-LOCK-END
+Here $\rho = \sum_\xi \rho_\xi$ is the mixture density and $\mbf v$ is the
+barycentric mixture velocity
+% AGENT-LOCK-BEGIN equation-lock: do not edit unless explicitly unlocked by user
+\begin{align}
+	\mbf{v} = \frac{1}{\rho} \sum_\xi \rho_\xi \mbf{v}_\xi.
+	\label{eq:mixture_mass_averaged_velocity}
+\end{align}
+% AGENT-LOCK-END
+%
+Each internal mechanism satisfies
+\(\sum_\xi\sum_\alpha\nu_{\xi (m)}^\alpha=0\), so the right-hand side of
+\eqref{eq:spatial_mass_3} vanishes. Equation~\eqref{eq:spatial_mass_4} is the
+overall mixture statement of mass conservation.
+
+\subsection{Averaged component transport and the extended material balance}
+\label{sec:averaged_component_transport_extension}
+
+The phase construction above applies at both the local and resolved scales.
+For the local description used in this averaging step, each component is
+treated as a one-component phase and traced by its own motion.  The resolved
+phase \(\xi\) groups the selected one-component phases, and its mass-averaged
+component velocity defines their common upscaled phase trajectory.  Averaging
+the component motion inside a representative current volume exposes transport
+not resolved by that phase trajectory, following the standard volume-averaging
+decomposition for porous-medium species
+transport~\cite{plumb1988dispersion,gray2009tcat_transport}.  A hat denotes a
+local, unaveraged quantity inside the averaging volume, whereas angle brackets
+denote its volume average.  Thus
+%
+\begin{equation}
+	\rho_\xi^\alpha
+	=
+	\left\langle\widehat\rho_\xi^\alpha\right\rangle,
+	\qquad
+	\widehat\rho_\xi^\alpha
+	=
+	\rho_\xi^\alpha+\widetilde\rho_\xi^\alpha,
+	\qquad
+	\left\langle\widetilde\rho_\xi^\alpha\right\rangle=0.
+	\label{eq:averaged_component_density_split}
+\end{equation}
+%
+The local, unaveraged velocity of component \(\alpha\) is decomposed into the
+resolved phase velocity, an unresolved fluctuation of the phase motion, and
+motion of the component relative to the local, unaveraged phase motion,
+%
+\begin{equation}
+	\widehat{\mbf v}_\xi^\alpha
+	=
+	\mbf v_\xi
+	+
+	\widetilde{\mbf v}_\xi
+	+
+	\widehat{\mbf u}_\xi^\alpha,
+	\qquad
+	\left\langle\widetilde{\mbf v}_\xi\right\rangle=\mbf 0.
+	\label{eq:averaged_component_velocity_split}
+\end{equation}
+%
+Here \(\widetilde{\mbf v}_\xi\) produces mechanical dispersion and
+\(\widehat{\mbf u}_\xi^\alpha\) produces molecular diffusion.  The resolved
+phase velocity is chosen to be the mass-averaged component velocity,
+%
+\begin{equation}
+	\rho_\xi\mbf v_\xi
+	=
+	\sum_\alpha
+	\left\langle
+	\widehat\rho_\xi^\alpha
+	\widehat{\mbf v}_\xi^\alpha
+	\right\rangle.
+	\label{eq:averaged_phase_mass_velocity_definition}
+\end{equation}
+%
+This choice fixes the phase trajectory used in
+\eqref{eq:phase_material_time_derivative_definition}.  The local, unaveraged
+material derivative following component \(\alpha\) is the extension
+%
+\begin{equation}
+	\frac{\widehat D_\xi^\alpha\widehat\square_\xi}{Dt}
+	=
+	\frac{\partial\widehat\square_\xi}{\partial t}
+	+
+	\left(
+	\mbf v_\xi
+	+
+	\widetilde{\mbf v}_\xi
+	+
+	\widehat{\mbf u}_\xi^\alpha
+	\right)\cdot
+	\nabla_{\mbf x}\widehat\square_\xi.
+	\label{eq:averaged_component_material_derivative}
+\end{equation}
+%
+At the local scale, the hatted material identity and Jacobian are the
+componentwise forms of \eqref{eq:material_mass_2} and
+\eqref{eq:phase_jacobian_definition}.  Applying this derivative to the hatted
+material identity and using the associated kinematic identity
+\(\widehat D_\xi^\alpha\widehat J_\xi^\alpha/Dt
+=\widehat J_\xi^\alpha\nabla_{\mbf x}\cdot\widehat{\mbf v}_\xi^\alpha\),
+and writing the result in divergence form gives
+%
+\begin{equation}
+	\frac{\partial\widehat\rho_\xi^\alpha}{\partial t}
+	+
+	\nabla_{\mbf x}\cdot
+	\left(
+	\widehat\rho_\xi^\alpha
+	\widehat{\mbf v}_\xi^\alpha
+	\right)
+	=
+	\sum_m\nu_{\xi (m)}^\alpha r_{(m)}.
+	\label{eq:local_component_balance_before_averaging}
+\end{equation}
+%
+The progress rates on the right are resolved current-volume rates taken to be
+uniform over the averaging volume.  They are therefore unchanged by averaging,
+which introduces fluctuation contributions through the storage and transport
+terms.  Substitution of
+\eqref{eq:averaged_component_density_split} and
+\eqref{eq:averaged_component_velocity_split} into
+\eqref{eq:local_component_balance_before_averaging} produces two relative fluxes,
+%
+\begin{subequations}
+	\begin{align}
+		\mbf j_{\xi,{\rm disp}}^\alpha
+		 & =
+		\left\langle
+		\widetilde\rho_\xi^\alpha
+		\widetilde{\mbf v}_\xi
+		\right\rangle,
+		\label{eq:averaged_mechanical_dispersion_flux_definition}
+		\\
+		\mbf j_{\xi,{\rm diff}}^\alpha
+		 & =
+		\left\langle
+		\widehat\rho_\xi^\alpha
+		\widehat{\mbf u}_\xi^\alpha
+		\right\rangle.
+		\label{eq:averaged_molecular_diffusion_flux_definition}
+	\end{align}
+\end{subequations}
+%
+Equations \eqref{eq:averaged_mechanical_dispersion_flux_definition} and
+\eqref{eq:averaged_molecular_diffusion_flux_definition} define what the
+averaged fluxes measure, but the macroscopic theory does not resolve the
+density and velocity fluctuations inside the averages.  Varying those subscale
+fields would add unknowns and closure equations.  The variational problem in
+\sref{virtual_power_derivation} therefore treats
+\(\mbf j_{\xi,{\rm disp}}^\alpha\) and
+\(\mbf j_{\xi,{\rm diff}}^\alpha\) as macroscopic process rates.  Their virtual
+changes enter the Onsager part of the formulation, and the entropy inequality
+restricts their constitutive force--flux laws
+\cite{doi2011onsager,wang2021onsager}.
+
+The dispersion flux \(\mbf j_{\xi,{\rm disp}}^\alpha\) is the covariance between
+unresolved density and phase-velocity fluctuations, while the diffusion flux
+\(\mbf j_{\xi,{\rm diff}}^\alpha\) is the averaged mass carried by component
+motion relative to the phase.  The averaged component balance is consequently
+%
+\begin{align}
+	\frac{\partial\rho_\xi^\alpha}{\partial t}
+	+
+	\nabla_{\mbf x}\cdot
+	\left(
+	\rho_\xi^\alpha\mbf v_\xi
+	+
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right)
+	 & =
+	\sum_m\nu_{\xi (m)}^\alpha r_{(m)}.
+	\label{eq:averaged_component_spatial_mass}
+\end{align}
+%
+Equation \eqref{eq:averaged_component_spatial_mass} governs composition when
+relative transport is present.  The corresponding phase-reference material
+increment \(\mc C_\xi^\alpha\) is the component mass added to a phase-attached
+region per unit phase reference volume by both conversion mechanisms and relative transport.
+Multiplication of \eqref{eq:averaged_component_spatial_mass} by \(J_\xi\),
+together with
+\(\dot{J}_\xi=J_\xi\nabla_{\mbf x}\cdot\mbf v_\xi\), gives
+%
+\begin{align}
+	\frac{D_\xi}{Dt}\left(J_\xi\rho_\xi^\alpha\right)
+	={} &
+	J_\xi\sum_m\nu_{\xi (m)}^\alpha r_{(m)}
+	-
+	J_\xi\nabla_{\mbf x}\cdot
+	\left(
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right).
+	\label{eq:averaged_component_reference_rate}
+\end{align}
+%
+Comparing \eqref{eq:averaged_component_reference_rate} with the material-balance
+structure in \eqref{eq:material_mass_2} and its rate form
+\eqref{eq:component_material_mass} identifies \(\dot{\mc C}_\xi^\alpha\) as
+%
+\begin{equation}
+	\dot{\mc C}_\xi^\alpha
+	=
+	J_\xi\sum_m\nu_{\xi (m)}^\alpha r_{(m)}
+	-
+	J_\xi\nabla_{\mbf x}\cdot
+	\left(
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right).
+	\label{eq:reference_conversion_accumulation_rate}
+\end{equation}
+%
+With zero initial accumulations, integration on the phase reference trajectory
+gives the same material-balance structure as \eqref{eq:material_mass_2},
+%
+\begin{equation}
+	\rho_{\xi0}^\alpha
+	+
+	\mc C_\xi^\alpha
+	=
+	J_\xi\rho_\xi^\alpha
+	=
+	J_\xi\phi_\xi\bar\rho_\xi\eta_\xi^\alpha.
+	\label{eq:augmented_component_material_measure}
+\end{equation}
+%
+Here \(\mc C_\xi^\alpha\) has the expanded meaning supplied by
+\eqref{eq:reference_conversion_accumulation_rate}: its rate contains both
+internal conversion and unresolved relative transport.  The reaction
+production and relative-flux parts therefore remain visible in the rate of the
+material increment.
+
+Substituting the component density and velocity decompositions
+\eqref{eq:averaged_component_density_split}--\eqref{eq:averaged_component_velocity_split}
+into the total component mass flux, using
+\(\rho_\xi=\sum_\alpha\rho_\xi^\alpha\) and
+\(\left\langle\widetilde{\mbf v}_\xi\right\rangle=\mbf 0\), gives
+%
+\begin{align}
+	\sum_\alpha
+	\left\langle
+	\widehat\rho_\xi^\alpha
+	\widehat{\mbf v}_\xi^\alpha
+	\right\rangle
+	 & =
+	\rho_\xi\mbf v_\xi
+	+
+	\sum_\alpha
+	\left(
+	\left\langle
+	\widehat\rho_\xi^\alpha\widetilde{\mbf v}_\xi
+	\right\rangle
+	+
+	\left\langle
+	\widehat\rho_\xi^\alpha\widehat{\mbf u}_\xi^\alpha
+	\right\rangle
+	\right)
+	\notag
+	\\
+	 & =
+	\rho_\xi\mbf v_\xi
+	+
+	\sum_\alpha
+	\left(
+	\left\langle
+	\widetilde\rho_\xi^\alpha\widetilde{\mbf v}_\xi
+	\right\rangle
+	+
+	\left\langle
+	\widehat\rho_\xi^\alpha\widehat{\mbf u}_\xi^\alpha
+	\right\rangle
+	\right)
+	\notag
+	\\
+	 & =
+	\rho_\xi\mbf v_\xi
+	+
+	\sum_\alpha
+	\left(
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right).
+	\label{eq:averaged_phase_mass_flux_decomposition}
+\end{align}
+%
+The last equality uses the flux definitions
+\eqref{eq:averaged_mechanical_dispersion_flux_definition} and
+\eqref{eq:averaged_molecular_diffusion_flux_definition}.  By the mass-averaged
+definition \eqref{eq:averaged_phase_mass_velocity_definition}, the left-hand
+side of \eqref{eq:averaged_phase_mass_flux_decomposition} is
+\(\rho_\xi\mbf v_\xi\).  Subtracting this resolved phase flux from both sides
+therefore leaves
+%
+\begin{equation}
+	\sum_\alpha
+	\left(
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right)
+	=\mbf 0.
+	\label{eq:averaged_relative_flux_sum}
+\end{equation}
+%
+Relative transport therefore redistributes component mass within a phase while
+preserving the phase total mass.  The combined relative flux has only \(N-1\)
+independent component directions in each phase.  Equation
+\eqref{eq:averaged_relative_flux_sum} fixes only the sum of dispersion and
+diffusion.  The block-diagonal constitutive split used below adopts the stronger
+specialization that the two flux families are separately zero-sum,
+%
+\begin{equation}
+	\sum_\alpha\mbf j_{\xi,k}^\alpha
+	=
+	\mbf 0,
+	\qquad
+	k\in\{{\rm disp},{\rm diff}\}.
+	\label{eq:separate_relative_flux_sum_closure}
+\end{equation}
+%
+The material increment \(\mc C_\xi^\alpha\) is tied to the transfer potential
+introduced in \sref{virtual_power_derivation}, while its relative-flux
+contribution is closed later by Onsager relations involving differences of the
+specific generalized transfer-work potentials and a separate electric-field
+contribution.  The Coleman--Noll procedure then identifies these differences with
+chemical-potential differences; at uniform temperature, the chemical-potential
+and electric contributions combine into the usual electrochemical-potential
+gradient.  Summing
+\eqref{eq:averaged_component_spatial_mass} over phases gives the global
+component balance,
+%
+\begin{align}
+	\frac{\partial}{\partial t}
+	\left(
+	\sum_\xi\phi_\xi\bar\rho_\xi\eta_\xi^\alpha
+	\right)
+	+
+	\nabla_{\mbf x}\cdot
+	\sum_\xi
+	\left(
+	\phi_\xi\bar\rho_\xi\eta_\xi^\alpha\mbf v_\xi
+	+
+	\mbf j_{\xi,{\rm disp}}^\alpha
+	+
+	\mbf j_{\xi,{\rm diff}}^\alpha
+	\right)
+	 & =
+	\sum_\xi\sum_m
+	\nu_{\xi (m)}^\alpha r_{(m)}.
+	\label{eq:averaged_global_component_balance}
+\end{align}
+%
+Summing \eqref{eq:averaged_global_component_balance} over components recovers
+the overall mass balance \eqref{eq:spatial_mass_4}: the relative fluxes cancel
+phase by phase by \eqref{eq:averaged_relative_flux_sum}, and each internal
+mechanism conserves total mass.  Applying the same summation to
+\eqref{eq:reference_conversion_accumulation_rate} gives, again by stoichiometric
+mass balance and
+\eqref{eq:averaged_relative_flux_sum},
+%
+\begin{equation}
+	\sum_\xi\sum_\alpha
+	\frac{\dot{\mc C}_\xi^\alpha}{J_\xi}
+	=
+	0.
+	\label{eq:material_increment_insertion_constraint}
+\end{equation}
+%
+This zero-sum identity becomes the material-insertion constraint in the
+Hamilton--d'Alembert principle.
+%
+The averaged balances determine where the two fluxes enter component
+transport; the entropy-admissible dissipation potential in
+\sref{virtual_power_derivation} supplies their constitutive laws.

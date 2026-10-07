@@ -1,0 +1,30 @@
+# Pinned linux/amd64 development toolchain; application builds reuse this layer.
+FROM mcr.microsoft.com/devcontainers/base@sha256:d94c97dd9cacf183d0a6fd12a8e87b526e9e928307674ae9c94139139c0c6eae
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gfortran git curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+ARG MINIFORGE_VERSION=25.11.0-1
+ARG MINIFORGE_SHA256=be1bad9d4e67a8753eb76fb4940e9a08036786675c7adf060627e55791bf110d
+RUN curl -fsSL "https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" -o /tmp/miniforge.sh \
+    && echo "${MINIFORGE_SHA256}  /tmp/miniforge.sh" | sha256sum -c - \
+    && bash /tmp/miniforge.sh -b -p /opt/conda && rm /tmp/miniforge.sh
+COPY environment/moose-linux-64.lock /opt/olivine-environment.lock
+RUN /opt/conda/bin/conda create -y -n moose --file /opt/olivine-environment.lock \
+    && /opt/conda/bin/conda clean -a -y
+ARG MOOSE_REVISION=abafb58b67a6037c6723ffeb19647c84484466da
+RUN git init /opt/moose && git -C /opt/moose remote add origin https://github.com/idaholab/moose.git \
+    && git -C /opt/moose fetch --depth=1 origin "${MOOSE_REVISION}" \
+    && git -C /opt/moose checkout --detach FETCH_HEAD
+COPY .devcontainer/moose-env.sh /etc/profile.d/moose-env.sh
+# Activate Conda via a wrapper: activation exports LIBMESH_DIR and MPI/toolchain settings.
+COPY .devcontainer/with-moose.sh /usr/local/bin/with-moose
+RUN chmod +x /usr/local/bin/with-moose \
+    && with-moose make -C /opt/moose/test -j2 \
+    && with-moose python -c 'import numpy, scipy, pandas, matplotlib; print(numpy.__version__, scipy.__version__)'
+ENV MOOSE_DIR=/opt/moose
+ENV MOOSE_CONDA_PREFIX=/opt/conda/envs/moose
+RUN chown -R vscode:vscode /opt/moose
+USER vscode
+LABEL org.opencontainers.image.source="https://github.com/johntfoster/olivine-carbonation-theory"
+LABEL org.opencontainers.image.description="Pinned MOOSE framework and scientific Python base"

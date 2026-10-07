@@ -1,18 +1,18 @@
 {
-  "name": "Olivine carbonation \u2014 theory inspection",
-  "image": "mcr.microsoft.com/devcontainers/python@sha256:ca7b20585cf65295cd0cef8ae8f02a008c1c85e83909d1e2af8d19706d3f34ee",
+  "name": "Olivine carbonation — compiled MOOSE and scientific Python",
+  "image": "ghcr.io/johntfoster/olivine-carbonation-theory:main",
   "remoteUser": "vscode",
-  "postCreateCommand": "./tools/setup-agent-workflows",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "waitFor": "postCreateCommand",
+  "containerEnv": {"MOOSE_DIR": "/opt/moose"},
   "customizations": {
     "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "James-Yu.latex-workshop"
-      ],
+      "extensions": ["ms-python.python", "ms-vscode.cpptools", "James-Yu.latex-workshop"],
       "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/envs/moose/bin/python",
         "latex-workshop.latex.autoBuild.run": "never"
       }
     }
-  }
+  },
+  "hostRequirements": {"cpus": 4, "memory": "8gb", "storage": "32gb"}
 }

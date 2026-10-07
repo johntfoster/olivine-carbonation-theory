@@ -4,7 +4,7 @@
   "title": "Compressible reactive poromechanics of olivine carbonation",
   "repository": "https://github.com/johntfoster/olivine-carbonation-theory",
   "default_branch": "main",
-  "status": "incubating",
+  "status": "active",
   "authority": {
     "instructions": "AGENTS.md",
     "profile": "agent-profile.json",
@@ -37,7 +37,7 @@
       "submission/*",
       "submissions/*"
     ],
-    "objective": "Author-authorized scaffold and theory formulation only; no implementation."
+    "objective": "Author-authorized MOOSE kernels, numerical verification, companion site and pinned prebuilt Codespaces images; preserve compositional special-case theory."
   },
   "publication": {
     "site": {
@@ -48,7 +48,7 @@
       "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
       "verification": "not-run",
       "configuration": ".devcontainer/devcontainer.json",
-      "image": "mcr.microsoft.com/devcontainers/python@sha256:ca7b20585cf65295cd0cef8ae8f02a008c1c85e83909d1e2af8d19706d3f34ee"
+      "image": "ghcr.io/johntfoster/olivine-carbonation-theory:main"
     },
     "citation": "CITATION.cff",
     "license": {
@@ -62,13 +62,13 @@
     }
   },
   "verification": {
-    "infrastructure": "not-run",
-    "implementation": "Not implemented; outside authorized scope.",
-    "analytical": "Theory development in progress; independent checks pending.",
-    "convergence": "Not applicable yet: no numerical implementation.",
-    "finite_deformation": "Formulation in progress; no numerical validation.",
+    "infrastructure": "Local project checks, static site links and four startup hash-guard tests passed. Local Docker base build and hosted deployment in progress.",
+    "implementation": "42 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
+    "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
+    "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 convergence verified; observed orders approximately 2.",
+    "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
-  "next_milestone": "Complete and independently check the theory formulation; no MOOSE implementation is authorized.",
-  "scientific_scope": "Theory-only finite-deformation reactive poromechanics: three compressible elastic solids (olivine, magnesite, silica) and one CO2 phase; no plasticity or MOOSE implementation."
+  "next_milestone": "Publish and verify the companion site and tested base/application development images; verify source-matched startup.",
+  "scientific_scope": "Theory and MOOSE implementation of finite-deformation reactive poromechanics: three compressible elastic solids (forsterite, magnesite, silica) and one aqueous CO2-bearing multicomponent fluid; no separate gas phase or plasticity."
 }

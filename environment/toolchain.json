@@ -1,0 +1,13 @@
+{
+  "architecture": "linux/amd64",
+  "moose_revision": "abafb58b67a6037c6723ffeb19647c84484466da",
+  "conda_lock": "environment/moose-linux-64.lock",
+  "moose_dev": "2026.02.20",
+  "moose_libmesh": "2026.02.18_f8a1758",
+  "python": "3.14.0",
+  "numpy": "2.4.2",
+  "scipy": "1.17.1",
+  "pandas": "3.0.1",
+  "matplotlib_base": "3.10.8",
+  "base_os_image": "mcr.microsoft.com/devcontainers/base@sha256:d94c97dd9cacf183d0a6fd12a8e87b526e9e928307674ae9c94139139c0c6eae"
+}

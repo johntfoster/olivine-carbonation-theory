@@ -1,0 +1,514 @@
+\section{Solid-reference form for porous media modeling}
+\label{sec:reservoir_simulation}
+
+This section rewrites the transport and mechanics equations in a form suitable
+for solution on the trajectory of the solid skeleton.  The solid motion
+$\bs\chi$ supplies the map from the solid reference coordinate
+$\mbf X$ to the current coordinate $\mbf x$, with deformation gradient
+$\mbf F$ and Jacobian $J$.
+
+\subsection{Relative flux vectors}
+\label{sec:relative_flux_vectors}
+
+The phase momentum equation with dynamic pressure lag
+\eqref{eq:el_mom_f_dynamic_capillary} determines
+Darcy-scale relative fluxes once interphase drag is written in terms of a
+velocity relative to the solid skeleton.  For each fluid phase \(f\), define the
+current relative mass flux by
+%
+\begin{equation}
+	\mbf w_f
+	=\phi_f\bar\rho_f\left(\mbf v_f-\mbf v_{\mc S}\right)
+	=\rho_f\left(\mbf v_f-\mbf v_{\mc S}\right),
+	\qquad
+	f\in\mc F .
+	\label{eq:relative_mass_flux_definition}
+\end{equation}
+%
+Thus
+%
+\begin{equation}
+	\mbf v_f
+	=\mbf v_{\mc S}+\frac{\mbf w_f}{\rho_f},
+	\qquad
+	f\in\mc F .
+	\label{eq:relative_flux_velocity_reconstruction}
+\end{equation}
+%
+A sufficient fluid--skeleton interaction closure consistent with
+\eqref{eq:MC_interphase_exchange_law} is
+%
+\begin{equation}
+	\mbf b_f
+	=
+	-\frac{\mu_f^{\mathrm{visc}}\phi_f}{\bar\rho_f}\,
+	\bs\kappa_f^{-1}\mbf w_f,
+	\qquad
+	f\in\mc F .
+	\label{eq:fluid_phase_interaction_law}
+\end{equation}
+%
+Here $\mu_f^{\mathrm{visc}}$ is the dynamic viscosity and $\bs\kappa_f$ is the
+permeability tensor for phase $f$.  Phase relative permeability may be absorbed
+into $\bs\kappa_f$ and may use the same capillary-history state \(\mbf h\) when
+relative-permeability hysteresis is retained.
+Equation~\eqref{eq:fluid_phase_interaction_law} contains
+only dissipative drag; all reversible driving forces remain in the phase
+momentum balance.  From \eqref{eq:relative_mass_flux_definition}, the two drag
+tensors are related by
+\(\mbf k_{f\mc S}^{-1}
+=\phi_f^2\mu_f^{\mathrm{visc}}\bs\kappa_f^{-1}\).
+Thus positive definiteness of \(\bs\kappa_f\), together with the
+interaction-energy allocation
+\eqref{eq:MC_drag_heating_equal_partition}, makes
+\eqref{eq:MC_mechanical_interaction_admissibility} nonnegative.
+
+Substituting \eqref{eq:relative_flux_velocity_reconstruction} and
+\eqref{eq:fluid_phase_interaction_law} into the fluid momentum balance
+\eqref{eq:el_mom_f_dynamic_capillary} gives, for each fluid phase,
+%
+\begin{align}
+	\frac{1}{\rho_f}
+	\left(
+		\phi_f^2\mu_f^{\mathrm{visc}}\bs\kappa_f^{-1}
+		+\sum_\alpha\dot{c}_f^\alpha\mbf I
+	\right)\mbf w_f
+		= & \;
+		\rho_f\left(\mbf g-\mbf a_f\right)
+		-\phi_f\nabla_{\mbf x}
+	\left(
+		\bar p_f-\omega_f^+
+	\right)
+		\notag \\
+	  &
+		+\nabla_{\mbf x}\cdot
+	\left(
+		\phi_f\mbf E\otimes\mbf d_f
+	\right)
+		+\sum_\alpha\dot{c}_f^\alpha
+	\left(\nabla_{\mbf x}\tau-\mbf v_{\mc S}\right),
+	\qquad
+	f\in\mc F,
+	\label{eq:relative_flux_linear_system}
+\end{align}
+%
+By the component mass balance and the separate zero-sum closure for the
+component-relative fluxes, the scalar
+\(\sum_\alpha\dot{c}_f^\alpha\) is the net phase-mass source due to
+conversion.  It enters the phase momentum balance as a source coefficient
+weighting the conversion-driven relative-flow term there.  The
+component-relative transport itself is closed through
+\eqref{eq:MC_relative_transport_closures}.
+
+To solve the preceding linear system for \(\mbf w_f\), invert the coefficient
+multiplying that flux.  Define the resulting conversion-corrected mobility
+tensor by
+%
+\begin{equation}
+	\widetilde{\bs\lambda}_f
+	=
+	\left(
+		\phi_f^2\mu_f^{\mathrm{visc}}\bs\kappa_f^{-1}
+		+\sum_\alpha\dot{c}_f^\alpha\mbf I
+	\right)^{-1},
+	\qquad
+	f\in\mc F .
+	\label{eq:modified_relative_flux_permeability}
+\end{equation}
+%
+The resistance inside the inverse has units
+\({\rm kg\,m^{-3}\,s^{-1}}\), and
+\(\widetilde{\bs\lambda}_f\) therefore has units
+\({\rm m^3\,s\,kg^{-1}}={\rm m^2\,Pa^{-1}\,s^{-1}}\).  The underlying
+drag law is dissipative when the phase permeability
+\(\bs\kappa_f\) is symmetric positive definite, \(\mu_f^{\mathrm{visc}}>0\), and
+\(\phi_f>0\).  These conditions make the drag contribution nonnegative in
+the entropy inequality.  The added scalar term comes from conversion insertion
+in the momentum balance and supplies no independent quadratic dissipation.
+Because \(\bs\kappa_f\) is symmetric with eigenvalues
+\(\kappa_{f,i}\), the combined resistance
+\(\phi_f^2\mu_f^{\mathrm{visc}}\bs\kappa_f^{-1}
++\sum_\alpha\dot{c}_f^\alpha\mbf I\)
+has eigenvalues
+\(\phi_f^2\mu_f^{\mathrm{visc}}/\kappa_{f,i}
++\sum_\alpha\dot{c}_f^\alpha\),
+for each \(f\in\mc F\).  Algebraic elimination of \(\mbf w_f\) requires
+exactly that none of these shifted eigenvalues vanish,
+%
+\begin{equation}
+	\sum_\alpha\dot{c}_f^\alpha
+	\ne
+	-\frac{\phi_f^2\mu_f^{\mathrm{visc}}}{\kappa_{f,i}},
+	\qquad
+	i=1,\ldots,d,\quad f\in\mc F .
+	\label{eq:modified_relative_flux_nonsingularity_condition}
+\end{equation}
+%
+This nonsingularity condition defines \(\widetilde{\bs\lambda}_f\).  A stronger
+positive-resistance regime requires every shifted eigenvalue to be positive.
+If \(\kappa_{f,\max}\) and \(\kappa_{f,\min}\) are the largest and smallest
+eigenvalues of \(\bs\kappa_f\), respectively, the binding direction is that of
+largest permeability, and the positive-resistance condition is
+%
+\begin{equation}
+	\sum_\alpha\dot{c}_f^\alpha
+	>
+	-\frac{\phi_f^2\mu_f^{\mathrm{visc}}}{\kappa_{f,\max}},
+	\qquad
+	f\in\mc F .
+	\label{eq:modified_relative_flux_positive_resistance_condition}
+\end{equation}
+%
+Within this positive-definite regime, the spectral condition number is
+%
+\begin{equation}
+	\operatorname{cond}_2
+	\left(
+		\phi_f^2\mu_f^{\mathrm{visc}}\bs\kappa_f^{-1}
+		+\sum_\alpha\dot{c}_f^\alpha\mbf I
+	\right)
+	=
+	\frac{
+		\phi_f^2\mu_f^{\mathrm{visc}}/\kappa_{f,\min}
+		+\sum_\alpha\dot{c}_f^\alpha
+	}{
+		\phi_f^2\mu_f^{\mathrm{visc}}/\kappa_{f,\max}
+		+\sum_\alpha\dot{c}_f^\alpha
+	},
+	\qquad
+	f\in\mc F .
+	\label{eq:modified_relative_flux_condition_number}
+\end{equation}
+%
+Thus quantitative conditioning within this regime requires the smallest
+shifted eigenvalue in the denominator to remain bounded away from zero.
+For an aqueous reaction that removes fluid mass on a time scale \(t_{\rm rxn}\),
+\(\sum_\alpha\dot{c}_f^\alpha\simeq-\rho_f/t_{\rm rxn}\).  The singular threshold
+at the first loss of positive definiteness is
+%
+\begin{equation}
+	t_{\rm rxn}
+	=
+	\frac{\rho_f\kappa_{f,\max}}{\phi_f^2\mu_f^{\mathrm{visc}}},
+	\qquad
+	f\in\mc F .
+	\label{eq:modified_relative_flux_reaction_timescale_threshold}
+\end{equation}
+%
+For longer time scales the combined resistance remains positive definite.  At
+equality it is singular in the largest-permeability direction.  At shorter
+time scales it leaves the positive-resistance regime, while algebraic inversion
+remains possible except at the individual eigenvalue-crossing times
+\(t_{\rm rxn}=\rho_f\kappa_{f,i}/
+(\phi_f^2\mu_f^{\mathrm{visc}})\).
+With representative reservoir values
+\(\rho_f=10^3\,{\rm kg\,m^{-3}}\), \(\mu_f^{\mathrm{visc}}=10^{-3}\,{\rm Pa\,s}\),
+\(\phi_f=0.3\), and \(\kappa_{f,\max}=10^{-12}\,{\rm m^2}\), this time is about
+\(10^{-5}\,{\rm s}\), corresponding to a removal rate of order
+\(10^8\,{\rm kg\,m^{-3}\,s^{-1}}\).  For conversion rates whose characteristic
+time is much longer than this value, the source correction is a small
+perturbation of the Darcy drag.  The estimate supplies a lower reaction-time
+bound for the positive-resistance form of the algebraic relative-flux closure.
+
+The resulting relative mass flux is
+%
+\begin{empheq}[box=\fbox]{align}
+	\mbf w_f
+	= & \;
+	\rho_f\widetilde{\bs\lambda}_f
+	\left[
+		\rho_f\left(\mbf g-\mbf a_f\right)
+		-\phi_f\nabla_{\mbf x}
+		\left(
+			\bar p_f-\omega_f^+
+		\right)
+		\right.
+		\notag \\
+	& \phantom{\;\rho_f\widetilde{\bs\lambda}_f}
+		\left.
+		+\nabla_{\mbf x}\cdot
+		\left(
+			\phi_f\mbf E\otimes\mbf d_f
+		\right)
+		+\sum_\alpha\dot{c}_f^\alpha
+		\left(
+			\nabla_{\mbf x}\tau-\mbf v_{\mc S}
+		\right)
+		\right],
+	\qquad
+	f\in\mc F .
+	\label{eq:generalized_fluid_darcy_mass_flux}
+\end{empheq}
+%
+This expression is the multicomponent fluid-phase analogue of a generalized
+Darcy flux.  Its driving force contains body force and inertia, the actual
+phase-pressure gradient assembled from stored capillarity, electrical
+corrections, and any dynamic lag, together with Maxwell stress and conversion
+insertion.
+The observer-conversion term, the relative-velocity contribution that arises
+when the phase-following thermodynamic rate is expressed in the skeleton
+frame, belongs to that single phase-following rate rather than entering the
+flux as an independent driving force.
+Equation~\eqref{eq:MC_collected_observer_correction_reassembly} recombines it
+with the skeleton-rate free-energy contribution before the collected
+inequality is separated into reversible and residual parts.
+Chemical-potential gradients drive component-relative transport
+through \eqref{eq:MC_relative_transport_closures}, a distinct dissipative
+mechanism alongside the bulk phase force and the conversion variation of
+\(\tau\).  Thermodynamic dissipation resides in the drag and
+component-transport closures.  The nonsingularity condition permits algebraic
+flux elimination, and the positive-resistance condition selects the stronger
+regime used for the conditioning estimate.  The interaction-energy allocation
+of \eqref{eq:MC_drag_heating_equal_partition} is retained.
+
+The neutral, conversion-free, negligible-inertia specialization
+\(\omega_f^+=0\), \(\mbf E\otimes\mbf d_f=\mbf0\),
+\(\dot{c}_f^\alpha=0\), and \(\mbf a_f=\mbf0\) reduces
+\eqref{eq:generalized_fluid_darcy_mass_flux} to
+%
+\begin{equation}
+	\phi_f\left(\mbf v_f-\mbf v_{\mc S}\right)
+	=
+	-\frac{\bs\kappa_f}{\mu_f^{\mathrm{visc}}}
+	\left(
+		\nabla_{\mbf x}\bar p_f
+		-\bar\rho_f\mbf g
+	\right),
+	\qquad
+	f\in\mc F .
+	\label{eq:standard_darcy_mass_flux_limit}
+\end{equation}
+%
+This is Darcy's law for phase \(f\) relative to the deforming solid skeleton.
+Neither isothermality nor a spatially uniform Helmholtz energy is required.
+Nonisothermal cross effects may modify this law only when they are
+introduced explicitly through a coupled constitutive closure.
+
+\subsection{Solid-reference relative fluxes}
+\label{sec:solid_reference_relative_fluxes}
+
+The current relative flux in \eqref{eq:generalized_fluid_darcy_mass_flux} is
+converted to a flux through surfaces in the solid reference configuration by the
+Piola transform.  Define the reference relative mass flux
+%
+\begin{equation}
+	\mbf W_f
+	=
+	J\mbf F^{-1}\mbf w_f,
+	\qquad
+	f\in\mc F .
+	\label{eq:reference_relative_mass_flux}
+\end{equation}
+%
+Define the pulled-back conversion-corrected mobility tensor
+%
+\begin{equation}
+	\widetilde{\bs\Lambda}_f
+	=
+	J\mbf F^{-1}
+	\widetilde{\bs\lambda}_f
+	\mbf F^{-T},
+	\qquad
+	f\in\mc F .
+	\label{eq:pulled_back_modified_permeability}
+\end{equation}
+%
+The flux assembled in the reference component balances is then
+%
+\begin{align}
+	\mbf W_f
+	= & \; \rho_f\widetilde{\bs\Lambda}_f
+	\left[
+		\rho_f\mbf F^T\left(\mbf g-\mbf a_f\right)
+		-\phi_f\nabla_{\mbf X}
+		\left(
+			\bar p_f-\omega_f^+
+		\right)
+		\right.
+		\notag \\
+	& \phantom{\;\rho_f\widetilde{\bs\Lambda}_f}
+		\left.
+		+\mbf F^T
+		\left[
+			\nabla_{\mbf x}\cdot
+			\left(
+				\phi_f\mbf E\otimes\mbf d_f
+			\right)
+		\right]
+		+\sum_\alpha\dot{c}_f^\alpha
+	\left(\nabla_{\mbf X}\tau-\mbf F^T\mbf v_{\mc S}\right)
+	\right],
+	\qquad
+	f\in\mc F .
+	\label{eq:solid_reference_relative_flux}
+\end{align}
+%
+Here gradients of scalar fields obey
+$\nabla_{\mbf x}(\cdot)=\mbf F^{-T}\nabla_{\mbf X}(\cdot)$, while the
+divergence of a spatial flux obeys
+%
+\begin{equation}
+	J\nabla_{\mbf x}\cdot\mbf w_f
+	=
+	\nabla_{\mbf X}\cdot
+	\mbf W_f,
+	\qquad
+	f\in\mc F .
+	\label{eq:solid_reference_flux_divergence}
+\end{equation}
+%
+Equations~\eqref{eq:reference_relative_mass_flux}--\eqref{eq:solid_reference_relative_flux}
+and \eqref{eq:solid_reference_flux_divergence} give the reference flux used in
+the multicomponent balances.  The expression retains phase labels, component
+conversion rates, and gradients of \(\tau\).
+
+\subsection{Component balances on the solid trajectory}
+\label{sec:solid_reference_component_balances}
+
+For a fluid phase, substituting
+\eqref{eq:relative_flux_velocity_reconstruction} into
+\eqref{eq:averaged_component_spatial_mass}, using
+\eqref{eq:component_partial_density_representation}, and writing the storage
+term on the solid trajectory gives
+%
+\begin{equation}
+	\left.
+	\frac{\partial}{\partial t}
+	\left(J\phi_f\bar\rho_f\eta_f^\alpha\right)
+	\right\vert_{\mbf X}
+	+\nabla_{\mbf X}\cdot
+	\left[
+	\eta_f^\alpha\mbf W_f
+	+
+	J\mbf F^{-1}
+	\left(
+	\mbf j_{f,{\rm disp}}^\alpha
+	+
+	\mbf j_{f,{\rm diff}}^\alpha
+	\right)
+	\right]
+	=
+	J\sum_m\nu_{f (m)}^\alpha r_{(m)},
+	\qquad
+	f\in\mc F .
+	\label{eq:solid_reference_fluid_component_balance}
+\end{equation}
+%
+For a solid phase \(s\), the phase velocity is the skeleton velocity, so there
+is no bulk phase flux relative to the solid mesh.  Component diffusion and
+dispersion remain admissible, giving
+%
+\begin{equation}
+	\begin{aligned}
+		\left.
+		\frac{\partial}{\partial t}
+		\left(J\phi_s\bar\rho_s\eta_s^\alpha\right)
+		\right\vert_{\mbf X}
+		& {}+
+		\nabla_{\mbf X}\cdot
+		\left[
+			J\mbf F^{-1}
+			\left(
+				\mbf j_{s,{\rm disp}}^\alpha
+				+
+				\mbf j_{s,{\rm diff}}^\alpha
+			\right)
+		\right]
+		\\
+		& {}=
+			J\sum_m\nu_{s (m)}^\alpha r_{(m)},
+		\qquad
+		s\in\mc S .
+	\end{aligned}
+	\label{eq:solid_reference_solid_component_balance}
+\end{equation}
+%
+Thus the solid-reference storage variables are the Lagrangian component masses
+\(J\phi_\xi\bar\rho_\xi\eta_\xi^\alpha\).  Transport through the solid mesh
+contains bulk fluid motion relative to the skeleton and component diffusion or
+dispersion relative to the fluid or solid phase.
+
+\subsection{Overall momentum on the solid trajectory}
+\label{sec:solid_reference_overall_momentum}
+
+Define the general solid-reference effective first Piola--Kirchhoff stress by
+%
+\begin{equation}
+	\mbf P^{\prime\prime}
+	\equiv
+	J\bs\sigma^{\prime\prime}\mbf F^{-T}.
+	\label{eq:solid_reference_effective_piola_stress}
+\end{equation}
+%
+The overall momentum balance \eqref{eq:MC_overall_momentum_nonlinear_biot} can be
+written on the solid trajectory by applying the Piola transform to the stress
+divergence and multiplying the remaining spatial source terms by \(J\).  Using
+\eqref{eq:solid_reference_effective_piola_stress}, this transformation gives
+%
+\begin{align}
+	J\sum_\xi\rho_\xi\mbf a_\xi
+	= & \;
+	\nabla_{\mbf X}\cdot
+		\left(
+		\mbf{P}^{\prime\prime}
+		-B\bar p_E J \mbf F^{-T}
+		+J\left(\mbf E\otimes\mbf d\right)\mbf F^{-T}
+		\right)
+	+J\rho\mbf g
+	\notag \\
+	&\;
+	-J\phi
+	\left.
+	\p{\gamma}{\theta_{\mc F}}
+	\right\vert_{\{S_f\}_{f\in\mc F},\mbf h}
+	\mbf F^{-T}\nabla_{\mbf X}\theta_{\mc F}
+	\notag \\
+	&\;
+	-J\phi\mbf F^{-T}
+	\left(\nabla_{\mbf X}\mbf h\right)^T
+	\left.
+	\p{\gamma}{\mbf h}
+	\right\vert_{\{S_f\}_{f\in\mc F},\theta_{\mc F}}
+	\notag \\
+	&\;
+	+J\phi\mbf F^{-T}
+	\sum_{f\in\mc F}
+	\left(
+	\bar p_f-\bar p_E-\gamma_f-\omega_f^+
+	\right)
+	\nabla_{\mbf X}S_f
+	\notag \\
+	&\;
+	+J\sum_\xi\sum_\alpha\dot{c}_\xi^\alpha
+	\left(
+		\mbf F^{-T}\nabla_{\mbf X}\tau-\mbf v_\xi
+	\right).
+	\label{eq:solid_reference_overall_momentum}
+\end{align}
+%
+Here
+\(\nabla_{\mbf x}\tau=\mbf F^{-T}\nabla_{\mbf X}\tau\), so every gradient in
+the conversion-insertion force is evaluated from the solid reference
+configuration.  The same pull-back gives
+\(\nabla_{\mbf x}\theta_{\mc F}
+=\mbf F^{-T}\nabla_{\mbf X}\theta_{\mc F}\) in the thermocapillary force and
+\(\nabla_{\mbf x}\mbf h
+=\nabla_{\mbf X}\mbf h\,\mbf F^{-1}\) in the capillary-history force.
+The same scalar-gradient pull-back carries the dynamic pressure-lag term through
+\(\nabla_{\mbf x}S_f=\mbf F^{-T}\nabla_{\mbf X}S_f\).
+
+If a quasi-static solid-skeleton solve is desired, the inertial term on the left
+is dropped.  If the fluid velocities are eliminated with
+\eqref{eq:relative_flux_velocity_reconstruction}, then the same equation is
+solved with $\mbf v_f=\mbf v_{\mc S}+\mbf w_f/\rho_f$ for fluid phases and
+$\mbf v_{\mc S}$ for the solid skeleton.  This leaves the solid displacement, the
+Lagrangian partial masses, and the fluid relative fluxes as the natural fields
+for a reference-configuration implementation.
+
+This quasi-static mechanics--fluid block is only part of the coupled model.
+A complete solve must additionally retain the solid component balances
+\eqref{eq:solid_reference_solid_component_balance}, the two subsystem energy
+balances \eqref{eq:MC_energy_balance}, Gauss' law \eqref{eq:gauss_law},
+mechanism kinetics, capillary-history and solid internal-variable evolution,
+and the remaining constitutive restrictions appropriate to the selected
+specialization.

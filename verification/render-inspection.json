@@ -1,0 +1,45 @@
+{
+  "category": "document-render-QA-not-scientific-validation",
+  "pdf": "build/main.pdf",
+  "pdf_sha256": "d726c299553eef0e559629ad437f4f8cc19bd0e52910599f6b5d3e15434c0c2e",
+  "render_command": "pdftoppm -f 6 -l 6 -scale-to 1400 -png build/main.pdf build/SF001-page",
+  "inspected_pages": [
+    6
+  ],
+  "page_count": 13,
+  "comparison": {
+    "prior_pdf_sha256": "58f07d5f41ad558ad632d7d184bdd2f2c98d77849610d88a6db94ee98b0b1fcf",
+    "text_changed_pages": [
+      6
+    ],
+    "unchanged_text_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "method": "pdftotext -layout comparison page by page; only changed page newly visually inspected"
+  },
+  "observations": [
+    "Faraday symbol F_{\\rm Far} is legible in definition and species-table header.",
+    "Species table, surrounding text and equations fit; no clipping, overlap or displaced page footer observed.",
+    "Full prior 13-page inspection is historical in the preserved pre-edit baseline; it is not represented as a new full-document visual inspection."
+  ],
+  "build_log": "build/main.log",
+  "build_log_sha256": "21e54878f839bdef869da266acffdba02b4cb7fbbf6944b859ca0660ec9b0464",
+  "latex_diagnostics": {
+    "overfull_boxes": 0,
+    "underfull_boxes": 0,
+    "undefined_references": 0,
+    "multiply_defined_labels": 0
+  },
+  "scientific_review": "not claimed; required notation fix implemented, independent acceptance remains pending"
+}

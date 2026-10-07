@@ -1,0 +1,2 @@
+# Python >=3.10; the current analytical and review helpers use only stdlib.
+# No third-party Python packages are required for the declared theory-only checks.

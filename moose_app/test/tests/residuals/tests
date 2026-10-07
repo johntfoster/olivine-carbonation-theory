@@ -1,0 +1,8 @@
+[Tests]
+ [quantitative_implementation]
+  type = RunCommand
+  command = 'python3 ../../../../scripts/check_implementation.py'
+  max_time = 900
+  requirement = 'Conservative reference mass, coupled AD derivatives, source-normalized transfer, finite-deformation Gauss/traction/insertion assembly and scalar/cross-component EG convergence satisfy independent quantitative tolerances.'
+ []
+[]

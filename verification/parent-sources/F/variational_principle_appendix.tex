@@ -1,0 +1,264 @@
+\section{Variational Derivation}
+\label{app:variational}
+\label{sec:variational}
+
+We derive the governing equations from Hamilton's extended principle, following Bedford \& Drumheller~\cite{drumheller1980thermomechanical} and Drumheller~\cite{drumheller2000}, adapted to a partially saturated four-phase system with porosity-dependent solid free energies.
+
+Each component has volume fraction~$\phi_\xi$, intrinsic density~$\bar\rho_\xi$, bulk density $\rho_\xi = \phi_\xi\bar\rho_\xi$, velocity~$\mbf{v}_\xi$, deformation gradient~$\mbf{F}_\xi$, and Jacobian $J_\xi = \det(\mbf{F}_\xi)$.  The solid phases share a common trajectory ($\mbf{v}_A = \mbf{v}_B = \mbf{v}_s$, $\mbf{F}_A = \mbf{F}_B = \mbf{F}_s$, $J_A = J_B = J_s$).  The total porosity is $\phi = \phi_f + \phi_g$, the fluid saturation is $S_f = \phi_f/\phi$, and the mass added per unit reference volume to component~$\xi$ by reactions is~$c_\xi$, with rate per unit current volume $c^+_\xi = \dot{c}_\xi / J_\xi$.
+
+The free energies of the solid phases are written as $\psi_A(\mbf{F}_s, \phi)$ and $\psi_B(\mbf{F}_s, \phi)$, retaining the full deformation gradient and the current porosity as independent arguments.  The multiplicative decomposition $\mbf{F}_s = \mbf{A}_s \bar{\mbf F}_s$ is \emph{not} imposed at this stage; it enters later in the Coleman--Noll procedure (Appendix~\ref{sec:coleman}) when a specific constitutive form is adopted.
+
+\subsection{Variational principle and its terms}
+
+The extended Hamilton's principle is
+\begin{equation*}
+  \int_{t_1}^{t_2}\left[\delta(T - U) + \delta W + \sum_k \delta C_k\right] dt = 0,
+\end{equation*}
+with kinetic energy, internal energy, virtual work, and three constraints:
+\begin{align*}
+  T &= \sum_\xi \int_{\mc{B}} \tfrac{1}{2}\rho_\xi\,\mbf{v}_\xi\cdot\mbf{v}_\xi \,\dv,  \\
+  U &= \int_{\mc{B}_{s0}} \left[\rho_{A0}\,\psi_A(\mbf{F}_s, \phi) + \rho_{B0}\,\psi_B(\mbf{F}_s, \phi)\right] dV_s \\
+    &\qquad + \int_{\mc{B}_{f0}} \rho_{f0}\,\psi_f(\bar\rho_f)\,dV_f + \int_{\mc{B}_{g0}} \rho_{g0}\,\psi_g(\bar\rho_g)\,dV_g + \int_{\mc{B}} \gamma_{fg}(S_f)\,\dv,  \\
+  \delta W &= \sum_\xi \int_{\mc{B}} \left[(\rho_\xi\mbf{g} + \mbf{b}_\xi)\cdot\delta\mbf{x}_\xi + \mc{L}_\xi\,\frac{\tilde\delta c_\xi}{J_\xi}\right] \,\dv,  \\
+  C_1 &= \int_{\mc{B}} \lambda\left(\sum_\xi\phi_\xi - 1\right) \,\dv,  \\
+  C_2 &= \sum_\xi \int_{\mc{B}_{\xi 0}} \mu_\xi\left(J_\xi - \frac{\phi_{\xi 0}\bar\rho_{\xi 0} + c_\xi}{\phi_\xi\bar\rho_\xi}\right) dV_\xi,  \\
+  C_3 &= \int_{\mc{B}} \tau\sum_\xi c^+_\xi \,\dv.
+\end{align*}
+The Helmholtz free energies are $\psi_A(\mbf{F}_s, \phi)$, $\psi_B(\mbf{F}_s, \phi)$, $\psi_f(\bar\rho_f)$, and $\psi_g(\bar\rho_g)$.  The interaction forces satisfy $\sum_\xi \mbf{b}_\xi = \mbf{0}$, and $\mc{L}_\xi$ is a generalized force conjugate to mass transfer (identified later via Coleman--Noll).  The Lagrange multipliers~$\lambda$, $\mu_\xi$, and~$\tau$ enforce the volume fraction constraint, component mass conservation, and mixture mass balance, respectively.
+
+Most of the required variations are detailed in Bedford \& Drumheller~\cite{drumheller1980thermomechanical} and will be omitted here; however, there are some new terms in this work that are derived below.
+
+\subsection{Variation of the internal energy}
+
+The solid contribution is
+\begin{align}
+  \delta U_s &= \int_{\mc{B}_{s0}} \sum_{\xi=A,B} \rho_{\xi 0} \left[\left.\p{\psi_\xi}{F_{kl}}\right\vert_\phi \delta F_{kl} + \left.\p{\psi_\xi}{\phi}\right\vert_{\mbf{F}_s} \delta\phi \right] dV_s.
+  \label{eq:deltaU_solid}
+\end{align}
+The variation $\delta F_{kl} = \partial(\delta x_{s,k})/\partial X_{s,l}$ produces the standard stress divergence upon integration by parts.  Transforming to the current configuration gives
+\begin{equation}
+  \int_{\mc{B}_{0}} \rho_{\xi 0}\,\left.\p{\psi_\xi}{F_{kl}}\right\vert_\phi \delta F_{kl}\, dV_s = -\int_{\mc{B}} \nabla_{\mbf{x}} \cdot (\bs\sigma'_\xi)^T \cdot \delta\mbf{x}_s \,\dv + \text{boundary terms},
+  \label{eq:stress_variation}
+\end{equation}
+where the Terzaghi effective Cauchy stress, i.e.\ the stress obtained with the
+mobile-phase intrinsic densities held fixed, is defined through
+\begin{equation}
+  \bs\sigma'_\xi = \frac{1}{J_s} \rho_{\xi 0}\,\p{\psi_\xi}{\mbf{F}_s}\bigg\vert_\phi\, \mbf{F}_s^T.
+  \label{eq:var_cauchy_def}
+\end{equation}
+The notation $|_\phi$ emphasizes that this derivative is taken at fixed porosity.
+
+\subsection{Porosity variation via the inter-component identity}
+
+The porosity~$\phi = \phi_f + \phi_g$ is a spatial field naturally associated with the fluid and gas components, yet it appears as an argument of the solid free energies $\psi_\xi(\mbf{F}_s, \phi)$ in the integral over the solid reference configuration.  Since this integral is taken at fixed~$\mbf{X}_s$, we require the variation of~$\phi$ at fixed~$\mbf{X}_s$.  Using the inter-component variation identity (equation~(1.26) of Bedford \& Drumheller~\cite{bedford1983theories})
+\begin{equation}
+  \left.\delta\Gamma_{(\zeta)}\right|_{\mbf{X}_{(\xi)}} = \delta\Gamma_{(\zeta)} - \nabla_{\mbf{x}}\Gamma_{(\zeta)} \cdot \left(\delta\mbf{x}_{(\zeta)} - \delta\mbf{x}_{(\xi)}\right),
+  \label{eq:BD_identity}
+\end{equation}
+we obtain
+\begin{align}
+  \left.\delta\phi\right|_{\mbf{X}_s}
+  &= \delta\phi_f + \delta\phi_g - \nabla_{\mbf{x}}\phi_f \cdot \left(\delta\mbf{x}_f - \delta\mbf{x}_s\right) - \nabla_{\mbf{x}}\phi_g \cdot \left(\delta\mbf{x}_g - \delta\mbf{x}_s\right) \notag \\
+  &= \delta\phi_f + \delta\phi_g - \nabla_{\mbf{x}}\phi_f \cdot \delta\mbf{x}_f - \nabla_{\mbf{x}}\phi_g \cdot \delta\mbf{x}_g + \nabla_{\mbf{x}}\phi \cdot \delta\mbf{x}_s.
+  \label{eq:delta_phi}
+\end{align}
+Defining
+\begin{equation}
+  P^\star_\phi \equiv \sum_{\xi=A,B} \rho_\xi\,\left.\p{\psi_\xi}{\phi}\right\vert_{\mbf{F}_s},
+  \label{eq:Pstar_phi}
+\end{equation}
+and substituting~\eqref{eq:delta_phi} into~\eqref{eq:deltaU_solid}, the porosity dependent part of the solid energy variation becomes:
+\begin{align}
+  \int_{\mc{B}_{0}} \sum_{\xi=A,B} \rho_{\xi 0}\,\left.\p{\psi_\xi}{\phi}\right\vert_{\mbf{F}_s}\, \left.\delta\phi\right|_{\mbf{X}_s}\, dV_s
+  &= \int_{\mc{B}} P^\star_\phi\, \delta\phi_f \,\dv + \int_{\mc{B}} P^\star_\phi\, \delta\phi_g \,\dv \notag \\
+  &\quad - \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi_f \cdot \delta\mbf{x}_f \,\dv - \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi_g \cdot \delta\mbf{x}_g \,\dv \notag \\
+  &\quad + \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi \cdot \delta\mbf{x}_s \,\dv.
+  \label{eq:phi_variation_split}
+\end{align}
+
+\subsection{Variation of the interfacial energy}
+
+With two mobile phases (liquid water and gas), let
+\[
+  \phi = \phi_f+\phi_g,\qquad
+  S_f=\frac{\phi_f}{\phi},\qquad
+  S_g=1-S_f=\frac{\phi_g}{\phi}.
+\]
+The saturations are used only as ratios of the primitive volume-fraction fields;
+the independent variations remain $\delta\phi_f$ and $\delta\phi_g$.  We write
+the current interfacial energy density as
+\[
+  U_{fg}=\int_{\mc B}\phi\,\gamma_{fg}(S_f)\,\dv .
+\]
+Define the liquid--gas capillary pressure by
+\begin{equation}
+  p_c \equiv -\frac{\partial\gamma_{fg}}{\partial S_f} > 0.
+  \label{eq:pc_def}
+\end{equation}
+Using $\delta\phi=\delta\phi_f+\delta\phi_g$ and
+\[
+  \delta S_f=\frac{\delta\phi_f-S_f\delta\phi}{\phi},
+\]
+the algebraic part of the interfacial variation is
+\begin{align}
+  \delta\!\left(\phi\gamma_{fg}\right)
+  &= \gamma_{fg}\,\delta\phi
+     + \frac{\partial\gamma_{fg}}{\partial S_f}
+       \left(\delta\phi_f-S_f\delta\phi\right) \notag\\
+  &= \gamma_f\,\delta\phi_f+\gamma_g\,\delta\phi_g,
+\end{align}
+where
+\begin{align}
+  \gamma_g &= \gamma_{fg}+S_f p_c, \notag\\
+  \gamma_f &= \gamma_g-p_c
+            = \gamma_{fg}-(1-S_f)p_c .
+  \label{eq:primitive_gamma_derivatives}
+\end{align}
+Consequently the capillary pressure is the difference of primitive interfacial
+potentials,
+\begin{equation}
+  p_c \equiv \bar p_g-\bar p_f \equiv \gamma_g-\gamma_f .
+  \label{eq:pc_gamma_difference}
+\end{equation}
+
+The spatial fields must also be varied with their transported parts.  For the
+phase displacement $\delta\mbf{x}_\xi$,
+\[
+  \delta_x\phi_\xi=-\nabla_{\mbf x}\cdot(\phi_\xi\delta\mbf{x}_\xi),
+\]
+so, after integration by parts, the complete interfacial-energy contribution is
+\begin{align}
+  \delta U_{fg}
+  &= \int_{\mc{B}} \left(\gamma_f\,\delta\phi_f
+      + \gamma_g\,\delta\phi_g\right) \,\dv \notag \\
+  &\quad + \int_{\mc{B}} \left(\phi_f\nabla_{\mbf{x}}\gamma_f\cdot\delta\mbf{x}_f
+      + \phi_g\nabla_{\mbf{x}}\gamma_g\cdot\delta\mbf{x}_g\right) \,\dv
+  + \text{boundary terms}.
+  \label{eq:deltaU_fg}
+\end{align}
+This form retains the gradient terms generated by the spatial dependence of the
+interfacial potentials; they are eliminated only after the volume-fraction
+Euler--Lagrange equations are used.
+
+\subsection{Collected variational principle}
+
+Evaluating all variations and collecting by independent variations $\delta\mbf{x}_\xi$, $\delta\phi_\xi$, $\delta\bar\rho_\xi$, and $\delta c_\xi$ gives
+\begin{align}
+  0 = \sum_\xi \int_{\mc{B}} \bigg\{
+  &\bigg[-\rho_\xi\mbf{a}_\xi + \nabla_{\mbf{x}}\cdot(\bs\sigma'_\xi)^T + \rho_\xi\mbf{g} + \mbf{b}_\xi
+  - \nabla_{\mbf{x}}\left(\mu_\xi J_\xi\right) - \lambda\nabla_{\mbf{x}}\phi_\xi + c^+_\xi\nabla_{\mbf{x}}\tau
+  \bigg]\cdot\delta\mbf{x}_\xi \notag \\
+  &+ \bigg[\frac{\mu_\xi J_\xi}{\phi_\xi} + \lambda\bigg] \,\delta\phi_\xi
+  + \bigg[\frac{\mu_\xi J_\xi}{\bar\rho_\xi} - \rho_\xi\p{\psi_\xi}{\bar\rho_\xi}\bigg] \,\delta\bar\rho_\xi \notag \\
+  &+ \bigg[\frac{1}{2}\mbf{v}_\xi\cdot\mbf{v}_\xi + \mc{L}_\xi - \frac{D_\xi\tau}{Dt} - \frac{\mu_\xi J_\xi}{\rho_\xi}\bigg]\frac{\delta c_\xi}{J_\xi}
+  \bigg\} \,\dv \notag \\
+  &+ \int_{\mc{B}} P^\star_\phi\, \delta\phi_f \,\dv + \int_{\mc{B}} P^\star_\phi\, \delta\phi_g \,\dv
+  + \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi \cdot \delta\mbf{x}_s \,\dv \notag \\
+  &- \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi_f \cdot \delta\mbf{x}_f \,\dv - \int_{\mc{B}} P^\star_\phi\, \nabla_{\mbf{x}}\phi_g \cdot \delta\mbf{x}_g \,\dv \notag \\
+  &- \int_{\mc{B}} \left(\gamma_f\,\delta\phi_f
+      + \gamma_g\,\delta\phi_g
+      + \phi_f\nabla_{\mbf{x}}\gamma_f\cdot\delta\mbf{x}_f
+      + \phi_g\nabla_{\mbf{x}}\gamma_g\cdot\delta\mbf{x}_g\right) \,\dv.
+  \label{eq:collected}
+\end{align}
+This is the fully collected first variation.  The final two lines contain the new contributions from the porosity-dependent solid energy and the fluid--gas interfacial energy.
+
+\subsection{Euler--Lagrange equations}
+
+Since the variations are independent and arbitrary, each coefficient in~\eqref{eq:collected} must vanish.
+
+\paragraph{Pressure identifications.}  From the coefficient of $\delta\bar\rho_\xi$ we identify the thermodynamic phase pressures
+\begin{equation}
+  \bar{p}_\xi \equiv \bar\rho_\xi^2\frac{\partial\psi_\xi}{\partial\bar\rho_\xi}, \qquad \xi \in \{f,g\},
+  \label{eq:pbar_def}
+\end{equation}
+so that
+\begin{equation}
+  \frac{\mu_f J_f}{\phi_f} = \bar p_f, \qquad \frac{\mu_g J_g}{\phi_g} = \bar p_g.
+  \label{eq:mu}
+\end{equation}
+From $\delta\phi_A$ and $\delta\phi_B$,
+\begin{equation}
+  \frac{\mu_A J_s}{\phi_A} = -\lambda, \qquad \frac{\mu_B J_s}{\phi_B} = -\lambda.
+\end{equation}
+From $\delta\phi_f$ and $\delta\phi_g$, including the $P^\star_\phi$ and
+interfacial-energy contributions,
+\begin{align}
+  \bar p_f &= -\lambda - P^\star_\phi + \gamma_f,
+  \label{eq:pf}
+  \\
+  \bar p_g &= -\lambda - P^\star_\phi + \gamma_g.
+  \label{eq:pg}
+\end{align}
+Subtracting~\eqref{eq:pf} from~\eqref{eq:pg} gives the capillary-pressure
+condition
+\begin{equation}
+  \bar p_g-\bar p_f = \gamma_g-\gamma_f = p_c .
+  \label{eq:pc_from_phi_variations}
+\end{equation}
+Therefore
+\begin{equation}
+  \bar p_E \equiv S_f\bar p_f + (1-S_f)\bar p_g - \gamma_{fg}
+  = -\lambda - P^\star_\phi,
+  \label{eq:lambda}
+\end{equation}
+where $S_f\gamma_f+S_g\gamma_g=\gamma_{fg}$ for the specialized density
+$\phi\gamma_{fg}(S_f)$.  Thus, when the solid energy has no explicit porosity
+dependence, $\bar p_E=-\lambda$, matching the compositional formulation.
+
+\paragraph{Fluid momentum.}  From the coefficient of $\delta\mbf{x}_f$,
+\begin{equation}
+  \rho_f\mbf{a}_f = \rho_f\mbf{g} + \mbf{b}_f - \nabla_{\mbf{x}}(\mu_f J_f) - \lambda\nabla_{\mbf{x}}\phi_f - P^\star_\phi\nabla_{\mbf{x}}\phi_f + \gamma_f\nabla_{\mbf{x}}\phi_f + \phi_f\nabla_{\mbf{x}}\gamma_f + c^+_f\nabla_{\mbf{x}}\tau.
+  \label{eq:mom_fluid_raw}
+\end{equation}
+Using $\mu_f J_f = \phi_f \bar p_f$ and \eqref{eq:pf},
+\begin{align*}
+  -\nabla_{\mbf{x}}(\phi_f \bar p_f) - \lambda\nabla_{\mbf{x}}\phi_f - P^\star_\phi\nabla_{\mbf{x}}\phi_f + \gamma_f\nabla_{\mbf{x}}\phi_f + \phi_f\nabla_{\mbf{x}}\gamma_f
+  &= -\phi_f\nabla_{\mbf{x}}\bar p_f - \bar p_f\nabla_{\mbf{x}}\phi_f \\
+  &\quad + \left(-\lambda - P^\star_\phi + \gamma_f\right)\nabla_{\mbf{x}}\phi_f
+  + \phi_f\nabla_{\mbf{x}}\gamma_f \\
+  &= -\phi_f\nabla_{\mbf{x}}\bar p_f.
+\end{align*}
+Hence the fluid momentum balance reduces to the phase-pressure form
+\begin{equation}
+  \boxed{\rho_f\mbf{a}_f = \rho_f\mbf{g} + \mbf{b}_f - \phi_f\nabla_{\mbf{x}}\bar p_f + c^+_f\left(\nabla_{\mbf{x}}\tau - \mbf{v}_f\right),}
+  \label{eq:mom_fluid}
+\end{equation}
+where the reaction-momentum term has been written in the standard Bedford--Drumheller form.
+
+\paragraph{Gas momentum.}  From the coefficient of $\delta\mbf{x}_g$,
+\begin{equation}
+  \rho_g\mbf{a}_g = \rho_g\mbf{g} + \mbf{b}_g - \nabla_{\mbf{x}}(\mu_g J_g) - \lambda\nabla_{\mbf{x}}\phi_g - P^\star_\phi\nabla_{\mbf{x}}\phi_g + \gamma_g\nabla_{\mbf{x}}\phi_g + \phi_g\nabla_{\mbf{x}}\gamma_g + c^+_g\nabla_{\mbf{x}}\tau.
+  \label{eq:mom_gas_raw}
+\end{equation}
+Using $\mu_g J_g = \phi_g \bar p_g$ and \eqref{eq:pg},
+\begin{align*}
+  -\nabla_{\mbf{x}}(\phi_g \bar p_g) - \lambda\nabla_{\mbf{x}}\phi_g - P^\star_\phi\nabla_{\mbf{x}}\phi_g + \gamma_g\nabla_{\mbf{x}}\phi_g + \phi_g\nabla_{\mbf{x}}\gamma_g
+  &= -\phi_g\nabla_{\mbf{x}}\bar p_g - \bar p_g\nabla_{\mbf{x}}\phi_g \\
+  &\quad + \left(-\lambda - P^\star_\phi + \gamma_g\right)\nabla_{\mbf{x}}\phi_g
+  + \phi_g\nabla_{\mbf{x}}\gamma_g \\
+  &= -\phi_g\nabla_{\mbf{x}}\bar p_g.
+\end{align*}
+Hence the gas momentum balance reduces to
+\begin{equation}
+  \boxed{\rho_g\mbf{a}_g = \rho_g\mbf{g} + \mbf{b}_g - \phi_g\nabla_{\mbf{x}}\bar p_g + c^+_g\left(\nabla_{\mbf{x}}\tau - \mbf{v}_g\right).}
+  \label{eq:mom_gas}
+\end{equation}
+
+\paragraph{Overall momentum.}  Summing the solid, fluid, and gas balances gives the mixture equation.  The direct inter-component body-force pair terms from~\eqref{eq:phi_variation_split} cancel in the sum, but the porosity-conjugate contribution survives through the solid pressure algebra.  Writing the equivalent pore pressure as $\bar p_E \equiv S_f\bar p_f + (1-S_f)\bar p_g-\gamma_{fg}=-\lambda-P^\star_\phi$, the overall balance takes the form
+\begin{equation}
+  \boxed{\rho\mbf{a} = \nabla_{\mbf{x}}\cdot(\bs\sigma'_s)^T - \nabla_{\mbf{x}}\bar p_E - \nabla_{\mbf{x}}\left[(1-\phi)P^\star_\phi\right] + \rho\mbf{g} - c^+_f\left(\mbf{v}_f - \mbf{v}_s\right) - c^+_g\left(\mbf{v}_g - \mbf{v}_s\right).}
+  \label{eq:mom_overall}
+\end{equation}
+When $\psi_\xi$ does not depend on $\phi$ ($P^\star_\phi = 0$), this reduces to the standard mixture form.
+
+\paragraph{Evolution of $\tau$.}  From the coefficient of $\delta c_\xi$ and choosing to evaluate the functions for the reactant $A$,
+\begin{equation}
+  \boxed{\left.\p{\tau}{t}\right|_{\mbf{X}_s} = \frac{1}{2}\mbf{v}_s\cdot\mbf{v}_s + \mc{L}_A + \frac{\lambda}{\bar\rho_A}.}
+  \label{eq:tau_final}
+\end{equation}
+
+\subsection{Connection to the Coleman--Noll procedure}
+\label{sec:coleman_connection}
+
+The variational derivation and the Coleman--Noll procedure are complementary.  Hamilton's principle takes the free energies (e.g. $\psi_\xi(\mbf{F}_s, \phi)$) as functions of \emph{independent fields} (subject to constraints) and derives the momentum balances, pressure identifications, and body forces as Euler--Lagrange equations.  The Coleman--Noll procedure (Appendix~\ref{sec:coleman}) starts from the entropy inequality with the \emph{same} energy and derives constitutive restrictions.  The multiplicative decomposition $\mbf{F}_s = \mbf{A}_s \bar{\mbf{F}}_s$ is a constitutive choice imposed within the Coleman--Noll procedure, giving $\psi_\xi(\mbf{F}_s, \phi) = \psi^{\text{iso}}_\xi(\bar{\mbf{F}}_s) + \psi^{\text{dis}}_\xi(J_s, \phi)$, which is a specialization of the general $\psi_\xi(\mbf{F}_s, \phi)$ used in the variational principle.

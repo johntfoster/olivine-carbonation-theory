@@ -1,0 +1,17 @@
+.git
+.agent-runtime
+build
+**/__pycache__
+.agents
+.claude
+.opencode
+.github/skills
+.private*
+**/*.log
+moose_app/build
+moose_app/lib
+moose_app/test/lib
+moose_app/olivine_carbonation-opt
+moose_app/olivine_carbonation.yaml
+moose_app/test/tests/**/out*
+**/.previous_test_results.json

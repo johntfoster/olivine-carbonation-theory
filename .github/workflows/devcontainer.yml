@@ -1,0 +1,81 @@
+name: Build tested revision devcontainer
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  application:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - name: Make room for MOOSE
+        run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve immutable base
+        id: base
+        env:
+          BASE_TAG: ghcr.io/${{ github.repository }}:base-current
+        run: |
+          docker pull "$BASE_TAG"
+          digest=$(docker image inspect "$BASE_TAG" --format '{{index .RepoDigests 0}}')
+          [[ "$digest" == *@sha256:* ]]
+          echo "image=$digest" >> "$GITHUB_OUTPUT"
+      - name: Build exact checked-out revision and run quantitative tests
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: .devcontainer/Dockerfile
+          platforms: linux/amd64
+          load: true
+          tags: olivine-app:${{ github.sha }}
+          build-args: |
+            BASE_IMAGE=${{ steps.base.outputs.image }}
+            SOURCE_REVISION=${{ github.sha }}
+          cache-from: type=gha,scope=olivine-app
+          cache-to: type=gha,scope=olivine-app,mode=max
+      - name: Verify checkout startup and archive evidence
+        env:
+          REVISION: ${{ github.sha }}
+        run: |
+          mkdir -p .agent-runtime/image-evidence
+          docker run --rm --entrypoint bash -v "$PWD:/workspaces/olivine" "olivine-app:$REVISION" -c 'cd /workspaces/olivine && python3 scripts/prebuilt_app.py startup && with-moose ./moose_app/olivine_carbonation-opt --help'
+          container=$(docker create "olivine-app:$REVISION")
+          docker cp "$container:/opt/olivine/verification/implementation-results.json" .agent-runtime/image-evidence/
+          docker cp "$container:/opt/olivine/prebuilt-application.json" .agent-runtime/image-evidence/
+          docker rm "$container"
+      - name: Publish tested exact-revision image
+        if: github.event_name != 'pull_request'
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}
+          REVISION: ${{ github.sha }}
+          REF: ${{ github.ref }}
+        run: |
+          docker tag "olivine-app:$REVISION" "$IMAGE:sha-$REVISION"
+          docker push "$IMAGE:sha-$REVISION"
+          # Move the main convenience alias only if this is still the remote main HEAD.
+          if [[ "$REF" == refs/heads/main ]] && [[ "$(git ls-remote origin refs/heads/main | cut -f1)" == "$REVISION" ]]; then
+            docker tag "olivine-app:$REVISION" "$IMAGE:main"
+            docker push "$IMAGE:main"
+          fi
+          docker inspect "$IMAGE:sha-$REVISION" --format '{{json .RepoDigests}}' > .agent-runtime/image-evidence/image-digests.json
+          cat .agent-runtime/image-evidence/image-digests.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: image-evidence-${{ github.sha }}
+          path: .agent-runtime/image-evidence/

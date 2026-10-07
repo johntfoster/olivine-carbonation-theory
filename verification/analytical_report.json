@@ -1,0 +1,688 @@
+{
+  "category": "synthetic-source-specialization-consistency-not-PDE-verification",
+  "original_source_current_status": {
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/main.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/defs.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/material_mass.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/virtual_power_derivation.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/technical_setting.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/appendix_component_potential_derivation.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/conservation_of_charge.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/ReactingMixture/main.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/ReactingMixture/defs.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/main.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/defs.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/variational_principle_appendix.tex": "matching",
+    "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/coleman_noll_appendix.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/main.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/defs.tex": "matching",
+    "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/sections/finite_deformation_biot.tex": "matching"
+  },
+  "command": "python3 verification/check_theory.py",
+  "python": "3.10.12",
+  "historical_rejected_checks_credited": 0,
+  "checks": [
+    {
+      "name": "seven_mechanisms_exact_atom_conservation",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": {
+        "elements": [
+          "Mg",
+          "Si",
+          "C",
+          "H",
+          "O"
+        ],
+        "stoichiometric_columns_transposed": [
+          [
+            -1,
+            0,
+            0,
+            -4,
+            0,
+            0,
+            0,
+            0,
+            2,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "name": "seven_mechanisms_exact_mass_conservation",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": {
+        "atomic_masses_kg_per_mol": [
+          "4861/200000",
+          "5617/200000",
+          "12011/1000000",
+          "63/62500",
+          "15999/1000000"
+        ]
+      }
+    },
+    {
+      "name": "seven_mechanisms_exact_charge_conservation",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "net_carbonation_reaction",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "material_insertion_mass_sum_zero",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "homogeneous_phase_offset_cancels",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "piola_virtual_work",
+      "category": "algebraic-consistency",
+      "error": 3.469446951953614e-18,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "nanson_nominal_traction",
+      "category": "algebraic-consistency",
+      "error": 4.440892098500626e-16,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "piola_flux_surface_invariance",
+      "category": "algebraic-consistency",
+      "error": 1.3877787807814457e-17,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "nonuniform_piola_divergence",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "weak_mass_outward_flux_sign",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "weak_gauss_outward_displacement_sign",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "mineral_root_residual",
+      "category": "algebraic-consistency",
+      "error": 3.39134260347476e-15,
+      "tolerance": 1e-12,
+      "passed": true,
+      "details": {
+        "F": [
+          [
+            1.12,
+            0.17,
+            -0.04
+          ],
+          [
+            0.03,
+            0.91,
+            0.08
+          ],
+          [
+            0.02,
+            -0.06,
+            1.04
+          ]
+        ],
+        "rho0": 3300.0,
+        "phi_s0": 0.6,
+        "K": 4800000000.0,
+        "Ks": 130000000000.0,
+        "Gs": 5000000000.0,
+        "pressure": 200000000.0
+      }
+    },
+    {
+      "name": "solid_pressure_from_helmholtz",
+      "category": "algebraic-consistency",
+      "error": 3.4528194963932036e-08,
+      "tolerance": 2e-07,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "solid_single_prime_energy_gradient",
+      "category": "algebraic-consistency",
+      "error": 1.308162878871859e-09,
+      "tolerance": 2e-08,
+      "passed": true,
+      "details": {
+        "F": [
+          [
+            1.12,
+            0.17,
+            -0.04
+          ],
+          [
+            0.03,
+            0.91,
+            0.08
+          ],
+          [
+            0.02,
+            -0.06,
+            1.04
+          ]
+        ],
+        "rho0": 3300.0,
+        "phi_s0": 0.6,
+        "K": 4800000000.0,
+        "Ks": 130000000000.0,
+        "Gs": 5000000000.0,
+        "pressure": 200000000.0
+      }
+    },
+    {
+      "name": "scalar_distention_coleman_noll_trace",
+      "category": "algebraic-consistency",
+      "error": 6.38251721467456e-10,
+      "tolerance": 2e-07,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "true_deformation_trace_matches_distention",
+      "category": "algebraic-consistency",
+      "error": 2.6733938297034043e-11,
+      "tolerance": 2e-08,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "intrinsic_mineral_mean_stress",
+      "category": "algebraic-consistency",
+      "error": 2.50262156369728e-15,
+      "tolerance": 1e-12,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "solid_constituent_mass_potential",
+      "category": "algebraic-consistency",
+      "error": 1.5799969384840004e-11,
+      "tolerance": 2e-07,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixed_pressure_mineral_J_tangent",
+      "category": "algebraic-consistency",
+      "error": 4.0555891978044656e-12,
+      "tolerance": 2e-09,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "one_solid_source_biot_exact",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-14,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "one_solid_matched_log_energy_exact",
+      "category": "algebraic-consistency",
+      "error": 1.1381290816997894e-16,
+      "tolerance": 1e-14,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "drained_matched_log_energy",
+      "category": "algebraic-consistency",
+      "error": 2.27777189821422e-16,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "three_solid_total_stress_pressure_tangent",
+      "category": "algebraic-consistency",
+      "error": 9.914291609902648e-14,
+      "tolerance": 2e-08,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "compressible_true_mass_distention",
+      "category": "algebraic-consistency",
+      "error": 1.3877787807814457e-17,
+      "tolerance": 1e-14,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "linearized_biot_limit",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-14,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "incompressible_mineral_limit",
+      "category": "algebraic-consistency",
+      "error": 2.745392801983826e-10,
+      "tolerance": 2e-09,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "aqueous_gibbs_density_legendre",
+      "category": "algebraic-consistency",
+      "error": 1.5568058994719358e-15,
+      "tolerance": 1e-10,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "aqueous_pressure_from_volume_derivative",
+      "category": "algebraic-consistency",
+      "error": 8.852830148846662e-10,
+      "tolerance": 3e-07,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "aqueous_constituent_mass_derivatives",
+      "category": "algebraic-consistency",
+      "error": 3.8283088460273575e-08,
+      "tolerance": 1e-05,
+      "passed": true,
+      "details": {
+        "masses_kg": [
+          1e-06,
+          2e-05,
+          0.01,
+          0.003,
+          0.002,
+          0.001,
+          0.002,
+          0.001,
+          0.98
+        ],
+        "molar_volumes_m3_per_mol": [
+          1.8e-05,
+          2e-05,
+          3.1e-05,
+          3e-05,
+          2.9e-05,
+          1.9e-05,
+          4.2e-05,
+          4.1e-05,
+          1.8e-05
+        ],
+        "pressure": 40000000.0,
+        "temperature": 350.0,
+        "component_relative_errors": [
+          1.716818120905019e-08,
+          1.2512051523716873e-08,
+          3.8695992083678623e-10,
+          2.6187932778113427e-10,
+          1.7431945286572528e-10,
+          6.541217317252052e-10,
+          8.555591548448338e-10,
+          2.858414479292334e-09,
+          3.8283088460273575e-08
+        ]
+      }
+    },
+    {
+      "name": "aqueous_euler_identity",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "source_tau_normalization",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "source_fluid_transfer_offset",
+      "category": "algebraic-consistency",
+      "error": 2.168404344971009e-19,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "component_transfer_equations_recovered",
+      "category": "algebraic-consistency",
+      "error": 3.393552799879629e-17,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "phase_changing_reaction_retains_source_offset",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "phase_changing_bare_affinity_is_not_substituted",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "reaction_entropy_production",
+      "category": "algebraic-consistency",
+      "error": 1.0339757656912846e-25,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "component_flux_zero_sum",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "relative_transport_nonnegative",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "reacting_flux_inverts_source_phase_momentum",
+      "category": "algebraic-consistency",
+      "error": 1.7905752131324608e-16,
+      "tolerance": 1e-13,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "positive_resistance_domain",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "drag_heating_nonnegative",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "conversion_free_source_darcy_limit",
+      "category": "algebraic-consistency",
+      "error": 2.117582368135751e-22,
+      "tolerance": 1e-14,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "overall_insertion_force_cancellation",
+      "category": "algebraic-consistency",
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "electrical_pressure_stress_bookkeeping",
+      "category": "algebraic-consistency",
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-15,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "mass_source_dimensions",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "insertion_force_dimensions",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tau_gradient_velocity_dimensions",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "chemical_stoichiometric_force_dimensions",
+      "category": "algebraic-consistency",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "inspected_source_bytes_unchanged",
+      "category": "source-document-integrity",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "parent_macros_preserved_byte_for_byte",
+      "category": "source-document-integrity",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "complete_equation_correspondence",
+      "category": "source-document-integrity",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "details": {
+        "equation_labels": 66
+      }
+    }
+  ],
+  "summary": {
+    "passed": 52,
+    "failed": 0,
+    "total": 52
+  },
+  "inputs": {
+    "paper/main.tex": "d0e2ba00818f0dd09f7c99926e40bc506a4fede86b38ff6007f49802ff7e6b2c",
+    "paper/defs.tex": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130",
+    "paper/references.bib": "6f53dd2f325e4ae97b782761fc51c36370d14ff51dc29ceb11e0778e5edbfd01",
+    "paper/source-lineage.json": "1814bb7d48fc9d062c093697ebf85f28ab95a134b3c6ca8ac59304cb35411255",
+    "paper/source-correspondence.md": "1307d188652c76783aa75502e0621d5a1fe275a641f6c261cf378d231cda35be",
+    "verification/check_theory.py": "0df721493a4b4edfb78b8d408ec435907ac15b0f0dacea83a25c3740ae3edbec",
+    "verification/build_equation_map.py": "570c48fa86eabcd62cc9ed037244cc409bd68d1f16e891ffdcadb806f52e847a",
+    "verification/equation-map.json": "b59d841375238d4cc6fc87f8e237f85032205afd14ce2903b22964a1e88a9392",
+    "verification/source-equation-excerpts.json": "b547855520e9dd8b3d65ec9d87215b72c817343ecccef82b3fce5faaabc07ba3",
+    "verification/parent-sources/C/main.tex": "c3851aeb803b6171213975cdf5370c7a06fe74d53f91fa1b04bfeb14becbc2fc",
+    "verification/parent-sources/C/defs.tex": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130",
+    "verification/parent-sources/C/sections/material_mass.tex": "181a44f957610a03dc89935a61bc11f062b71ba0c120e1e993d29340340b45db",
+    "verification/parent-sources/C/sections/virtual_power_derivation.tex": "af58b4477c4beb49f80ab168711f20be7d65f91b97c5e9ece3cfae878cc59dcb",
+    "verification/parent-sources/C/sections/multicomponent_solids.tex": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f",
+    "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd",
+    "verification/parent-sources/C/sections/technical_setting.tex": "e763dc62db966281517c860381b5e5005269695f43cccfc89ea6159d0d393868",
+    "verification/parent-sources/C/sections/appendix_component_potential_derivation.tex": "788a8a1c2265dd9d5018d302ad67c5cb065e0e23019c6a03b8e1a14293e3508c",
+    "verification/parent-sources/C/sections/conservation_of_charge.tex": "f3b8e13e1bec27b205a3104db818870dc763c5780aa62c1fd26246c725b44d3b",
+    "verification/parent-sources/R/main.tex": "89007bd26a8b842deaad873a2d8b3a472ad620c77b62a3b5686325cf2bc5ad29",
+    "verification/parent-sources/R/defs.tex": "55f0e9e3a9d93c65fb19af3a2989088c74904eb9ef6653a1558dd5e1601276dc",
+    "verification/parent-sources/F/main.tex": "6592f68c358edeaa6f853695af57ad555c4fa467376168727ec6469844239204",
+    "verification/parent-sources/F/defs.tex": "2f1fff9e1224ea8460c0e43f923238092aebe88b436d725461bc88248097ab88",
+    "verification/parent-sources/F/variational_principle_appendix.tex": "8be4af7ad016377b329548835dc4998f1a9b8d1c52fdd15d4bbe533082d6bcb4",
+    "verification/parent-sources/F/coleman_noll_appendix.tex": "5d86733ed7f5d3f4954851c3e25e481ec254cd70798e23679722ab6842d8c6f1",
+    "verification/parent-sources/B/paper/main.tex": "345ab5bd044c15db36405eeafcafa09202bb0ea2ff05c18d96406e9c447f6c3b",
+    "verification/parent-sources/B/paper/defs.tex": "2ce1a86d727aa30144fa7fa620c6cabd15d0663d5c7a6e66e839055fbe085ab4",
+    "verification/parent-sources/B/paper/sections/finite_deformation_biot.tex": "95d84b7a27bc9d151f384e059dd4dd52a4bedb467b42b106165ba5f38d922bce"
+  },
+  "categories": {
+    "source_fidelity": "equation map and byte identity checked; independent mathematical audit pending",
+    "constitutive_and_balance_consistency": "passed",
+    "continuum_simulation": "not_performed",
+    "convergence": "not_performed",
+    "physical_validation": "not_performed",
+    "independent_acceptance": "pending"
+  }
+}

@@ -15,5 +15,5 @@ jobs:
   site:
     uses: johntfoster/research-agent-workflows/.github/workflows/research-site.yml@74309a56c009d65aa83f7729e6775fb8fea340ce
     with:
-      build-argv: '["python3", ".agent/shared/tools/research_project.py", "site"]'
+      build-argv: '["python3", "scripts/build_site.py"]'
       deploy: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}

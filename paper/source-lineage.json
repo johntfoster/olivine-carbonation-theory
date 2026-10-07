@@ -1,0 +1,150 @@
+{
+  "status": "source-faithful-rebuild-unreviewed",
+  "authority": "Actual working-tree bytes, not HEAD alone; source repositories remain read-only.",
+  "sources": [
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/main.tex",
+      "relative_path": "main.tex",
+      "sha256": "c3851aeb803b6171213975cdf5370c7a06fe74d53f91fa1b04bfeb14becbc2fc",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/main.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/defs.tex",
+      "relative_path": "defs.tex",
+      "sha256": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/defs.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/material_mass.tex",
+      "relative_path": "sections/material_mass.tex",
+      "sha256": "181a44f957610a03dc89935a61bc11f062b71ba0c120e1e993d29340340b45db",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/material_mass.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/virtual_power_derivation.tex",
+      "relative_path": "sections/virtual_power_derivation.tex",
+      "sha256": "af58b4477c4beb49f80ab168711f20be7d65f91b97c5e9ece3cfae878cc59dcb",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/virtual_power_derivation.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+      "relative_path": "sections/multicomponent_solids.tex",
+      "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/multicomponent_solids.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+      "relative_path": "sections/pulled_back_solid_skeleton.tex",
+      "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/technical_setting.tex",
+      "relative_path": "sections/technical_setting.tex",
+      "sha256": "e763dc62db966281517c860381b5e5005269695f43cccfc89ea6159d0d393868",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/technical_setting.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/appendix_component_potential_derivation.tex",
+      "relative_path": "sections/appendix_component_potential_derivation.tex",
+      "sha256": "788a8a1c2265dd9d5018d302ad67c5cb065e0e23019c6a03b8e1a14293e3508c",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/appendix_component_potential_derivation.tex"
+    },
+    {
+      "source": "C",
+      "path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/conservation_of_charge.tex",
+      "relative_path": "sections/conservation_of_charge.tex",
+      "sha256": "f3b8e13e1bec27b205a3104db818870dc763c5780aa62c1fd26246c725b44d3b",
+      "head": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+      "snapshot_path": "verification/parent-sources/C/sections/conservation_of_charge.tex"
+    },
+    {
+      "source": "R",
+      "path": "/home/jfoster/Documents/LaTeX/ReactingMixture/main.tex",
+      "relative_path": "main.tex",
+      "sha256": "89007bd26a8b842deaad873a2d8b3a472ad620c77b62a3b5686325cf2bc5ad29",
+      "head": "b60e73b3437e3140e1011c4b19e1c6e30575831f",
+      "snapshot_path": "verification/parent-sources/R/main.tex"
+    },
+    {
+      "source": "R",
+      "path": "/home/jfoster/Documents/LaTeX/ReactingMixture/defs.tex",
+      "relative_path": "defs.tex",
+      "sha256": "55f0e9e3a9d93c65fb19af3a2989088c74904eb9ef6653a1558dd5e1601276dc",
+      "head": "b60e73b3437e3140e1011c4b19e1c6e30575831f",
+      "snapshot_path": "verification/parent-sources/R/defs.tex"
+    },
+    {
+      "source": "F",
+      "path": "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/main.tex",
+      "relative_path": "main.tex",
+      "sha256": "6592f68c358edeaa6f853695af57ad555c4fa467376168727ec6469844239204",
+      "head": "549f1c92b56976288ac08719c58e3660e97cdb85",
+      "snapshot_path": "verification/parent-sources/F/main.tex"
+    },
+    {
+      "source": "F",
+      "path": "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/defs.tex",
+      "relative_path": "defs.tex",
+      "sha256": "2f1fff9e1224ea8460c0e43f923238092aebe88b436d725461bc88248097ab88",
+      "head": "549f1c92b56976288ac08719c58e3660e97cdb85",
+      "snapshot_path": "verification/parent-sources/F/defs.tex"
+    },
+    {
+      "source": "F",
+      "path": "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/variational_principle_appendix.tex",
+      "relative_path": "variational_principle_appendix.tex",
+      "sha256": "8be4af7ad016377b329548835dc4998f1a9b8d1c52fdd15d4bbe533082d6bcb4",
+      "head": "549f1c92b56976288ac08719c58e3660e97cdb85",
+      "snapshot_path": "verification/parent-sources/F/variational_principle_appendix.tex"
+    },
+    {
+      "source": "F",
+      "path": "/home/jfoster/Documents/LaTeX/FourPhaseReactingMixture/coleman_noll_appendix.tex",
+      "relative_path": "coleman_noll_appendix.tex",
+      "sha256": "5d86733ed7f5d3f4954851c3e25e481ec254cd70798e23679722ab6842d8c6f1",
+      "head": "549f1c92b56976288ac08719c58e3660e97cdb85",
+      "snapshot_path": "verification/parent-sources/F/coleman_noll_appendix.tex"
+    },
+    {
+      "source": "B",
+      "path": "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/main.tex",
+      "relative_path": "paper/main.tex",
+      "sha256": "345ab5bd044c15db36405eeafcafa09202bb0ea2ff05c18d96406e9c447f6c3b",
+      "head": "9e469c871ccf833287771e447b90761cc5c5ab03",
+      "snapshot_path": "verification/parent-sources/B/paper/main.tex"
+    },
+    {
+      "source": "B",
+      "path": "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/defs.tex",
+      "relative_path": "paper/defs.tex",
+      "sha256": "2ce1a86d727aa30144fa7fa620c6cabd15d0663d5c7a6e66e839055fbe085ab4",
+      "head": "9e469c871ccf833287771e447b90761cc5c5ab03",
+      "snapshot_path": "verification/parent-sources/B/paper/defs.tex"
+    },
+    {
+      "source": "B",
+      "path": "/home/jfoster/projects/research/reactive_transport/finite-strain-biot-poromechanics/paper/sections/finite_deformation_biot.tex",
+      "relative_path": "paper/sections/finite_deformation_biot.tex",
+      "sha256": "95d84b7a27bc9d151f384e059dd4dd52a4bedb467b42b106165ba5f38d922bce",
+      "head": "9e469c871ccf833287771e447b90761cc5c5ab03",
+      "snapshot_path": "verification/parent-sources/B/paper/sections/finite_deformation_biot.tex"
+    }
+  ]
+}

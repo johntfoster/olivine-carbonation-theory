@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/johntfoster/finite-strain-biot-poromechanics",
+  "revision": "9e469c871ccf833287771e447b90761cc5c5ab03",
+  "path": "moose_app/include/utils/MatchedLogMineralState.h",
+  "sha256": "4227605bb143421379a654c810cb19d711c8afcec2561bbc1df041be0e0ab4aa",
+  "license": "Apache-2.0",
+  "modifications": "Retain the Newton AD mineral-volume solver; omit the companion-specific single-solid Biot helper. Use carbonation phase-weighted stress and Biot formulas."
+}

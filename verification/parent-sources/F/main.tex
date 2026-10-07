@@ -1,0 +1,535 @@
+\documentclass[11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[]{cancel}
+\usepackage[margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage[]{lmodern}
+\usepackage[]{nicefrac}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes.geometric, positioning, patterns, shapes.arrows}
+\usepackage[]{hyperref}
+\hypersetup{colorlinks = true, urlcolor = gray}
+
+\input{defs.tex}
+
+\title{A finite-deformation formulation for partially saturated reacting porous media with exchange-potential-driven transport}
+
+\author[1,2,3]{John T. Foster\footnote{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
+\author[1]{Syed Talha Tirmizi}
+\author[3,4]{Marc Hesse}
+
+\affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin}
+\affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin}
+\affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin}
+\affil[4]{The Jackson School of Geosciences, The University of Texas at Austin}
+
+\date{\today}
+
+\begin{document}\sloppy
+\maketitle
+
+
+\section{Momentum balance}
+\label{sec:momentum}
+
+\subsection{Kinematics and phase structure}
+The volume fractions satisfy
+\begin{equation}
+\phi_A + \phi_B + \phi_f + \phi_g = 1,
+\label{eq:saturation}
+\end{equation}
+with total porosity $\phi=\phi_f+\phi_g$ and fluid saturation $S_f=\phi_f/\phi$. Each component map has $\mbf{F}_\xi=\partial\bs\chi_\xi/\partial\mbf{X}_\xi$ and $J_\xi=\det(\mbf{F}_\xi)$; solids share trajectory $\mbf{v}_A=\mbf{v}_B=\mbf{v}_s$ and $\mbf{F}_A=\mbf{F}_B=\mbf{F}_s$.
+
+With multiplicative decomposition,
+\begin{equation}
+\mbf{F}_\xi=\mbf{A}_\xi\bar{\mbf{F}}_\xi, \qquad J_\xi=\alpha_\xi\bar J_\xi,
+\end{equation}
+and for incompressible solid phases,
+\begin{equation}
+\alpha_s=J_s,\qquad \bar{\mbf{F}}_s=J_s^{-1/3}\mbf{F}_s,\qquad \bar J_s\equiv1.
+\label{eq:alpha_Js}
+\end{equation}
+
+\subsection{Pressure identifications from the variational principle}
+From Appendix~\ref{app:variational}, thermodynamic pressures are
+\begin{equation}
+\bar p_\xi\equiv\bar\rho_\xi^2\frac{\partial\psi_\xi}{\partial\bar\rho_\xi},
+\label{eq:pbar}
+\end{equation}
+with $\bar p_A=\bar p_B=-\lambda$. Fluid and gas pressures satisfy
+\begin{align}
+\bar p_f &= -\lambda-P_\phi^\star-p_c(1-S_f),\\
+\bar p_g &= -\lambda-P_\phi^\star+p_cS_f,
+\end{align}
+where
+\begin{equation}
+p_c\equiv-\frac{1}{\phi}\frac{\partial\gamma_{fg}}{\partial S_f},
+\qquad
+P_\phi^\star\equiv\sum_{\xi=A,B}\rho_\xi\left.\frac{\partial\psi_\xi}{\partial\phi}\right|_{\mbf{F}_s}.
+\end{equation}
+
+\subsection{General gas-phase formulation with compressibility}
+For a compressible gas phase without assuming atmospheric connectivity, the gas and fluid pressures remain related through capillarity:
+\begin{align}
+\bar p_f &= -\lambda-P_\phi^\star-p_c(1-S_f),\\
+\bar p_g &= -\lambda-P_\phi^\star+p_cS_f.
+\label{eq:pf_pg_general}
+\end{align}
+Hence the saturation-weighted phase pressure is
+\begin{equation}
+\bar p \equiv S_f\bar p_f + (1-S_f)\bar p_g = -\lambda - P_\phi^\star,
+\label{eq:pbar_mix}
+\end{equation}
+so that
+\begin{equation}
+\lambda = -\bar p - P_\phi^\star.
+\label{eq:lambda_from_pbar}
+\end{equation}
+The capillary pressure $p_c(S_f)$ remains bounded by capillary physics, ensuring physical closure of the saturation-pressure relationship.
+
+\subsection{Component and mixture momentum}
+\begin{align}
+\rho_s\mbf{a}_s &= \nabla\cdot\left[(\bs\sigma_s')^\intercal+\lambda\mbf{I}+\phi P_\phi^\star\mbf{I}\right] + \rho_s\mbf{g}+\mbf{b}_s + c_f^+(\mbf{v}_s-\nabla\tau) + c_g^+(\mbf{v}_s-\nabla\tau),
+\label{eq:mom_solid_component}\\
+\rho_f\mbf{a}_f &= \rho_f\mbf{g}+\mbf{b}_f-\phi_f\nabla p_f + c_f^+(\nabla\tau-\mbf{v}_f),
+\label{eq:mom_fluid_component}\\
+\rho_g\mbf{a}_g &= \rho_g\mbf{g}+\mbf{b}_g-\phi_g\nabla p_g + c_g^+(\nabla\tau-\mbf{v}_g).
+\label{eq:mom_gas_component}
+\end{align}
+Summing Eqs.~\eqref{eq:mom_solid_component}--\eqref{eq:mom_gas_component}, taking $\mbf{b}_s+\mbf{b}_f+\mbf{b}_g=\mbf{0}$, and using $\bar p = S_f\bar p_f+(1-S_f)\bar p_g = -\lambda-P_\phi^\star$ gives
+\begin{equation}
+\rho\mbf{a}=\nabla\cdot\left[(\bs\sigma_s')^\intercal-\bar p\mbf{I}-(1-\phi)P_\phi^\star\mbf{I}\right]+\rho\mbf{g}-c_f^+(\mbf{v}_f-\mbf{v}_s)-c_g^+(\mbf{v}_g-\mbf{v}_s).
+\label{eq:mom_overall_main}
+\end{equation}
+Equivalently, since $\lambda=-\bar p-P_\phi^\star$,
+\begin{equation}
+\rho\mbf{a}=\nabla\cdot\left[(\bs\sigma_s')^\intercal+\lambda\mbf{I}+\phi P_\phi^\star\mbf{I}\right]+\rho\mbf{g}-c_f^+(\mbf{v}_f-\mbf{v}_s)-c_g^+(\mbf{v}_g-\mbf{v}_s).
+\label{eq:mom_overall_lambda}
+\end{equation}
+
+\section{Constitutive modeling}
+\label{sec:constitutive}
+
+\subsection{Free-energy structure and distention energetics}
+\begin{equation}
+\psi_\xi(\mbf{F}_s,\phi)=\psi_\xi^{\mathrm{iso}}(\bar{\mbf{F}}_s)+\psi_\xi^{\mathrm{dis}}(J_s,\phi),\quad \xi\in\{A,B\},
+\label{eq:psi_decomp}
+\end{equation}
+with $\psi_f(\bar\rho_f)$ and $\psi_g(\bar\rho_g)$.
+Define
+\begin{equation}
+\bar P_\xi^\star=\left.\frac{\partial W_\xi^{\mathrm{dis}}}{\partial J_s}\right|_\phi+\frac{1-\phi}{J_s}\left.\frac{\partial W_\xi^{\mathrm{dis}}}{\partial\phi}\right|_{J_s}.
+\end{equation}
+Then admissible effective PK1 stress is
+\begin{equation}
+\mbf{P}_s'=J_s^{2/3}\sum_{\xi=A,B}\phi_\xi\left[\bar{\mbf{P}}_\xi'-\frac13(\bar{\mbf{P}}_\xi':\mbf{F}_s)\mbf{F}_s^{-T}\right]+J_s\sum_{\xi=A,B}\phi_\xi\bar P_\xi^\star\mbf{F}_s^{-T}.
+\label{eq:PK1_total}
+\end{equation}
+
+\subsection{Specific model: neo-Hookean + logarithmic distention energy}
+\begin{equation}
+W_\xi^{\mathrm{iso}}=\frac{G_\xi}{2}(\bar{\mbf{F}}_s:\bar{\mbf{F}}_s-3),
+\qquad
+W_\xi^{\mathrm{dis}}=\frac{K_\xi^\star}{2(1-\phi)}(\ln J_s)^2.
+\end{equation}
+Hence
+\begin{equation}
+\mbf{P}_s' = \mu_{\mathrm{eff}}J_s^{1/3}\left[\mbf{F}_s-\frac13I_1\mbf{F}_s^{-T}\right] + K_{\mathrm{eff}}^\star\frac{\ln J_s}{J_s}\left(1+\frac12\ln J_s\right)\mbf{F}_s^{-T}.
+\label{eq:PK1_specific}
+\end{equation}
+
+\subsection{Interfacial energy, capillary pressure, and saturation closure}
+
+The capillary pressure is defined as the pressure difference between gas and fluid phases:
+\begin{equation}
+p_c \equiv p_g - p_f > 0.
+\label{eq:pc_def_main}
+\end{equation}
+Interfacial energy determines this pressure variationally.  Writing the current
+interfacial energy density as $\phi\gamma_{fg}(S_f)$, the primitive
+volume-fraction derivatives are
+\begin{align}
+  \gamma_g &= \gamma_{fg}+S_f p_c, \notag\\
+  \gamma_f &= \gamma_{fg}-(1-S_f)p_c,
+\end{align}
+with
+\begin{equation}
+  p_c = -\frac{\partial\gamma_{fg}}{\partial S_f}
+      = \gamma_g-\gamma_f
+      = \bar p_g-\bar p_f .
+\end{equation}
+The variational derivation in Appendix~\ref{sec:variational} therefore gives
+the capillary-pressure condition directly from the water and gas
+volume-fraction equations, without introducing an independent saturation
+multiplier. We adopt a Brooks--Corey law written in terms of the effective liquid saturation
+\begin{equation}
+S_e \equiv \frac{S_f-S_r}{1-S_r-S_{nr}},
+\qquad 0 < S_e \le 1,
+\end{equation}
+where $S_r$ and $S_{nr}$ are the residual wetting and nonwetting saturations. The capillary pressure is then
+\begin{equation}
+p_c(S_f) = p_d S_e^{-1/d} = p_d\left(\frac{S_f-S_r}{1-S_r-S_{nr}}\right)^{-1/d},
+\label{eq:brooks_corey}
+\end{equation}
+where $p_d$ is the air-entry pressure and $d$ is the pore-size distribution index. Inverting this relationship gives
+\begin{equation}
+S_f(p_c) = S_r + (1-S_r-S_{nr})\left(\frac{p_d}{p_c}\right)^d,
+\label{eq:Sf_of_pc}
+\end{equation}
+which is well-defined for $p_c \ge p_d > 0$. The liquid volume fraction then follows:
+\begin{equation}
+\phi_f = \phi \cdot S_f(p_c) = \phi\left[S_r + (1-S_r-S_{nr})\left(\frac{p_d}{p_c}\right)^d\right],
+\label{eq:phi_f_of_pc}
+\end{equation}
+and the gas porosity is
+\begin{equation}
+\phi_g = \phi - \phi_f = \phi\left[(1-S_r) - (1-S_r-S_{nr})\left(\frac{p_d}{p_c}\right)^d\right].
+\label{eq:phi_g_of_pc}
+\end{equation}
+
+Time derivatives propagate through the chain rule. From $p_c = p_g - p_f$:
+\begin{equation}
+\dot p_c = \dot p_g - \dot p_f,
+\label{eq:pc_rate}
+\end{equation}
+and 
+\begin{equation}
+\dot S_f = \frac{\partial S_f}{\partial p_c}\dot p_c = -\frac{(1-S_r-S_{nr})d\,p_d^d}{p_c^{d+1}}\dot p_c.
+\label{eq:Sf_rate}
+\end{equation}
+The time derivative of $\phi_f$ is:
+\begin{equation}
+\dot\phi_f = \dot\phi \cdot S_f + \phi \cdot \dot S_f.
+\label{eq:phi_f_rate}
+\end{equation}
+These chain-rule dependencies are essential for consistency with the solved variables $(\dot p_f, \dot p_g, \dot\phi)$.
+
+\subsection{Relative flux, reaction kinetics, and mass-source identification}
+
+The relative fluid flux (reference frame) is:
+\begin{equation}
+\mbf{w}=\rho_f\tilde{\mbf{k}}\left[\rho_f\mbf{g}-\phi_f\nabla \bar p_f + c_f^+(\nabla\tau-\mbf{v}_s)\right],
+\label{eq:darcy_flux}
+\end{equation}
+with reference-frame flux $\mbf{W}=J_s\mbf{F}_s^{-1}\mbf{w}$. The term $c_f^+(\nabla\tau-\mbf{v}_s)$ arises from the exchange potential and the mass-source constraint, not as an independent constitutive assumption.
+
+The reaction kinetics are taken in the saturation-weighted conversion form
+\begin{equation}
+\left.\frac{\partial c_\xi}{\partial t}\right|_{\mbf{X}_s}=\nu_\xi R, \qquad R=m_B r a_0 \, S_f(1-\xi),
+\label{eq:reaction_rate}
+\end{equation}
+where
+\begin{equation}
+  \xi \equiv \frac{\phi_B}{1-\phi},
+  \qquad
+  1-\xi = \frac{\phi_A}{1-\phi},
+\end{equation}
+is the local solid conversion variable, and $\nu_\xi$ are stoichiometric coefficients satisfying the constituent mass balance. In this formulation the implemented solid source terms are obtained directly from the stoichiometric rate per unit reference volume as
+\begin{equation}
+  c_A^+ = \frac{\nu_A R}{J_s}, \qquad c_B^+ = \frac{\nu_B R}{J_s},
+\label{eq:c_AB_from_kinetics}
+\end{equation}
+with $\nu_A<0$ and $\nu_B>0$ for reactant consumption and product generation, respectively.
+
+For the gas-off closure used in the present source-term implementation, the fluid source is taken as
+\begin{equation}
+  c_f^+ = -(c_A^+ + c_B^+),
+\end{equation}
+which is the no-gas limit of overall constituent mass conservation. In the fully trapped-gas formulation one instead has the more general combined constraint
+\begin{equation}
+  c_f^+ + c_g^+ = -\dot\phi + (1-\phi)\mathrm{tr}(\mbf{L}_s) - \frac{c_A^+}{\bar\rho_A} - \frac{c_B^+}{\bar\rho_B},
+\end{equation}
+but the current code path uses the gas-off closure above for the reaction-source partition.
+
+\section{Mass balances}
+\label{sec:mass_balances}
+
+\subsection{Four-component mass conservation}
+\begin{subequations}
+\begin{align}
+\frac{\partial(\phi_f\bar\rho_f)}{\partial t}+\nabla\cdot(\phi_f\bar\rho_f\mbf{v}_f)&=c_f^+,\label{eq:mb_f}\\
+\frac{\partial(\phi_g\bar\rho_g)}{\partial t}+\nabla\cdot(\phi_g\bar\rho_g\mbf{v}_g)&=c_g^+,\label{eq:mb_g}\\
+\frac{\partial\phi_A}{\partial t}+\nabla\cdot(\phi_A\mbf{v}_s)&=\frac{c_A^+}{\bar\rho_A},\label{eq:mb_A}\\
+\frac{\partial\phi_B}{\partial t}+\nabla\cdot(\phi_B\mbf{v}_s)&=\frac{c_B^+}{\bar\rho_B}.\label{eq:mb_B}
+\end{align}
+\end{subequations}
+
+\subsection{Constraint on mass-production rates}
+The volume fraction constraint $\phi_A + \phi_B + \phi_f + \phi_g = 1$ and geometric incompressibility of solids ($\alpha_s = J_s$) together imply:
+\begin{equation}
+\sum_{\xi=A,B,f,g} c_\xi^+ = 0.
+\label{eq:mass_balance_constraint}
+\end{equation}
+Thus $c_\xi^+$ is not independently specified but is derived from the volume-fraction and solid-mass constraints. Specifically, from the solid porosity kinematic equation and the volume-fraction constraint:
+\begin{equation}
+c_f^+ + c_g^+ = -\dot\phi + (1-\phi)\mathrm{tr}(\mbf{L}_s) - \frac{c_A^+}{\bar\rho_A} - \frac{c_B^+}{\bar\rho_B}.
+\label{eq:c_fg_from_constraint}
+\end{equation}
+Since the reaction rates $c_A^+$ and $c_B^+$ are driven by kinetics (external), and we solve for $\dot\phi$ from the solid-mass balance, the combined flux $c_f^+ + c_g^+$ is geometrically determined. The individual partition between $c_f^+$ and $c_g^+$ follows from the saturation kinetics and capillary coupling.
+
+\subsection{Solid porosity balance}
+With $\phi_B=1-\phi-\phi_A$, integrating the volume-fraction and solid-mass constraints gives:
+\begin{equation}
+-\dot\phi + (1-\phi)\,\mathrm{tr}(\mbf{L}_s) - \frac{c_A^+}{\bar\rho_A}-\frac{c_B^+}{\bar\rho_B}=0.
+\label{eq:solid_mass_phi}
+\end{equation}
+This equation is solved for $\dot\phi$ (or equivalently, the rate of porosity change) given the reaction rates and skeleton deformation.
+
+\subsection{Fluid and gas equations of state}
+
+\subsubsection{Fluid phase (liquid water)}
+For the liquid phase, assume linear compressibility:
+\begin{equation}
+\dot{\bar\rho}_f=\frac{\bar\rho_f}{K_f}\dot{\bar p}_f,
+\label{eq:fluid_eos}
+\end{equation}
+where $K_f$ is the fluid bulk modulus. This is a constituent closure and is solved as one of the nine weak forms.
+
+\subsubsection{Gas phase (ideal gas with trapped-gas closure)}
+For the gas phase, assume ideal-gas behavior under isothermal conditions:
+\begin{equation}
+\bar\rho_g = \frac{M_g}{RT}\bar p_g,
+\label{eq:ideal_gas_eos_intrinsic}
+\end{equation}
+where $M_g$ is the molar mass, $R$ is the universal gas constant, and $T$ is held constant. In the trapped-gas saturation formulation we do not solve a separate gas mass balance. Instead, we impose
+\begin{equation}
+  c_g^+ = 0,
+  \qquad
+  \mbf Q = \mbf 0,
+  \label{eq:trapped_gas_assumption}
+\end{equation}
+and recover the gas pressure and density diagnostically from capillarity,
+\begin{equation}
+  \bar p_g = \bar p_f + p_c(S_f),
+  \qquad
+  \bar\rho_g = \frac{M_g}{RT}\left[\bar p_f + p_c(S_f)\right].
+  \label{eq:pg_rhog_from_pf_S}
+\end{equation}
+Thus the gas phase acts as a trapped compressible storage phase with no independent reactive source term.
+
+\subsubsection{Saturation equation from the fluid mass balance}
+We retain the same notation used in the ReactingMixture paper and write
+\begin{equation}
+  S_f = \frac{\phi_f}{\phi},
+  \qquad
+  \phi_f = \phi S_f,
+  \qquad
+  \phi_g = \phi(1-S_f).
+  \label{eq:Sf_definition_mass}
+\end{equation}
+Starting from the pulled-back fluid mass balance,
+\begin{equation}
+  J_s\frac{\partial(\phi_f\bar\rho_f)}{\partial t} + \phi_f\bar\rho_f\frac{\partial J_s}{\partial t} + \nabla_{\mbf{X}_s}\cdot\mbf W = J_s c_f^+,
+  \label{eq:sat_fluid_start}
+\end{equation}
+and substituting $\phi_f = \phi S_f$ gives
+\begin{equation}
+  J_s\frac{\partial(\phi S_f \bar\rho_f)}{\partial t} + \phi S_f \bar\rho_f\frac{\partial J_s}{\partial t} + \nabla_{\mbf{X}_s}\cdot\mbf W = J_s c_f^+.
+  \label{eq:sat_fluid_sub_1}
+\end{equation}
+Expanding the time derivative, dividing by $J_s$, and using
+\begin{equation}
+  \frac{\partial J_s}{\partial t} = J_s\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}),
+  \label{eq:Js_rate_sat}
+\end{equation}
+gives
+\begin{equation}
+  \bar\rho_f\phi\dot S_f + \bar\rho_f S_f\dot\phi + \phi S_f\dot{\bar\rho}_f + \phi S_f\bar\rho_f\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}) + \frac{1}{J_s}\nabla_{\mbf{X}_s}\cdot\mbf W = c_f^+.
+  \label{eq:sat_fluid_sub_3}
+\end{equation}
+Now use the solid mass balance,
+\begin{equation}
+  \dot\phi = (1-\phi)\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}) - \frac{c_A^+}{\bar\rho_A} - \frac{c_B^+}{\bar\rho_B},
+  \label{eq:sat_solid_sub_2}
+\end{equation}
+and the fluid equation of state,
+\begin{equation}
+  \dot{\bar\rho}_f = \frac{\bar\rho_f}{K_f}\dot{\bar p}_f,
+  \label{eq:sat_fluid_eos_sub}
+\end{equation}
+to obtain the saturation equation
+\begin{equation}
+  \boxed{\phi\dot S_f + \frac{\phi_f}{K_f}\dot{\bar p}_f + S_f\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}) - S_f\left(\frac{c_A^+}{\bar\rho_A} + \frac{c_B^+}{\bar\rho_B}\right) + \frac{1}{J_s\bar\rho_f}\nabla_{\mbf{X}_s}\cdot\mbf W - \frac{c_f^+}{\bar\rho_f} = 0.}
+  \label{eq:sat_from_fluid_eos}
+\end{equation}
+This is the equation solved for $S_f$.
+
+\subsubsection{Overall pressure equation from fluid plus gas storage}
+The pressure equation is obtained by adding the fluid and gas mass balances under the trapped-gas assumptions~\eqref{eq:trapped_gas_assumption}. Since $\mbf Q=\mbf 0$ and $c_g^+=0$, we have
+\begin{equation}
+  J_s\frac{\partial(\phi_f\bar\rho_f + \phi_g\bar\rho_g)}{\partial t} + \left(\phi_f\bar\rho_f + \phi_g\bar\rho_g\right)\frac{\partial J_s}{\partial t} + \nabla_{\mbf{X}_s}\cdot\mbf W = J_s c_f^+.
+  \label{eq:overall_start}
+\end{equation}
+Define
+\begin{equation}
+  \hat\rho \equiv S_f\bar\rho_f + (1-S_f)\bar\rho_g,
+  \label{eq:rhohat_def}
+\end{equation}
+so that $\phi_f\bar\rho_f + \phi_g\bar\rho_g = \phi\hat\rho$. Then Eq.~\eqref{eq:overall_start} becomes
+\begin{equation}
+  \hat\rho\,\dot\phi + \phi\dot{\hat\rho} + \phi\hat\rho\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}) + \frac{1}{J_s}\nabla_{\mbf{X}_s}\cdot\mbf W - c_f^+ = 0.
+  \label{eq:overall_phi_rhohat}
+\end{equation}
+Furthermore,
+\begin{equation}
+  \dot{\hat\rho} = (\bar\rho_f-\bar\rho_g)\dot S_f + S_f\dot{\bar\rho}_f + (1-S_f)\dot{\bar\rho}_g,
+  \label{eq:rhohat_dot_1}
+\end{equation}
+and from Eqs.~\eqref{eq:sat_fluid_eos_sub} and~\eqref{eq:pg_rhog_from_pf_S},
+\begin{equation}
+  \dot{\bar\rho}_g = \frac{M_g}{RT}\left(\dot{\bar p}_f + p_c'(S_f)\dot S_f\right).
+  \label{eq:rhog_dot_pfSf}
+\end{equation}
+Therefore,
+\begin{equation}
+  \dot{\hat\rho} = \left[S_f\frac{\bar\rho_f}{K_f} + (1-S_f)\frac{M_g}{RT}\right]\dot{\bar p}_f + \left[\bar\rho_f-\bar\rho_g + (1-S_f)\frac{M_g}{RT}p_c'(S_f)\right]\dot S_f.
+  \label{eq:rhohat_dot_2}
+\end{equation}
+Substituting Eqs.~\eqref{eq:sat_solid_sub_2} and~\eqref{eq:rhohat_dot_2} into Eq.~\eqref{eq:overall_phi_rhohat} yields the exact overall pressure equation,
+\begin{equation}
+  \boxed{C_p\dot{\bar p}_f + C_S\dot S_f + \hat\rho\,\mbox{tr}(\dot{\mbf F}_s\mbf F_s^{-1}) - \hat\rho\left(\frac{c_A^+}{\bar\rho_A} + \frac{c_B^+}{\bar\rho_B}\right) + \frac{1}{J_s}\nabla_{\mbf{X}_s}\cdot\mbf W - c_f^+ = 0,}
+  \label{eq:overall_pressure_equation}
+\end{equation}
+where
+\begin{align}
+  C_p &\equiv \phi\left[S_f\frac{\bar\rho_f}{K_f} + (1-S_f)\frac{M_g}{RT}\right],
+  \label{eq:Cp_def}\\
+  C_S &\equiv \phi\left[\bar\rho_f-\bar\rho_g + (1-S_f)\frac{M_g}{RT}p_c'(S_f)\right].
+  \label{eq:Cs_def}
+\end{align}
+Equation~\eqref{eq:overall_pressure_equation} is solved for $\bar p_f$, while Eq.~\eqref{eq:sat_from_fluid_eos} is solved for $S_f$.
+
+\section{System of eight unknowns and closures}
+\label{sec:system_definition}
+
+The trapped-gas saturation formulation solves for eight unknowns in the reference configuration:
+\begin{enumerate}
+  \item Solid displacements: $u_x, u_y$ (2 DOFs)
+  \item Liquid pressure: $\bar p_f$ (1 DOF)
+  \item Saturation: $S_f$ (1 DOF)
+  \item Total porosity: $\phi$ (1 DOF)
+  \item Reactant fraction: $\phi_A$ (1 DOF)
+  \item Exchange potential: $\tau$ (1 DOF)
+  \item Intrinsic liquid density: $\bar\rho_f$ (1 DOF)
+\end{enumerate}
+The gas pressure and gas density are recovered diagnostically from Eq.~\eqref{eq:pg_rhog_from_pf_S}.
+
+All remaining variables are determined by closures:
+\begin{itemize}
+  \item Deformation gradient: $\mbf{F}_s = \mbf{I} + \nabla u$ (kinematic)
+  \item Jacobian: $J_s = \det(\mbf{F}_s)$ (kinematic)
+  \item Product fraction: $\phi_B = (1-\phi) - \phi_A$ (volume-fraction constraint)
+  \item Liquid porosity: $\phi_f = \phi S_f$ (definitional)
+  \item Gas porosity: $\phi_g = \phi(1-S_f)$ (definitional)
+  \item Capillary pressure: $p_c = p_c(S_f)$ (capillary closure)
+  \item Gas pressure: $\bar p_g = \bar p_f + p_c(S_f)$ (diagnostic)
+  \item Gas density: $\bar\rho_g = \frac{M_g}{RT}[\bar p_f + p_c(S_f)]$ (diagnostic)
+  \item Mass sources: $c_A^+, c_B^+, c_f^+$ with $c_g^+=0$
+  \item Bulk densities: $\rho_\xi = \phi_\xi \bar\rho_\xi$ (definitional)
+  \item Mixture density: $\rho = \sum \rho_\xi$ (definitional)
+  \item Velocity gradients: $\mbf{L}_s = \dot{\mbf{F}}_s \mbf{F}_s^{-1}$ (kinematic)
+\end{itemize}
+
+\section{Exchange potential evolution}
+\label{sec:tau}
+
+\begin{equation}
+\left.\frac{\partial\tau}{\partial t}\right|_{\mbf{X}_s}=\frac12\mbf{v}_s\cdot\mbf{v}_s+\phi_A\left.\frac{\partial\psi_A^{\mathrm{dis}}}{\partial\phi}\right|_{J_s}-\psi_A+\frac{\lambda}{\bar\rho_A}.
+\label{eq:tau_evolution}
+\end{equation}
+When $P_\phi^\star\to0$, this recovers the prior three-phase form.
+
+\section{The role of the exchange potential}
+\label{sec:tau_role}
+
+\subsection{Compressible gas and bounded suction}
+With compressible gas and capillary closure, the gas pressure $\bar p_g$ evolves according to both mass balance and ideal-gas equation, while fluid pressure $\bar p_f$ remains bounded by capillary physics: $|\nabla \bar p_f| \le p_c(S_f)|\nabla S_f|$.
+
+\subsection{Exchange-potential gradient as thermodynamic forcing}
+Define
+\begin{equation}
+\varepsilon\equiv\frac{|c_f^+\nabla\tau|}{\phi_f|\nabla \bar p_f|}.
+\label{eq:epsilon}
+\end{equation}
+Near active fronts, free-energy contrasts can make $\varepsilon>1$, which is especially important in regions of limited capillary-pressure gradients.
+
+\section{Weak forms: the trapped-gas saturation formulation}
+\label{sec:weak_forms}
+
+\subsection{System summary}
+The following weak forms determine the eight unknowns $(u_x, u_y, \bar p_f, S_f, \phi, \phi_A, \tau, \bar\rho_f)$, with the momentum balance contributing two component equations. The trapped-gas pressure and density are recovered diagnostically.
+
+\paragraph{(1) Momentum balance}
+\begin{equation}
+\int_{\Omega_0}\left[\mbf{P}_s':\nabla_{\mbf{X}}\delta\mbf{u}-\bar p\,J_s\mbf{F}_s^{-T}:\nabla_{\mbf{X}}\delta\mbf{u} -(1-\phi)P_\phi^\star J_s\mbf{F}_s^{-T}:\nabla_{\mbf{X}}\delta\mbf{u} -J_s\rho\mbf{g}\cdot \delta\mbf{u} +\frac{c_f^+}{\phi_f\bar\rho_f}\mbf{F}_s\mbf{W}\cdot \delta\mbf{u}\right]dV_0=0.
+\label{eq:wf_mom}
+\end{equation}
+Here we used the current-frame relative mass flux $\mbf w=\phi_f\bar\rho_f(\mbf v_f-\mbf v_s)$ together with the pull-back relation $\mbf W=J_s\mbf F_s^{-1}\mbf w$, so that
+\begin{equation}
+  \mbf v_f-\mbf v_s = \frac{\mbf F_s\mbf W}{J_s\phi_f\bar\rho_f}.
+\end{equation}
+Therefore the reaction-momentum contribution $-J_s c_f^+(\mbf v_f-\mbf v_s)\cdot\delta\mbf u$ becomes $-(c_f^+/(\phi_f\bar\rho_f))\mbf F_s\mbf W\cdot\delta\mbf u$ inside the pulled-back weak form, and after moving all terms to the left this yields the positive contribution shown above.
+
+\paragraph{(2) Overall pressure equation}
+\begin{equation}
+\int_{\Omega_0}\left[\delta\bar p_f\,J_s\left(C_p\dot{\bar p}_f + C_S\dot S_f + \hat\rho\,\mathrm{tr}(\mbf{L}_s) - \hat\rho\left(\frac{c_A^+}{\bar\rho_A} + \frac{c_B^+}{\bar\rho_B}\right) - c_f^+\right) - \nabla_{\mbf{X}}\delta\bar p_f\cdot\mbf W\right]dV_0=0.
+\label{eq:wf_pressure}
+\end{equation}
+
+\paragraph{(3) Saturation equation}
+\begin{equation}
+\int_{\Omega_0}\left[\delta S_f\,J_s\left(\phi\dot S_f + \frac{\phi_f}{K_f}\dot{\bar p}_f + S_f\,\mathrm{tr}(\mbf{L}_s) - S_f\left(\frac{c_A^+}{\bar\rho_A} + \frac{c_B^+}{\bar\rho_B}\right) - \frac{c_f^+}{\bar\rho_f}\right) - \nabla_{\mbf{X}}\delta S_f\cdot\frac{\mbf W}{\bar\rho_f}\right]dV_0=0.
+\label{eq:wf_saturation}
+\end{equation}
+
+\paragraph{(4) Solid porosity balance}
+\begin{equation}
+\int_{\Omega_0}\left[-\delta\phi\,J_s\dot\phi + \delta\phi\,J_s(1-\phi)\mathrm{tr}(\mbf{L}_s)-\delta\phi\,J_s\frac{c_A^+}{\bar\rho_A}-\delta\phi\,J_s\frac{c_B^+}{\bar\rho_B}\right]dV_0=0.
+\label{eq:wf_solid}
+\end{equation}
+
+\paragraph{(5) Reactant mass balance}
+\begin{equation}
+\int_{\Omega_0}\left[\delta\phi_A\,J_s\dot\phi_A+\delta\phi_A\,J_s\phi_A\mathrm{tr}(\mbf{L}_s)-\delta\phi_A\,J_s\frac{c_A^+}{\bar\rho_A}\right]dV_0=0.
+\label{eq:wf_reactant}
+\end{equation}
+
+\paragraph{(6) Exchange potential evolution}
+\begin{equation}
+\int_{\Omega_0}\delta\tau\,J_s\left[\dot\tau-\frac12\mbf{v}_s\cdot\mbf{v}_s-\phi_A\left.\frac{\partial\psi_A^{\mathrm{dis}}}{\partial\phi}\right|_{J_s}+\psi_A-\frac{\lambda}{\bar\rho_A}\right]dV_0=0.
+\label{eq:wf_tau}
+\end{equation}
+
+\paragraph{(7) Fluid equation of state}
+\begin{equation}
+\int_{\Omega_0}\delta\bar\rho_f\,J_s\left[\dot{\bar\rho}_f-\frac{\bar\rho_f}{K_f}\dot{\bar p}_f\right]dV_0=0.
+\label{eq:wf_eos_f}
+\end{equation}
+
+\paragraph{(8) Diagnostic gas closure}
+After solving Eqs.~\eqref{eq:wf_pressure}--\eqref{eq:wf_eos_f}, the trapped-gas quantities follow pointwise from
+\begin{equation}
+  \bar p_g = \bar p_f + p_c(S_f), \qquad \bar\rho_g = \frac{M_g}{RT}\left[\bar p_f + p_c(S_f)\right], \qquad \phi_g = \phi(1-S_f).
+\label{eq:diag_pc}
+\end{equation}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+We reorganized the four-phase framework to match the three-phase manuscript architecture while retaining partial-saturation physics, distention energy, and a full variational/thermodynamic closure.
+
+\section*{Acknowledgments}
+The authors thank Syed Talha Tirmizi and Emmanuel Ikpesu for implementation and verification support in MOOSE.
+
+\appendix
+\input{variational_principle_appendix}
+\input{coleman_noll_appendix}
+%\input{appendix_no_mechanics}
+
+\bibliography{all}
+\bibliographystyle{plain}
+\end{document}

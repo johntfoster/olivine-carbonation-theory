@@ -1,0 +1,590 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools,graphicx,booktabs,longtable,array}
+\usepackage{lmodern,microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{xurl}
+\input{paper/defs.tex}
+\newcommand{\dev}{\operatorname{dev}}
+\title{Finite-deformation theory of olivine carbonation}
+\author{John T. Foster\\The University of Texas at Austin}
+\date{7 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We develop an isothermal finite-deformation description of olivine carbonation with three compressible elastic solid phases---forsterite, magnesite and silica---and one aqueous phase. Phase and component mass balances couple mineral conversion to aqueous transport and deformation of a common solid skeleton. A logarithmic elastic free energy satisfies the scalar-distention restriction and determines mineral density, stress and Biot coefficients. Aqueous reactions use mass-based stoichiometric coefficients, while a single fluid free energy determines density and component potentials. A common exchange potential supplies the transfer-work contributions to phase-changing reaction rates and fluid momentum. Pullback to the solid reference configuration gives the balances and weak forms. Synthetic checks assess conservation, constitutive derivatives, transfer work and reference transformations.
+\end{abstract}
+
+\section{Physical setting and assumptions}
+The formulation describes mass transfer, aqueous transport and elastic deformation during carbonation. The solid and fluid constituents occupy a common current region and exchange mass through chemical reactions. Their volume fractions, intrinsic densities and component mass fractions determine local storage. A matched logarithmic elastic energy couples mineral compression to skeleton deformation \citep{matchedlog}.
+
+The net chemical transformation is
+% provenance: application | C:eq:unified_stoich_current
+\begin{equation}
+ \mathrm{Mg_2SiO_4}+2\mathrm{CO_2(aq)}\longrightarrow
+ 2\mathrm{MgCO_3}+\mathrm{SiO_2}.
+ \label{eq:application_reaction}
+\end{equation}
+The phase sets are \(\mc S=\{A,B,C\}\), with \(A\) forsterite, \(B\) magnesite and \(C\) silica, and \(\mc F=\{f\}\), the aqueous phase. The index \(\xi\in\mc S\cup\mc F\) ranges over all phases, and \(s\in\mc S\) ranges over the solids. Each solid is a pure-component phase; aqueous components \(\alpha\) are the chemical species enumerated below. All solids share a common skeleton motion. The specialization is isothermal at prescribed \(\theta>0\), elastic, with identity plastic and stress-free factors. A thermal reservoir supplies the heat required to maintain the prescribed temperature.
+
+The aqueous fluid fills the pore volume, so \(\phi=\phi_f\) and \(S_f=1\). The interfluid interfacial energy is \(\gamma=0\). Ionic species contribute to charge density, electrochemical transport and the electric field. We take the permittivity to be constant and common to all phases. The model applies to elastic deformation and reaction within the domain of positive participating phase masses.
+
+\section{Phase and component measures and solid kinematics}
+\(\rho_\xi^\alpha\) and \(\rho_\xi\) are masses per current mixture volume; \(\bar\rho_\xi\) is mass per current phase volume. The definitions are
+% provenance: inherited | C:eq:component_partial_density_representation,C:eq:phase_mass_fraction,C:eq:volume_fraction_constraint
+\begin{equation}
+ \rho_\xi=\phi_\xi\bar\rho_\xi=\sum_\alpha\rho_\xi^\alpha,
+ \quad \rho_\xi^\alpha=\phi_\xi\bar\rho_\xi\eta_\xi^\alpha,
+ \quad \sum_\alpha\eta_\xi^\alpha=1,
+ \quad \phi_f+\sum_{s\in\mc S}\phi_s=1.
+ \label{eq:densities}
+\end{equation}
+For a pure solid its only mass fraction is one. The common skeleton coordinate is \(\mbf X\), while \(\mbf X_\xi\) denotes a phase-attached reference coordinate when needed. For the mobile fluid, \(\mbf X_f\) follows fluid motion, while \(\mbf X\) follows the skeleton.
+% provenance: inherited | C:eq:common_solid_skeleton_motion,C:eq:MC_skeleton_rate_convention,C:eq:MC_phase_skeleton_transport_identity
+\begin{align}
+ \mbf x&=\bs\chi(\mbf X,t),\quad \mbf F=\nabla_{\mbf X}\bs\chi,
+ \quad J=\det\mbf F>0,\quad \mbf v_{\mc S}=\partial_t\bs\chi|_{\mbf X},\label{eq:motion}\\
+ \phasedot\Gamma&=D_{\mc S}\Gamma/Dt,
+ \qquad D_\xi\Gamma/Dt=\phasedot\Gamma+
+ (\mbf v_\xi-\mbf v_{\mc S})\cdot\nabla_{\mbf x}\Gamma.
+ \label{eq:rates}
+\end{align}
+A heavy dot follows the solid skeleton. An ordinary dot on \(\mc C_\xi^\alpha\) follows phase \(\xi\).
+
+The Jacobian \(J_\xi\) maps phase-reference volume to current volume; for every solid, \(J_s=J\). The phase-reference material increment \(\mc C_\xi^\alpha\), in kg per phase reference volume, contains both conversion and transport relative to the phase:
+% provenance: inherited | C:eq:augmented_component_material_measure,C:eq:reference_conversion_accumulation_rate
+\begin{align}
+ \rho_{\xi0}^\alpha+\mc C_\xi^\alpha
+ &=J_\xi\phi_\xi\bar\rho_\xi\eta_\xi^\alpha,\label{eq:material_measure}\\
+ \dot c_\xi^\alpha=\frac{\dot{\mc C}_\xi^\alpha}{J_\xi}
+ &=\sum_m\nu_{\xi(m)}^\alpha r_{(m)}
+ -\nabla_{\mbf x}\cdot(\mbf j_{\xi,{\rm disp}}^\alpha+\mbf j_{\xi,{\rm diff}}^\alpha).
+ \label{eq:material_rate}
+\end{align}
+Thus \(\dot c_\xi^\alpha\) includes reaction production and the divergence of component-relative transport. The separate zero-sum constitutive specialization and the spatial balance are
+% provenance: inherited | C:eq:separate_relative_flux_sum_closure,C:eq:averaged_component_spatial_mass
+\begin{align}
+ \sum_\alpha\mbf j_{\xi,k}^\alpha&=\mbf0,
+ \quad k\in\{{\rm disp},{\rm diff}\},\label{eq:zero_sum_flux}\\
+ \partial_t\rho_\xi^\alpha+\nabla_{\mbf x}\cdot
+ (\rho_\xi^\alpha\mbf v_\xi+\mbf j_{\xi,{\rm disp}}^\alpha+\mbf j_{\xi,{\rm diff}}^\alpha)
+ &=\sum_m\nu_{\xi(m)}^\alpha r_{(m)}.\label{eq:spatial_component_balance}
+\end{align}
+Hence \(\sum_\alpha\dot c_f^\alpha\) is the net aqueous phase mass-production rate. For each pure solid, the component-relative fluxes are zero.
+
+The compressible scalar-distention specialization is
+% provenance: inherited | C:eq:MC_solid_distension_decomposition,C:eq:MC_scalar_distension_deformation,C:eq:MC_solid_true_mass_conservation
+\begin{equation}
+ \mbf F=\mbf A_s\bar{\mbf F}_s,
+ \quad \mbf A_s=a_s^{1/3}\mbf I,
+ \quad J=a_s\bar J_s,
+ \quad \bar J_s=\det\bar{\mbf F}_s=\frac{\bar\rho_{s0}}{\bar\rho_s}.
+ \label{eq:distention}
+\end{equation}
+Summing the solid component measures gives
+% provenance: inherited | C:eq:MC_solid_phase_material_mass,C:eq:MC_solid_distension_mass_relation,C:eq:MC_solid_distension_evolution
+\begin{align}
+ J\phi_s\bar\rho_s&=\phi_{s0}\bar\rho_{s0}+\mc C_s,
+ \quad a_s\phi_s=\phi_{s0}+\mc C_s/\bar\rho_{s0},\label{eq:solid_material_mass}\\
+ \frac{\phasedot a_s}{a_s}&=\nabla_{\mbf x}\cdot\mbf v_{\mc S}
+ +\frac{\phasedot{\bar\rho}_s}{\bar\rho_s},
+ \quad \phasedot{\mc C}_s=J\sum_m\nu_{s(m)}r_{(m)}.\label{eq:distention_rate}
+\end{align}
+Taking determinants of the deformation split gives \(a_s=J/\bar J_s\), including during mass exchange. The adopted true-material density relation \(\bar J_s\bar\rho_s=\bar\rho_{s0}\), together with phase mass balance, gives \(a_s\phi_s=\phi_{s0}+\mc C_s/\bar\rho_{s0}\). Thus the accumulated mass exchange enters the relation between distention and phase volume fraction through \(\mc C_s\). When \(\mc C_s=0\), this relation reduces to \(a_s=\phi_{s0}/\phi_s\). Reaction can change \(\phi_s\) at fixed \(J\) through the material increment. The constitutive equations and boundary conditions determine the resulting stress.
+
+\section{Variational statement and transfer work}
+At a fixed instantaneous thermal state, coordinate stationarity gives
+% provenance: inherited | C:eq:vp_principle
+\begin{equation}
+ \delta\int_{t_1}^{t_2}(T-U)\dt+
+ \int_{t_1}^{t_2}\left(\delta W+\sum_{k=1}^4\delta C_k\right)\dt=0.
+ \label{eq:variational_principle}
+\end{equation}
+Let \(\mc B\) denote the current mixture region and \(\mc B_{\xi0}\) the phase-reference region. The body acceleration is \(\mbf g\), the interaction force per mixture volume is \(\mbf b_\xi\), and \(\mbf t_\xi\) is phase traction per current boundary area. The electrical variables \(\varphi\), \(\varrho\), and \(\bar q\) denote potential, charge per mixture volume, and outward electric displacement. For these four phases, the energies and external virtual work are
+% provenance: specialization | C:eq:T_def,C:eq:U_def,C:eq:W_def
+\begin{align}
+ T&=\sum_\xi\int_{\mc B}\tfrac12\rho_\xi|\mbf v_\xi|^2\dv,
+ \quad U=\sum_\xi\int_{\mc B}(\rho_\xi\psi_\xi+\phi_\xi\omega_\xi^+)\dv,\label{eq:energies}\\
+ \delta W&=\int_{\mc B}\left[\sum_\xi(\rho_\xi\mbf g+\mbf b_\xi)\cdot\delta\mbf x_\xi
+ +\sum_{\xi,\alpha}(\psi_\xi+L_\xi^\alpha)\frac{\delta\mc C_\xi^\alpha}{J_\xi}
+ -\varrho\delta\varphi\right]\dv\notag\\
+ &\quad+\sum_\xi\int_{\partial\mc B}\mbf t_\xi\cdot\delta\mbf x_\xi\,{\rm d}a
+ +\int_{\partial\mc B}\bar q\delta\varphi\,{\rm d}a.\label{eq:virtual_work}
+\end{align}
+The four constraints are
+% provenance: inherited | C:eq:C1_def,C:eq:C2_def,C:eq:C3_def,C:eq:C4_def
+\begin{align}
+ C_1&=\int_{\mc B}\lambda(\sum_\xi\phi_\xi-1)\dv,\notag\\
+ C_2&=\sum_{\xi,\alpha}\int_{\mc B_{\xi0}}\pi_\xi^\alpha
+ \left(J_\xi-\frac{\rho_{\xi0}^\alpha+\mc C_\xi^\alpha}{\phi_\xi\bar\rho_\xi\eta_\xi^\alpha}\right)\dVxi,\notag\\
+ C_3&=\sum_\xi\int_{\mc B}\Pi_\xi(\sum_\alpha\eta_\xi^\alpha-1)\dv,\notag\\
+ C_4&=\int_{\mc B}\tau\sum_{\xi,\alpha}\frac{\dot{\mc C}_\xi^\alpha}{J_\xi}\dv.
+ \label{eq:constraints}
+\end{align}
+The component sums in a pure solid have one term. The ratios in these constraints are evaluated for positive component masses; phase boundaries require an active-phase limit.
+
+The material-measure variation gives
+\(\delta\int\rho_\xi^\alpha\Upsilon_\xi\dv
+=\int[\rho_\xi^\alpha\delta\Upsilon_\xi+
+\Upsilon_\xi\delta\mc C_\xi^\alpha/J_\xi]\dv\).
+Thus the inserted Helmholtz storage in \(-\delta U\) cancels the \(+\psi_\xi\) supply in \(\delta W\). Time integration of kinetic work gives both \(-\rho_\xi\mbf a_\xi\) and \(-\sum_\alpha\dot c_\xi^\alpha\mbf v_\xi\). The material-insertion constraint gives the complementary gradient term. Combining these variations gives the transfer relation
+% provenance: inherited | C:eq:el_conversion_component,C:eq:MC_neutral_component_euler_identity
+\begin{align}
+ \frac{D_\xi\tau}{Dt}&=\tfrac12|\mbf v_\xi|^2+L_\xi^\alpha
+ -\frac{\pi_\xi^\alpha}{\phi_\xi\bar\rho_\xi\eta_\xi^\alpha},\label{eq:transfer_variation}\\
+ \hat\mu_\xi^\alpha&=\psi_\xi+
+ \frac{\pi_\xi^\alpha}{\phi_\xi\bar\rho_\xi\eta_\xi^\alpha},
+ \quad \mu_\xi^\alpha=\hat\mu_\xi^\alpha+z_\xi^\alpha\varphi.\label{eq:component_euler}
+\end{align}
+Here \(\hat\mu\), \(\mu\), \(L\), and \(\psi\) have units J/kg. The specific charge \(z_\xi^\alpha\) has units C/kg.
+
+Choose any present solid \(s_\star\) as the transfer reference. The normalization and its immediate consequence are
+% provenance: inherited | C:eq:MC_transfer_work_reference_normalization,C:eq:MC_admissible_conversion_component,C:eq:MC_transfer_work_full_recovery
+\begin{align}
+ \psi_{s_\star}+L_{s_\star}^{N}&=\hat\mu_{s_\star}^{N},
+ \qquad \phasedot\tau=\tfrac12|\mbf v_{\mc S}|^2,\label{eq:tau_evolution}\\
+ L_\xi^\alpha&=\hat\mu_\xi^\alpha-\psi_\xi+
+ D_\xi\tau/Dt-\tfrac12|\mbf v_\xi|^2.\label{eq:transfer_recovery}
+\end{align}
+The single exchange potential \(\tau\) has a prescribed initial field and a fixed time-independent additive constant. For a stationary skeleton, \eqref{eq:tau_evolution} preserves that initial field. Any present solid can serve as the transfer reference because all solids share the same velocity and normalization.
+
+Writing \(\mbf v_f=\mbf v_{\mc S}+\mbf w_f/\rho_f\) gives the explicit fluid transfer offset:
+% provenance: derived | C:eq:MC_generalized_transfer_phase_offset,C:eq:relative_flux_velocity_reconstruction,C:eq:MC_admissible_conversion_component
+\begin{equation}
+ \frac{D_s\tau}{Dt}-\tfrac12|\mbf v_{\mc S}|^2=0,
+ \quad \frac{D_f\tau}{Dt}-\tfrac12|\mbf v_f|^2
+ =\frac{\mbf w_f}{\rho_f}\cdot(\nabla_{\mbf x}\tau-\mbf v_{\mc S})
+ -\tfrac12\left|\frac{\mbf w_f}{\rho_f}\right|^2.
+ \label{eq:fluid_transfer_offset}
+\end{equation}
+The offset is retained in phase-changing reaction power below.
+
+\section{Elastic free energy and constitutive restrictions}
+With all plastic and stress-free factors equal to identity, we use the constitutive state
+\(\psi_s(\bar{\mbf F}_s,\mbf A_s,\bar\rho_s,\theta)\).
+For isotropic distention its constitutive restrictions include
+% provenance: specialization | C:eq:MC_phase_pressure_definitions,C:eq:MC_scalar_distension_solid_stress,C:eq:MC_scalar_distension_stress_restriction
+\begin{equation}
+ \bar p_s=\bar\rho_s^2\left.\p{\psi_s}{\bar\rho_s}\right|_{\bar{\mbf F}_s,a_s},
+ \quad \bs\sigma_s'=\rho_s\left.\p{\psi_s}{\bar{\mbf F}_s}\right|_{a_s,\bar\rho_s}\bar{\mbf F}_s^T,
+ \quad \tfrac13\operatorname{tr}\bs\sigma_s'=\rho_s a_s\left.\p{\psi_s}{a_s}\right|_{\bar{\mbf F}_s,\bar\rho_s}.
+ \label{eq:solid_restrictions}
+\end{equation}
+The electrical enthalpy selected below has zero density derivative. The constitutive derivatives treat kinematics and density as independent arguments before imposing their mass-conservation relation: \(J=a_s\det\bar{\mbf F}_s\) is a kinematic argument, while \(\bar\rho_{s0}/\bar\rho_s\) is a density argument. Their relation to \(\bar J_s\) is imposed \emph{after} taking the indicated partial derivatives.
+
+Let \(K_s>0\) be the reference intrinsic mineral modulus, \(G_s>0\) a phase-normalized skeleton shear modulus, and \(0<K<\phi_{s0}K_s\) the drained skeleton bulk modulus allocated to solid \(s\) per unit mixture reference volume. We use the same symbol \(K\) for each solid branch; its value may differ by mineral, with the branch understood from \(s\). These material parameters specify the elastic response of each branch. The reference fraction \(\phi_{s0}\) converts \(K\) to the phase-normalized coefficient \(K/\phi_{s0}\). An admissible energy is
+% provenance: application | C:eq:MC_solid_general_free_energy,B:eq:distention-mineral-volumetric-energy
+\begin{align}
+ \psi_s={}&\psi_s^0+\frac1{\bar\rho_{s0}}\left\{
+ \frac{G_s}{2}[J^{-2/3}\mbf F:\mbf F-3]
+ +\frac{K}{2\phi_{s0}(1-K/(\phi_{s0}K_s))}\left[\ln\frac{J}{\bar\rho_{s0}/\bar\rho_s}\right]^2
+ +\frac{K_s}2\left[\ln\frac{\bar\rho_{s0}}{\bar\rho_s}\right]^2\right\}.
+ \label{eq:solid_energy}
+\end{align}
+\(\psi_s^0\) is the chemically consistent reference Helmholtz energy per mass at the prescribed temperature. It contributes to reaction potentials, and its mechanical derivatives are zero. The mixture reference storage is \(\sum_sJ\rho_s\psi_s\), with the reacting mass \(J\rho_s=\phi_{s0}\bar\rho_{s0}+\mc C_s\). Added material takes the recipient phase state, under local equilibrium within each phase. Phase connectivity and the modulus allocation in \eqref{eq:solid_energy} are assumptions requiring calibration.
+
+Differentiation before enforcing true mass conservation, then substitution of \(\bar\rho_{s0}/\bar\rho_s=\bar J_s\), gives
+% provenance: derived | C:eq:MC_phase_pressure_definitions,C:eq:MC_scalar_distension_solid_stress,B:eq:matched-energy-density-derivative
+\begin{align}
+ \bar p_s&=\frac{[K/(\phi_{s0}(1-K/(\phi_{s0}K_s)))]\ln(J/\bar J_s)-K_s\ln\bar J_s}{\bar J_s},\label{eq:solid_pressure}\\
+ \bs\sigma_s'&=\frac{\rho_s}{\bar\rho_{s0}}\left[
+ G_sJ^{-2/3}\dev(\mbf F\mbf F^T)+\frac{K\ln(J/\bar J_s)}{\phi_{s0}(1-K/(\phi_{s0}K_s))}\mbf I\right].\label{eq:solid_single_prime}
+\end{align}
+Because the isochoric term is invariant under scalar changes in \(a_s\), both the true-deformation trace and the distention derivative in \eqref{eq:solid_restrictions} equal
+\(\rho_s K\ln(J/\bar J_s)/[\bar\rho_{s0}\phi_{s0}(1-K/(\phi_{s0}K_s))]\).
+Thus the energy satisfies the scalar-distention restriction in \eqref{eq:solid_restrictions}.
+
+The intrinsic mechanical mineral mean stress is recovered from the same pair of derivatives:
+% provenance: derived | C:eq:MC_solid_stress_definition,B:eq:matched-logarithmic-mineral-stress
+\begin{equation}
+ \frac{1}{3\phi_s}\operatorname{tr}\bs\sigma_s'-\bar p_s
+ =\frac{K_s\ln\bar J_s}{\bar J_s}.
+ \label{eq:intrinsic_mineral_mean}
+\end{equation}
+This expression gives the intrinsic mechanical mean stress. The electric field contributes the Maxwell stress defined below.
+
+
+\subsection{Electrical state, pressure identification and scalar mineral solve}
+For definiteness choose a common constant permittivity \(\epsilon>0\) and a linear electric enthalpy. The exact specialized electrical and volume-fraction relations are
+% provenance: application | C:eq:electric_field_definitions,C:eq:MC_volume_fraction_restrictions,C:eq:gauss_law
+\begin{align}
+ \mbf E&=-\nabla_{\mbf x}\varphi,
+ \quad \omega_\xi^+=-\tfrac12\epsilon|\mbf E|^2,
+ \quad \mbf d_\xi=\epsilon\mbf E,
+ \quad \mbf d=\sum_\xi\phi_\xi\mbf d_\xi=\epsilon\mbf E,\label{eq:electric_closure}\\
+ \bar p_\xi-\omega_\xi^+&=\bar p_E=-\lambda,
+ \quad \bar p_s=\bar p_f,
+ \quad \nabla_{\mbf x}\cdot\mbf d=\varrho
+ =\sum_\alpha z_f^\alpha\phi_f\bar\rho_f\eta_f^\alpha.\label{eq:pressure_gauss}
+\end{align}
+In an electric field, \(\bar p_E=\bar p_f+\epsilon|\mbf E|^2/2\). For \(\mbf E=\mbf0\) both reduce to the common pore pressure. The pure solids are uncharged. Gauss’ law resolves the field associated with the ionic charge density, including formal Debye-scale effects.
+
+Using \(\bar p_s=\bar p_f\), the local mineral equation is
+% provenance: derived | C:eq:MC_solid_volume_fraction_restriction,B:eq:verification-mineral-factors
+\begin{equation}
+ K_s\ln\bar J_s+\left(1-\frac{K}{\phi_{s0}K_s}\right)\bar p_f\bar J_s-\frac{K}{\phi_{s0}}\ln J=0.
+ \label{eq:mineral_solve}
+\end{equation}
+It has a unique positive root at \(\bar p_f\ge0\). For negative pressure, use the branch continuous from zero pressure only while
+\(K_s+\left(1-K/(\phi_{s0}K_s)\right)\bar p_f\bar J_s>0\).
+Also require \(0<\bar J_s<e\) for positive tangent of the prescribed mineral mean-stress law, positive phase masses and positive pore volume. Constitutive reference constants and chemical standard states must use the same pressure origin; \(\bar p_f=0\) defines the mechanical pressure origin.
+
+At fixed \(\bar p_E\), electric field and instantaneous reacted mass per reference volume, implicit differentiation gives
+% provenance: derived | C:eq:MC_phase_biot_coefficient,B:eq:solid-density-eos-tangent
+\begin{equation}
+ \left.\p{\bar J_s}{J}\right|_{\bar p_E,\mbf E}
+ =\frac{K\bar J_s}{\phi_{s0}J[K_s+\left(1-K/(\phi_{s0}K_s)\right)\bar p_f\bar J_s]},
+ \quad 1-\bar B_s=a_s\left.\p{\bar J_s}{J}\right|_{\bar p_E,\mbf E}.
+ \label{eq:phase_biot}
+\end{equation}
+The last equality follows directly from the specific-volume definition with
+\(\bar v_s=\bar J_s/\bar\rho_{s0}\).
+% provenance: inherited | C:eq:MC_phase_biot_split,C:eq:MC_solid_biot_rollup_coefficient,C:eq:solid_reference_effective_piola_stress
+\begin{align}
+ \bs\sigma_s''&=\bs\sigma_s'-\phi_s(1-\bar B_s)\bar p_E\mbf I,
+ \quad \bs\sigma''=\sum_s\bs\sigma_s'',\label{eq:biot_stress}\\
+ B&=1-\sum_s\phi_s(1-\bar B_s),
+ \quad \mbf P''=J\bs\sigma''\mbf F^{-T},\label{eq:biot_aggregate}\\
+ \bs\sigma&=\bs\sigma''-B\bar p_E\mbf I+\mbf E\otimes\mbf d
+ =\sum_s\bs\sigma_s'-\bar p_f\mbf I+
+ \epsilon(\mbf E\otimes\mbf E-\tfrac12|\mbf E|^2\mbf I).\label{eq:total_stress}
+\end{align}
+The final equality is an algebraic check on electrical pressure bookkeeping for common permittivity. The double-prime stress is evaluated at the current prescribed pressure; the drained response follows by setting pressure and electric field to zero.
+
+\subsection{Elastic limiting cases}
+For a single nonreacting solid, \(J\rho_s=\phi_{s0}\bar\rho_{s0}\).
+In the matched logarithmic elastic law, identify the bulk moduli with \(K\) and \(K_s\), and the shear modulus with \(G=\phi_{s0}G_s\). Then \(J\rho_s(\psi_s-\psi_s^0)\) equals its coupled elastic energy, and \eqref{eq:mineral_solve} is exactly its elastic mineral residual. The mineral modulus remains \(K_s\).
+
+At zero pressure and zero field,
+\(\bar J_s=J^{K/(\phi_{s0}K_s)}\).
+The drained mixture reference energy is
+\(\sum_s(\phi_{s0}+\mc C_s/\bar\rho_{s0})
+[G_s(J^{-2/3}\mbf F:\mbf F-3)/2+(K/\phi_{s0})(\ln J)^2/2]\).
+For a frozen reacted state about \(J=1\),
+% provenance: derived | C:eq:MC_solid_biot_rollup_coefficient,B:eq:poroplastic-biot-correction
+\begin{equation}
+ B_0=1-\sum_s\frac{\phi_s K}{\phi_{s0}K_s},
+ \qquad K_{\rm drained}=\sum_s\frac{\phi_s K}{\phi_{s0}},
+ \qquad G_{\rm drained}=\sum_s\phi_s G_s.
+ \label{eq:linear_limit}
+\end{equation}
+These are tangent limits at the stated state. At the unreacted reference state, each participating solid contributes its allocated \(K\) to the drained modulus. In the incompressible-mineral limit \(K_s\to\infty\), \(\bar J_s\to1\), \(a_s\to J\), and \(B\to1\); these are the incompressible-mineral kinematics.
+
+\section{Aqueous components and chemistry}
+\label{sec:chemistry}
+The aqueous components are the species in Table~\ref{tab:species}. All dissolved species belong to the aqueous phase. Here \(M_\alpha\) is species molar mass, \(F_{\rm Far}\) is Faraday’s constant, and the integer in the last column is the valence used to compute the specific charge \(z_f^\alpha\). Atomic masses are used consistently; electron mass is neglected in the chemical mass bookkeeping.
+\begin{table}[ht]
+\centering
+\begin{tabular}{clrrrrrr}
+\toprule
+\(\alpha\)& Species & Mg & Si & C & H & O &\(M_\alpha z_f^\alpha/F_{\rm Far}\)\\
+\midrule
+1&H\(^{+}\)&0&0&0&1&0&1\\
+2&OH\(^{-}\)&0&0&0&1&1&-1\\
+3&CO\(_2\)(aq)&0&0&1&0&2&0\\
+4&HCO\(_3^{-}\)&0&0&1&1&3&-1\\
+5&CO\(_3^{2-}\)&0&0&1&0&3&-2\\
+6&Mg\(^{2+}\)&1&0&0&0&0&2\\
+7&H\(_4\)SiO\(_4\)&0&1&0&4&4&0\\
+8&H\(_3\)SiO\(_4^{-}\)&0&1&0&3&4&-1\\
+\(N=9\)&H\(_2\)O&0&0&0&2&1&0\\
+\bottomrule
+\end{tabular}
+\caption{A minimal application species set within the single aqueous phase. Other aqueous complexes require additional components and compatible free-energy data.}
+\label{tab:species}
+\end{table}
+
+\subsection{One free energy for density and component potentials}
+We use \(\psi_f(\bar\rho_f,\{\eta_f^\alpha\},\theta)\) and
+\(\bar p_f=\bar\rho_f^2\partial\psi_f/\partial\bar\rho_f\).
+An ideal-mixture example can be specified through its mass-specific Gibbs transform, with mole fractions used only as constitutive functions of the mass fractions:
+% provenance: application | C:eq:MC_fluid_pressure_definition,C:eq:MC_absolute_neutral_component_potential
+\begin{align}
+ x_f^\alpha&=\frac{\eta_f^\alpha/M_\alpha}{\sum_\beta\eta_f^\beta/M_\beta},
+ \qquad \bar v_f^0=\sum_\alpha\frac{\eta_f^\alpha v_\alpha^0}{M_\alpha},\label{eq:aqueous_mole_fractions}\\
+ g_f(\bar p_f,\{\eta_f^\alpha\})&=
+ \sum_\alpha\frac{\eta_f^\alpha}{M_\alpha}
+ \left[g_\alpha^0+R\theta\ln x_f^\alpha
+ +v_\alpha^0K_f(1-e^{-(\bar p_f-p_0)/K_f})\right].\label{eq:aqueous_gibbs}
+\end{align}
+\(g_\alpha^0\) is a standard molar chemical potential, \(v_\alpha^0>0\) a constant molar volume and \(K_f>0\) a pressure modulus. These constitutive parameters require material calibration. \(p_0\) uses the same pressure origin as \(\bar p_f\). This example assumes ideal mixing. A nonideal model may replace it only by supplying a differentiable thermodynamic potential and its consistent derivatives.
+
+At fixed mass fractions the Legendre derivative and inverse give
+% provenance: derived | C:eq:MC_fluid_pressure_definition,C:eq:MC_absolute_neutral_component_potential
+\begin{align}
+ \frac1{\bar\rho_f}=\left.\p{g_f}{\bar p_f}\right|_{\eta}
+ &=\bar v_f^0e^{-(\bar p_f-p_0)/K_f},
+ \quad \bar p_f=p_0+K_f\ln(\bar\rho_f\bar v_f^0),\label{eq:aqueous_eos}\\
+ \psi_f(\bar\rho_f,\eta)&=g_f(\bar p_f(\bar\rho_f,\eta),\eta)-\frac{\bar p_f(\bar\rho_f,\eta)}{\bar\rho_f},\label{eq:aqueous_helmholtz}\\
+ \hat\mu_f^\alpha&=\frac1{M_\alpha}
+ [g_\alpha^0+R\theta\ln x_f^\alpha+v_\alpha^0K_f(1-e^{-(\bar p_f-p_0)/K_f})].\label{eq:aqueous_potentials}
+\end{align}
+For example, \(\partial\psi_f/\partial\bar\rho_f\) contains the chain terms
+\((\partial g_f/\partial\bar p_f-1/\bar\rho_f)\partial\bar p_f/\partial\bar\rho_f\), which cancel, leaving \(\bar p_f/\bar\rho_f^2\). The constituent-mass derivative, taken at fixed phase volume and other component densities, yields \eqref{eq:aqueous_potentials}. Constant density-independent electrical enthalpy adds zero to this derivative. The pure-solid counterpart is
+% provenance: specialization | C:eq:MC_neutral_component_euler_identity,C:eq:MC_absolute_neutral_component_potential
+\begin{equation}
+ \hat\mu_s=\psi_s+\bar p_s/\bar\rho_s,
+ \qquad s\in\{A,B,C\}.
+ \label{eq:solid_potential}
+\end{equation}
+The reference chemical energies in \(\psi_s^0\) and \(g_\alpha^0\) must share an elemental reference convention. Compatible chemical data determine reaction direction and equilibrium composition.
+
+\subsection{Mass-based reaction mechanisms}
+The three mineral mechanisms and four aqueous mechanisms are chosen as
+% provenance: application | C:eq:unified_stoich_current,C:eq:mechanism_charge_conservation
+\begin{align}
+ (1):\quad A+4\mathrm H^+&\rightleftharpoons2\mathrm{Mg}^{2+}+\mathrm{H_4SiO_4},\notag\\
+ (2):\quad\mathrm{Mg}^{2+}+\mathrm{HCO_3^-}&\rightleftharpoons B+\mathrm H^+,\notag\\
+ (3):\quad\mathrm{H_4SiO_4}&\rightleftharpoons C+2\mathrm{H_2O},\notag\\
+ (4):\quad\mathrm{H_2O}&\rightleftharpoons\mathrm H^++\mathrm{OH^-},\notag\\
+ (5):\quad\mathrm{CO_2(aq)}+\mathrm{H_2O}&\rightleftharpoons\mathrm H^++\mathrm{HCO_3^-},\notag\\
+ (6):\quad\mathrm{HCO_3^-}&\rightleftharpoons\mathrm H^++\mathrm{CO_3^{2-}},\notag\\
+ (7):\quad\mathrm{H_4SiO_4}&\rightleftharpoons\mathrm H^++\mathrm{H_3SiO_4^-}.
+ \label{eq:mechanisms}
+\end{align}
+Here \(r_{(m)}\) is chosen to be molar progress per \emph{current mixture} volume and time, mol\,m\(^{-3}\)s\(^{-1}\). Each \(\nu_{\xi(m)}^\alpha\) is its signed molar stoichiometric number multiplied by \(M_\alpha\), in kg/mol. For example,
+\(\nu_{A(1)}=-M_A\), \(\nu_{f(1)}^{1}=-4M_1\),
+\(\nu_{f(1)}^{6}=2M_6\), \(\nu_{f(1)}^{7}=M_7\).
+Reference-volume production is \(J\nu_{\xi(m)}^\alpha r_{(m)}\).
+
+Every column satisfies the mass and charge constraints, and atom conservation gives further exact checks:
+% provenance: derived | C:eq:unified_stoich_current,C:eq:material_increment_insertion_constraint,C:eq:mechanism_charge_conservation
+\begin{equation}
+ \sum_{\xi,\alpha}\nu_{\xi(m)}^\alpha=0,
+ \qquad \sum_{\xi,\alpha}z_\xi^\alpha\nu_{\xi(m)}^\alpha=0,
+ \qquad \sum_{\xi,\alpha}\frac{n_e^{\xi\alpha}}{M_{\xi\alpha}}\nu_{\xi(m)}^\alpha=0.
+ \label{eq:mechanism_conservation}
+\end{equation}
+\(n_e^{\xi\alpha}\) is the number of atoms of element \(e\) in one formula unit. Element balances are obtained by weighting the component mass balances with \(n_e/M\). Mechanisms (1), twice (2), (3), and twice (5) sum to \eqref{eq:application_reaction}. Independent rates allow dissolved Mg and Si to accumulate or travel before precipitation. The local rate ratios follow from the individual kinetic laws.
+
+\section{Reaction and transport laws}
+At common temperature the uncoupled Onsager reaction law becomes
+% provenance: specialization | C:eq:MC_onsager_reaction_rate,C:eq:MC_affinity_projection,C:eq:MC_reaction_power_local_thermal_equilibrium
+\begin{align}
+ r_{(m)}&=-\frac{K_{(m)}}{\theta}
+ \sum_{\xi,\alpha}(\psi_\xi+L_\xi^\alpha)\nu_{\xi(m)}^\alpha,
+ \qquad K_{(m)}>0,\label{eq:reaction_kinetics}\\
+ \mc A_{(m)}&=-\sum_{\xi,\alpha}\mu_\xi^\alpha\nu_{\xi(m)}^\alpha
+ =-\sum_{\xi,\alpha}\hat\mu_\xi^\alpha\nu_{\xi(m)}^\alpha,\label{eq:affinity}\\
+ -\sum_{\xi,\alpha}(\psi_\xi+L_\xi^\alpha)\nu_{\xi(m)}^\alpha
+ &=\mc A_{(m)}-
+ \left(D_f\tau/Dt-\tfrac12|\mbf v_f|^2\right)\sum_\alpha\nu_{f(m)}^\alpha.
+ \label{eq:reaction_force}
+\end{align}
+The electrical potential cancels by charge conservation, while the solid transfer offsets vanish by \eqref{eq:tau_evolution}. The fluid offset contributes to dissolution and precipitation through the net aqueous mass transfer in \eqref{eq:reaction_force}. \(K_{(m)}\) has units mol\(^2\)K/(J\,m\(^3\)s) under the declared molar progress convention and is positive in the interior of the admissible composition domain. These smooth rate laws apply to positive participating masses. Phase disappearance and nucleation require an active-set or degenerate-mobility extension.
+
+For homogeneous mechanisms (4)--(7), \(\sum_\alpha\nu_{f(m)}^\alpha=0\). Their rapid-equilibrium limit is consequently \(\mc A_{(m)}=0\), and \eqref{eq:aqueous_potentials} gives
+% provenance: derived | C:eq:MC_affinity_projection,C:eq:MC_onsager_reaction_rate
+\begin{equation}
+ \prod_\alpha(x_f^\alpha)^{\nu_{f(m)}^\alpha/M_\alpha}
+ =\exp\left[-\frac1{R\theta}\sum_\alpha
+ \frac{\nu_{f(m)}^\alpha}{M_\alpha}
+ \{g_\alpha^0+v_\alpha^0K_f(1-e^{-(\bar p_f-p_0)/K_f})\}\right],
+ \quad m=4,\ldots,7.
+ \label{eq:speciation}
+\end{equation}
+Equation \eqref{eq:speciation} is the usual mass-action equilibrium relation \citep{ewing1994}, specialized to the ideal-mixture chemical potentials in \eqref{eq:aqueous_potentials}; its pressure dependence follows from the chosen Gibbs energy in \eqref{eq:aqueous_gibbs}. The finite-rate system uses all seven laws in \eqref{eq:reaction_kinetics}. In the optional rapid-equilibrium limit, \eqref{eq:speciation} replaces the four aqueous rate laws; their four rates then act as algebraic multipliers determined by the species balances.
+
+The isothermal transport law, with water as reference component \(N\), is
+% provenance: specialization | C:eq:MC_diffusion_closure,C:eq:MC_dispersion_closure,C:eq:MC_relative_transport_closures
+\begin{align}
+ \mbf j_{f,k}^\alpha&=-\sum_{\beta\ne N}\mbf D_{f,k}^{\alpha\beta}
+ [\nabla_{\mbf x}(\hat\mu_f^\beta-\hat\mu_f^N)
+ +(z_f^\beta-z_f^N)\nabla_{\mbf x}\varphi],\quad\alpha\ne N,\notag\\
+ \mbf j_{f,k}^N&=-\sum_{\alpha\ne N}\mbf j_{f,k}^\alpha,
+ \qquad k\in\{{\rm diff},{\rm disp}\}.
+ \label{eq:relative_transport}
+\end{align}
+Each reduced mobility is symmetric positive definite on its eight independent mass-flux coordinates, with units kg\,s/m\(^3\). Mechanical dispersion can be omitted by setting that entire constitutive block to zero and omitting its inverse in dissipation. Different mobilities or nonideal chemistry remain constitutive choices for these forces. A component-independent phase potential cancels from the gradient differences; spatially constant electrical gauge shifts leave the driving gradients unchanged.
+
+Weighting the component balances by specific charge and summing gives the charge balance:
+% provenance: inherited | C:eq:charge_current_density_definition,C:eq:mixture_charge_balance
+\begin{equation}
+ \mbf i=\sum_\alpha z_f^\alpha
+ (\rho_f^\alpha\mbf v_f+\mbf j_{f,{\rm disp}}^\alpha+\mbf j_{f,{\rm diff}}^\alpha),
+ \quad \partial_t\varrho+\nabla_{\mbf x}\cdot\mbf i=0.
+ \label{eq:charge_balance}
+\end{equation}
+Gauss’ law in \eqref{eq:pressure_gauss} supplies the field equation. Pure electric-displacement boundary data require the compatibility condition \(\int_{\mc B}\varrho\dv=\int_{\partial\mc B}\bar q\,{\rm d}a\) and its rate; a potential boundary allows its surface charge to adjust. Prescribed electric and ionic fluxes must satisfy this compatibility condition throughout the evolution.
+
+\section{Fluid momentum, the reacting flux and overall momentum}
+Let \(\mbf a_\xi=D_\xi\mbf v_\xi/Dt\) denote phase acceleration. With \(S_f=1\) and \(\gamma=0\), fluid momentum balance includes electrical and material-insertion forces:
+% provenance: specialization | C:eq:el_mom_f_dynamic_capillary
+\begin{equation}
+ \rho_f\mbf a_f=\rho_f\mbf g+\mbf b_f
+ -\phi_f\nabla_{\mbf x}\bar p_E
+ +\nabla_{\mbf x}\cdot(\phi_f\mbf E\otimes\mbf d_f)
+ +\sum_\alpha\dot c_f^\alpha(\nabla_{\mbf x}\tau-\mbf v_f).
+ \label{eq:fluid_momentum}
+\end{equation}
+Viscous drag opposes fluid motion relative to the skeleton. The relative mass flux and its drag closure are
+% provenance: inherited | C:eq:relative_mass_flux_definition,C:eq:fluid_phase_interaction_law
+\begin{equation}
+ \mbf w_f=\rho_f(\mbf v_f-\mbf v_{\mc S}),
+ \qquad \mbf b_f=-\frac{\mu_f^{\rm visc}\phi_f}{\bar\rho_f}\bs\kappa_f^{-1}\mbf w_f,
+ \quad \bs\kappa_f=\bs\kappa_f^T>0.
+ \label{eq:drag}
+\end{equation}
+Here the viscosity is the aqueous dynamic viscosity, and the permeability is the symmetric positive-definite tensor in the drag law. Substitution of \(\mbf v_f=\mbf v_{\mc S}+\mbf w_f/\rho_f\) moves the inserted-mass velocity term to the left:
+% provenance: specialization | C:eq:relative_flux_linear_system,C:eq:modified_relative_flux_permeability
+\begin{align}
+ \frac1{\rho_f}\left(\phi_f^2\mu_f^{\rm visc}\bs\kappa_f^{-1}
+ +\sum_\alpha\dot c_f^\alpha\mbf I\right)\mbf w_f
+ ={}&\rho_f(\mbf g-\mbf a_f)-\phi_f\nabla_{\mbf x}\bar p_E\notag\\
+ &+\nabla_{\mbf x}\cdot(\phi_f\mbf E\otimes\mbf d_f)
+ +\sum_\alpha\dot c_f^\alpha(\nabla_{\mbf x}\tau-\mbf v_{\mc S}),\label{eq:flux_linear_system}\\
+ \widetilde{\bs\lambda}_f&=
+ \left(\phi_f^2\mu_f^{\rm visc}\bs\kappa_f^{-1}
+ +\sum_\alpha\dot c_f^\alpha\mbf I\right)^{-1}.\label{eq:corrected_mobility}
+\end{align}
+Thus \(\mbf w_f\) is \(\rho_f\widetilde{\bs\lambda}_f\) times the entire right-hand side of \eqref{eq:flux_linear_system}. The resistance has units kg\,m\(^{-3}\)s\(^{-1}\), \(\nabla\tau\) has velocity units, and each right-hand term has force-per-volume units. The conversion term in the resistance and the \(\nabla\tau\) force are the two parts of the same phase momentum derivation. Both contributions enter the coupled reaction and flow problem.
+
+Algebraic inversion requires every shifted resistance eigenvalue to be nonzero. Using the largest permeability eigenvalue, a stronger positive-resistance regime is
+% provenance: inherited | C:eq:modified_relative_flux_positive_resistance_condition
+\begin{equation}
+ \sum_\alpha\dot c_f^\alpha>
+ -\frac{\phi_f^2\mu_f^{\rm visc}}{\kappa_{f,\max}}.
+ \label{eq:resistance_domain}
+\end{equation}
+The conversion shift enters the momentum resistance, while the drag law supplies the dissipative power. For negligible fluid inertia one sets \(\mbf a_f=\mbf0\) \emph{after} the derivation. With zero field and zero phase conversion, the Darcy limit is
+% provenance: specialization | C:eq:standard_darcy_mass_flux_limit
+\begin{equation}
+ \phi_f(\mbf v_f-\mbf v_{\mc S})=
+ -\frac{\bs\kappa_f}{\mu_f^{\rm visc}}
+ (\nabla_{\mbf x}\bar p_f-\bar\rho_f\mbf g).
+ \label{eq:darcy_limit}
+\end{equation}
+
+Summing the phase momenta uses \(\sum_\xi\mbf b_\xi=0\) and
+\(\sum_{\xi,\alpha}\dot c_\xi^\alpha=0\). All solids move with \(\mbf v_{\mc S}\), so the global \(\nabla\tau\) term cancels and insertion momentum takes the form
+% provenance: derived | C:eq:MC_overall_momentum_nonlinear_biot,C:eq:material_increment_insertion_constraint
+\begin{equation}
+ \sum_\xi\rho_\xi\mbf a_\xi=
+ \nabla_{\mbf x}\cdot\bs\sigma+\rho\mbf g
+ -\left(\sum_\alpha\dot c_f^\alpha\right)(\mbf v_f-\mbf v_{\mc S}),
+ \quad \rho=\sum_\xi\rho_\xi.
+ \label{eq:overall_momentum}
+\end{equation}
+The phase-relative transfer contribution remains in \eqref{eq:fluid_momentum} and \eqref{eq:reaction_force}.
+
+\section{Thermodynamic restriction}
+The mechanical, pressure, composition and volume-fraction restrictions above remove the reversible rate coefficients in the Coleman--Noll inequality. Uniform prescribed temperature removes temperature-gradient terms; elasticity removes plastic dissipation; one pore phase removes saturation and interfacial-history dissipation. The remaining entropy production is
+% provenance: specialization | C:eq:MC_onsager_reaction_transport_dissipation,C:eq:MC_interphase_exchange_positive
+\begin{align}
+ 0\le{}&-\frac1\theta\sum_mr_{(m)}
+ \sum_{\xi,\alpha}(\psi_\xi+L_\xi^\alpha)\nu_{\xi(m)}^\alpha\notag\\
+ &-\frac1\theta\sum_{k,\alpha\ne N}\mbf j_{f,k}^\alpha\cdot
+ [\nabla_{\mbf x}(\hat\mu_f^\alpha-\hat\mu_f^N)
+ +(z_f^\alpha-z_f^N)\nabla_{\mbf x}\varphi]
+ -\frac1\theta\mbf b_f\cdot(\mbf v_f-\mbf v_{\mc S})\notag\\
+ ={}&\sum_m\frac{r_{(m)}^2}{K_{(m)}}+
+ \frac1\theta\sum_{k,\alpha,\beta\ne N}\mbf j_{f,k}^\alpha\cdot
+ (\mbf D_{f,k}^{-1})^{\alpha\beta}\mbf j_{f,k}^\beta
+ +\frac{\phi_f^2\mu_f^{\rm visc}}\theta
+ (\mbf v_f-\mbf v_{\mc S})\cdot\bs\kappa_f^{-1}(\mbf v_f-\mbf v_{\mc S}).
+ \label{eq:dissipation}
+\end{align}
+The mechanical interaction-energy allocation places half the nonnegative drag heating in the aqueous subsystem and half in the aggregate solid subsystem. Their sum cancels the loss of relative mechanical power and conserves mixture energy. At a common temperature any additional equal-and-opposite reaction-heat allocation cancels from the total entropy supply. The thermostat removes the total heat required by the first law. The transfer force in \eqref{eq:dissipation} is given by \eqref{eq:reaction_force}.
+
+\section{Solid-reference balances and weak forms}
+Scalar gradients and fluxes pull back by
+% provenance: inherited | C:eq:reference_relative_mass_flux,C:eq:pulled_back_modified_permeability,C:eq:solid_reference_flux_divergence
+\begin{equation}
+ \nabla_{\mbf x}=\mbf F^{-T}\nabla_{\mbf X},\quad
+ \mbf W_f=J\mbf F^{-1}\mbf w_f,\quad
+ \widetilde{\bs\Lambda}_f=J\mbf F^{-1}\widetilde{\bs\lambda}_f\mbf F^{-T},
+ \quad J\nabla_{\mbf x}\cdot\mbf w_f=\nabla_{\mbf X}\cdot\mbf W_f.
+ \label{eq:piola_flux}
+\end{equation}
+The reference flux relation, including the electrical force, is
+% provenance: specialization | C:eq:solid_reference_relative_flux
+\begin{align}
+ \mbf W_f=\rho_f\widetilde{\bs\Lambda}_f\bigg[&
+ \rho_f\mbf F^T(\mbf g-\mbf a_f)-\phi_f\nabla_{\mbf X}\bar p_E
+ +\mbf F^T\nabla_{\mbf x}\cdot(\phi_f\mbf E\otimes\mbf d_f)\notag\\
+ &+\sum_\alpha\dot c_f^\alpha
+ (\nabla_{\mbf X}\tau-\mbf F^T\mbf v_{\mc S})\bigg].
+ \label{eq:reference_flux}
+\end{align}
+The component balances in the solid reference configuration are
+% provenance: specialization | C:eq:solid_reference_fluid_component_balance,C:eq:solid_reference_solid_component_balance
+\begin{align}
+ \partial_t(J\phi_f\bar\rho_f\eta_f^\alpha)|_{\mbf X}
+ +\nabla_{\mbf X}\cdot\left[
+ \eta_f^\alpha\mbf W_f+J\mbf F^{-1}
+ (\mbf j_{f,{\rm disp}}^\alpha+\mbf j_{f,{\rm diff}}^\alpha)\right]
+ &=J\sum_m\nu_{f(m)}^\alpha r_{(m)},\label{eq:reference_fluid_mass}\\
+ \partial_t(J\phi_s\bar\rho_s)|_{\mbf X}&=J\sum_m\nu_{s(m)}r_{(m)}.
+ \label{eq:reference_solid_mass}
+\end{align}
+Adding all twelve equations cancels component-relative flux and internal mass production, leaving
+% provenance: derived | C:eq:solid_reference_fluid_component_balance,C:eq:solid_reference_solid_component_balance
+\begin{equation}
+ \partial_t(J\rho)|_{\mbf X}+\nabla_{\mbf X}\cdot\mbf W_f=0.
+ \label{eq:reference_total_mass}
+\end{equation}
+The same weighting by element counts or specific charges gives the element or charge balances. The variational constraint uses the phase-attached increment \(\mc C_f^\alpha\), while these reference balances follow the solid skeleton.
+
+Define the total nominal stress \(\mbf P=J\bs\sigma\mbf F^{-T}\).
+Quasi-static mechanics is an optional restriction of \eqref{eq:overall_momentum}; with inertial terms omitted it reads
+% provenance: specialization | C:eq:solid_reference_overall_momentum
+\begin{equation}
+ \mbf0=\nabla_{\mbf X}\cdot\mbf P+J\rho\mbf g
+ -\frac{\sum_\alpha\dot c_f^\alpha}{\rho_f}\mbf F\mbf W_f.
+ \label{eq:reference_momentum}
+\end{equation}
+The factor \(J\) in the current insertion force cancels against the inverse flux transform, which explains its absence in the last displayed coefficient.
+
+\subsection{Residuals and boundary signs}
+Let scalar tests \(\delta\eta_f^\alpha,\delta\phi_s,\delta\tau,\delta\varphi\) and vector test \(\delta\mbf u\) vanish on their essential boundaries. Define outward component mass flux \(\bar h_f^\alpha\), nominal traction \(\bar{\mbf T}\), and reference outward electric displacement \(\bar q_0\). Each fluid component balance is tested independently with arbitrary \(\delta\eta_f^\alpha\). The fluid residual is
+% provenance: derived | C:eq:solid_reference_fluid_component_balance
+\begin{align}
+ 0={}&\int_{\mc B_0}\delta\eta_f^\alpha
+ [\partial_t(J\phi_f\bar\rho_f\eta_f^\alpha)-J\sum_m\nu_{f(m)}^\alpha r_{(m)}]\dVblank\notag\\
+ &-\int_{\mc B_0}\nabla_{\mbf X}\delta\eta_f^\alpha\cdot
+ [\eta_f^\alpha\mbf W_f+J\mbf F^{-1}(\mbf j_{f,{\rm disp}}^\alpha+\mbf j_{f,{\rm diff}}^\alpha)]\dVblank
+ +\int_{\Gamma_h}\delta\eta_f^\alpha\bar h_f^\alpha\,{\rm d}A.
+ \label{eq:weak_fluid}
+\end{align}
+The solid, transfer and momentum residuals are
+% provenance: derived | C:eq:solid_reference_solid_component_balance,C:eq:MC_admissible_conversion_component,C:eq:solid_reference_overall_momentum
+\begin{align}
+ 0&=\int_{\mc B_0}\delta\phi_s[\partial_t(J\phi_s\bar\rho_s)-J\sum_m\nu_{s(m)}r_{(m)}]\dVblank,\label{eq:weak_solid}\\
+ 0&=\int_{\mc B_0}\delta\tau[\partial_t\tau-\tfrac12|\mbf v_{\mc S}|^2]\dVblank,\label{eq:weak_tau}\\
+ 0&=\int_{\mc B_0}\left[\nabla_{\mbf X}\delta\mbf u:\mbf P
+ -\delta\mbf u\cdot J\rho\mbf g
+ +\delta\mbf u\cdot\frac{\sum_\alpha\dot c_f^\alpha}{\rho_f}\mbf F\mbf W_f\right]\dVblank
+ -\int_{\Gamma_T}\delta\mbf u\cdot\bar{\mbf T}\,{\rm d}A.\label{eq:weak_momentum}
+\end{align}
+All time derivatives in these residuals are at fixed \(\mbf X\). The local \(\tau\) equation is determined by initial data at each solid material point. Including inertia adds \(\int\delta\mbf u\cdot J\sum_\xi\rho_\xi\mbf a_\xi\dVblank\) to the momentum residual.
+
+The pulled-back Gauss residual is
+% provenance: derived | C:eq:gauss_law,C:eq:electrostatic_boundary_conditions
+\begin{equation}
+ 0=\int_{\mc B_0}\nabla_{\mbf X}\delta\varphi\cdot
+ (J\mbf F^{-1}\epsilon\mbf F^{-T}\nabla_{\mbf X}\varphi)\dVblank
+ -\int_{\mc B_0}\delta\varphi J\varrho\dVblank
+ +\int_{\Gamma_q}\delta\varphi\bar q_0\,{\rm d}A.
+ \label{eq:weak_gauss}
+\end{equation}
+The positive boundary term follows because electric displacement is minus the dielectric tensor times the potential gradient. As for mass flux, \(\bar q_0\) denotes outward electric displacement.
+
+\subsection{Closed field system and future residual map}
+The closed system in this subsection uses quasi-static solid and fluid momentum: the acceleration terms are set to zero in \eqref{eq:overall_momentum} and \eqref{eq:reference_flux}, while material-insertion forces and transfer work are retained. A convenient choice of fields is the displacement \(\mbf u=\bs\chi-\mbf X\), \(\bar p_f\), three solid volume fractions \(\phi_A,\phi_B,\phi_C\), eight independent aqueous mass fractions \(\eta_f^\alpha\), \(\tau\), and \(\varphi\). Set \(\eta_f^N=1-\sum_{\alpha\ne N}\eta_f^\alpha\) and \(\phi_f=1-\sum_s\phi_s\). The three scalar mineral solves determine \(\bar\rho_s\); the aqueous EOS determines \(\bar\rho_f\); all stresses, specific potentials, fluxes and rates are constitutive outputs, with the reaction/relative-flux block solved together because the transfer offset depends on \(\mbf w_f\) and its resistance depends on reaction rates. Solvability of this nonlinear block must be assessed for the selected parameters and state.
+
+This quasi-static system has 17 scalar fields in three dimensions: three displacement, one pressure, three solid fractions, eight independent mass fractions, one transfer potential and one electric potential. They are supplied by three momentum, three solid mass, nine aqueous mass, one transfer and one Gauss equation. The ninth aqueous mass equation governs aqueous phase storage. Material multipliers can be recovered from \(\pi_\xi^\alpha=\rho_\xi^\alpha(\hat\mu_\xi^\alpha-\psi_\xi)\); \(L\) follows from \eqref{eq:transfer_recovery}. Distention is recovered from \eqref{eq:distention}. Initial data must satisfy volume and mass-fraction normalization, positive masses, the mineral and fluid EOS, Gauss compatibility and the specified \(\tau\) gauge.
+
+Retaining fluid inertia makes \eqref{eq:reference_flux} an evolution relation for fluid velocity or relative flux. A dynamic formulation therefore includes that vector field, its momentum equation and initial velocity data, together with the inertial form of the mixture momentum balance.
+
+The weak forms define the residual and constitutive responsibilities for a future implementation. A mechanics residual implements \eqref{eq:weak_momentum}; nine component residuals implement \eqref{eq:weak_fluid}; three solid residuals implement \eqref{eq:weak_solid}; local transfer and electrical residuals implement \eqref{eq:weak_tau} and \eqref{eq:weak_gauss}. Constitutive materials provide \eqref{eq:mineral_solve}--\eqref{eq:total_stress}, \eqref{eq:aqueous_eos}--\eqref{eq:solid_potential}, and the coupled \eqref{eq:reaction_kinetics}, \eqref{eq:relative_transport}, \eqref{eq:reference_flux} block. Differentiation must include the implicit mineral roots, reacted mass weights and phase-conversion resistance. Stabilization, time integration, finite-element spaces, active-phase treatment and solver tolerances are future implementation decisions.
+
+\section{Scope of the consistency checks}
+The companion verification script checks atom, mass and charge stoichiometry; transfer normalization and offsets; mass-source cancellation; the single-solid elastic limit; constitutive pressure and stress derivatives; the scalar-distention restriction; Biot tangents; reference transformations of virtual work and flux; reacting-flux inversion; the Darcy limit; and nonnegative force--rate products. Its report records the inspected file digests, parameters, errors, tolerances and commands. These synthetic checks establish the tested algebraic and constitutive identities. Continuum solutions, convergence studies and experimental comparisons remain subsequent stages of assessment.
+
+Quantitative application requires compatible chemical standard potentials, activity models, mineral moduli, permeability, species mobilities and reaction mobilities. Phase disappearance and nucleation require a derived active-phase extension. The present equations describe the elastic, positive-mass branch of the reacting mixture.
+
+\bibliographystyle{plainnat}
+\bibliography{paper/references}
+\end{document}

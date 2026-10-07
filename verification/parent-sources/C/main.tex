@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{placeins}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[]{cancel}
+\usepackage[margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage[]{lmodern}
+\usepackage{microtype}
+\usepackage[]{nicefrac}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes.geometric, positioning, patterns, shapes.arrows}
+\usepackage[]{hyperref}
+\hypersetup{
+    colorlinks = true,
+    urlcolor = gray,
+}
+
+\input{defs.tex}
+
+\title{A thermodynamically consistent theory of multicomponent porous media:
+finite-deformation mechanics, compositional flow, electrostatics, reactions, and phase
+transformations}
+
+\author[1,2,3]{John T. Foster\footnote{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
+
+\affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin}
+\affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin}
+\affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%
+\begin{abstract}
+	Reactive reservoir models must combine compositional flow, deformation,
+	electrostatics, chemical reactions, and phase transformations without losing
+	the thermodynamic origin of each term.  This paper develops such a theory for
+	multicomponent, multiphase porous media at finite deformation.  Component mass
+	conservation is first written on phase-attached material regions and then
+	volume averaged, which separates molecular diffusion and mechanical dispersion
+	from bulk phase motion.  Mobile fluids and load-bearing multicomponent solids
+	use the same phase/component variables.  Solid composition can therefore
+	change stress-free deformation, elasticity, plastic flow, and nonlinear Biot
+	coupling.  A fixed-pressure Legendre transform gives phase Biot coefficients
+	at the current reacted state; an optional additive component specialization
+	resolves those coefficients into component contributions.
+
+	The derivation combines a constrained Hamilton--d'Alembert statement for the
+	phase-coordinate balances with Onsager stationarity for dissipative saturation
+	redistribution, reaction, and component-relative transport.  Varying
+	component material measures and phase
+	Jacobians together produces the momentum carried by inserted mass and a
+	generalized Darcy-like relative-flux law.  The same calculation gives the
+	composition restrictions, transfer-potential equations, and phase-transfer
+	equilibrium conditions.  Material-carried charge is tied directly to component
+	mass.
+	Traditional reaction affinities are sums of electrochemical potentials.  Away
+	from uniform temperature, charged transport instead keeps the
+	temperature-weighted neutral-potential gradient separate from the electric
+	field so that the force is independent of the arbitrary electric-potential
+	level.  The entropy inequality identifies admissible stress, pressure,
+	reaction, drag, diffusion, dispersion, heat-transfer, and plastic-flow laws.
+	A capillary-history state extends the interfacial energy to
+	drainage--imbibition hysteresis, with its evolution restricted by the same
+	dissipation inequality.  An optional dynamic-capillary resistance relates the
+	pressure lag to the skeleton-following saturation rate and supplies its
+	d'Alembert work in the phase momentum balances.
+	Standard compositional flow, black-oil flow, nonlinear poromechanics, and
+	single-solid, single-fluid Biot theory follow as stated limits of the full
+	solid-reference formulation.
+\end{abstract}
+%
+
+\input{sections/introduction.tex}
+\input{sections/material_mass.tex}
+\input{sections/conservation_of_charge.tex}
+\input{sections/virtual_power_derivation.tex}
+\input{sections/multicomponent_solids.tex}
+\input{sections/pulled_back_solid_skeleton.tex}
+\input{sections/correspondence_to_other_theories.tex}
+\input{sections/conclusions.tex}
+
+\appendix
+\numberwithin{equation}{section}
+\input{sections/technical_setting.tex}
+\input{sections/appendix_component_potential_derivation.tex}
+\input{sections/appendix_single_phase_energy_audit.tex}
+
+\section*{Acknowledgements}
+
+The author thanks Professors David DiCarlo, Mojdeh Delshad, D. Nicolas Espinoza, and Marc Hesse
+for useful conversations. This work was funded by the U.S. Department of Energy
+under awards DE-FE0032349 ``Hydrogen Storage in Salt Caverns in the Permian
+Basin: Seal Integrity Evaluation and Field Test'' and DE-AR0001864283, assigned
+control number 2784-1755, ``Cyclic Injection for Commercial Seismic-Safe
+Geologic H2 Production.''
+
+\input{provenance/ai_use_statement.tex}
+
+\bibliographystyle{plainurl}
+\bibliography{all}
+
+\end{document}

@@ -1,0 +1,3 @@
+# Immutable author-source snapshots retain exact inspected bytes and hashes.
+# Whitespace normalization would corrupt the source-provenance contract.
+verification/parent-sources/** -whitespace

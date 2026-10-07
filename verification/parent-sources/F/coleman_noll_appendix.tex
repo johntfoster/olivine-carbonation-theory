@@ -1,0 +1,158 @@
+\section{Coleman-Noll Procedure}
+\label{app:coleman_noll}
+\label{sec:coleman}
+
+The Coleman-Noll procedure is a systematic thermodynamic approach used to derive restrictions on constitutive models by ensuring compliance with the second law of thermodynamics. This procedure involves formulating the entropy inequality and identifying constraints that must be satisfied by any admissible constitutive relation. We apply this method to our reacting mixture to establish thermodynamically consistent constitutive equations.
+
+Introducing the Helmholtz free energy $\psi_\xi$, the entropy $s_\xi$, and the temperature $\theta_\xi$ for each component $\xi$. These quantities are related to the internal energy through the Legendre transformation
+\begin{equation}
+  E_\xi = \psi_\xi + s_\xi \theta_{\xi}.
+  \label{eq:legendre}
+\end{equation}
+From \cite{drumheller2000} the conservation of energy for component $\xi$ in the mixture takes the form
+\begin{equation}
+  \rho_{\xi} \dot{E}_{\xi} + c_{\xi}^{+} E_{\xi} = \mathrm{tr}\left(\left(\bs{\sigma}^{\prime}_{\xi}\right)^{T} \mathbf{L}_{\xi}\right) + \phi_{\xi}\bar{p}_\xi  \frac{\dot{\bar\rho}_{\xi}}{\bar\rho_{\xi}} - \mathcal{L}_{\xi} c_{\xi}^{+} - \nabla_{\mathbf{x}} \cdot \mathbf{q}_{\xi} + \rho_{\xi} r_{\xi} + \dot{e}_{\xi},
+  \label{eq:coe}
+\end{equation}
+where the terms on the right-hand side represent mechanical power, work due to density changes, latent heat of reaction, heat conduction, heat supply, and interaction energy, respectively. $\mathcal{L}_\xi$ is a generalized force that does work when $c^{+}_\xi$ changes.  Substituting the Legendre transformation \eqref{eq:legendre} into the energy equation \eqref{eq:coe} and rearranging to solve for the heat supply term $\rho_\xi r_{\xi}$ yields
+\begin{align}
+  \rho_{\xi} r_{\xi} =& \, \rho_{\xi} \dot{\psi}_{\xi} + \rho_\xi \dot{s}_\xi \theta_\xi + \rho_\xi s_\xi \dot\theta_\xi + c_{\xi}^{+} \left(\psi_{\xi} + s_\xi \theta_\xi\right) - \notag \\
+  & \, \mathrm{tr}(\boldsymbol{\sigma}^{\prime T}_{\xi} \mathbf{L}_{\xi}) - \phi_{\xi} \bar{p}_\xi \frac{\dot{\bar\rho}_{\xi}}{\bar\rho_{\xi}} + \mathcal{L}_{\xi} c_{\xi}^{+} + \nabla_{\mathbf{x}} \cdot \mathbf{q}_{\xi} - \dot{e}_{\xi}, \label{eq:rho_r}
+\end{align}
+The second law of thermodynamics for the mixture requires that the entropy production rate be non-negative
+\begin{equation}
+  0 \leq \sum_{\xi} \left[ \rho_{\xi} \dot{s}_{\xi} + \nabla_{\mathbf{x}} \cdot \left( \frac{\mathbf{q}_{\xi}}{\theta_{\xi}} \right) - \frac{\rho_{\xi} r_{\xi}}{\theta_{\xi}} + c_{\xi}^{+} s_{\xi} \right].
+  \label{eq:2nd_law}
+\end{equation}
+To apply the Coleman-Noll procedure, we substitute the expression for the heat supply term \eqref{eq:rho_r} into the entropy inequality \eqref{eq:2nd_law}:
+\begin{equation}
+  0 \leq \sum_{\xi} \left[ - \frac{1}{\theta_{\xi}} \left( \rho_{\xi} \dot{\psi}_{\xi} +  \rho_\xi s_\xi \dot\theta_\xi + c_{\xi}^{+} \psi_{\xi}  - \mathrm{tr}(\boldsymbol{\sigma}^{\prime T}_{\xi} \mathbf{L}_{\xi}) - \phi_{\xi} \bar{p}_\xi \frac{\dot{\bar\rho}_{\xi}}{\bar\rho_{\xi}} + \mathcal{L}_{\xi} c_{\xi}^{+} - \dot{e}_{\xi}\right) - \frac{\mbf{q}_\xi}{\theta^2_{\xi}} \cdot \nabla_{\mbf{x}} \theta_\xi \right].
+  \label{eq:2nd_law_expand_1}
+\end{equation}
+
+For our reacting mixture, since $\alpha_s = J_s$ (equation~\eqref{eq:alpha_Js}) implies $\mbf{\bar F}_s = J_s^{-\nicefrac{1}{3}} \mbf{F}_s$ is a known function of $\mbf{F}_s$, we specify the functional dependencies of the Helmholtz free energy as
+\begin{align*}
+  \psi_A &= \psi_A(\mbf{\bar F}_s(\mbf{F}_s),\, J_s(\mbf{F}_s),\, \phi), \\
+  \psi_B &= \psi_B(\mbf{\bar F}_s(\mbf{F}_s),\, J_s(\mbf{F}_s),\, \phi), \\
+  \psi_f &= \psi_f(\bar\rho_f), \\
+  \psi_g &= \psi_g(\bar\rho_g),
+\end{align*}
+furthermore, we assume that the solid free energies can be decomposed as
+\begin{align*}
+  \psi_\xi &= \psi_\xi^{\text{iso}}(\mbf{\bar F}_s(\mbf{F}_s)) + \psi_\xi^{\text{dis}}(J_s(\mbf{F}_s),\, \phi),
+\end{align*}
+where the first term is the free energy associated with isochoric (i.e.\ volume preserving) deformation of the solid mineral grains, and the second term involves the distention energy, i.e.\ the energy associated with rearranging the incompressible mineral grains during deformation of the solid skeleton.
+
+To focus on the key thermodynamic restrictions and simplify the derivations, we assume a spatially and temporally uniform temperature in what follows.  This allows us to concentrate on the mechanical aspects of the constitutive relationships.
+
+Since $\mbf{\bar F}_s$ and $J_s$ both depend on $\mbf{F}_s$, and $\psi^{\text{dis}}_\xi$ depends on $\phi$, the time derivative of the solid free energies requires the chain rule through all three paths:
+\begin{align}
+  \dot\psi_\xi = \p{\psi^{\text{iso}}_\xi}{\bar{F}_{mn}} \frac{\partial \bar{F}_{mn}}{\partial F_{kl}} \dot{F}_{kl} + \left.\p{\psi^{\text{dis}}_\xi}{J_s}\right\vert_\phi J_s F^{-T}_{kl} \dot{F}_{kl} + \left.\p{\psi^{\text{dis}}_\xi}{\phi}\right\vert_{J_s}\dot\phi,
+  \label{eq:psi_dot_chain}
+\end{align}
+where
+\begin{align}
+  \frac{\partial \bar{F}_{mn}}{\partial F_{kl}} = J_s^{-\nicefrac{1}{3}}\left(\delta_{mk}\delta_{nl} - \frac{1}{3} F_{mn} F^{-T}_{kl}\right).
+  \label{eq:chain_tensor_app}
+\end{align}
+The first term in~\eqref{eq:psi_dot_chain} produces the deviatoric (isochoric) contribution to the stress via the projection in~\eqref{eq:chain_tensor_app}.  The second term produces the volumetric (distention) contribution.  The third term, involving $\dot\phi$, will be modified using the mass balance.
+
+For the mechanical power, since $\bs\sigma'_s$ is symmetric (by angular momentum balance), we note
+\begin{align}
+  \mathrm{tr}\left(\left(\bs\sigma'_s\right)^T \mbf{L}_s\right) &= \sigma'_{ji} \dot{F}_{ik} F^{-1}_{kj} = \frac{1}{J_s} P'_{ik} \dot{F}_{ik},
+  \label{eq:mech_power_app}
+\end{align}
+where $\mbf{P}'_s = J_s \bs\sigma'_s \mbf{F}_s^{-T}$ is the first Piola--Kirchhoff effective stress.
+
+Following \cite{drumheller1980thermomechanical}, the conservation of energy for the entire mixture gives
+\begin{align}
+  \sum_\xi \dot{e}_\xi &= -\sum_\xi \mbf{b}_\xi \cdot \mbf{v}_\xi \notag \\
+  &= -\mbf{b}_f \cdot \left(\mbf{v}_f -  \mbf{v}_s\right) - \mbf{b}_g \cdot \left(\mbf{v}_g - \mbf{v}_s\right).
+  \label{eq:disappation}
+\end{align}
+
+Substituting~\eqref{eq:psi_dot_chain} and~\eqref{eq:mech_power_app} into the entropy inequality~\eqref{eq:2nd_law_expand_1}, recalling that $\dot{\bar\rho}_A = \dot{\bar\rho}_B = 0$ by incompressibility, we obtain
+\begin{align}
+  0 \leq & \left(\frac{1}{J_s} P'_{s,ik} - \sum_{\xi=A,B} \rho_\xi \left[\p{\psi^{\text{iso}}_\xi}{\bar{F}_{mn}} \frac{\partial \bar{F}_{mn}}{\partial F_{ik}} + \left.\p{\psi^\text{dis}_\xi}{J_s}\right\vert_\phi J_s F^{-T}_{ik}\right]\right) \dot{F}_{ik} \notag \\
+  & + \left(\frac{\phi_f \bar{p}_f}{\bar\rho_f} - \rho_f \p{\psi_f}{\bar\rho_f}\right) \dot{\bar\rho}_f + \left(\frac{\phi_g \bar{p}_g}{\bar\rho_g} - \rho_g \p{\psi_g}{\bar\rho_g}\right) \dot{\bar\rho}_g \notag \\
+  & - \sum_{\xi=A,B} \rho_\xi \left.\p{\psi^\text{dis}_\xi}{\phi}\right\vert_{J_s}\dot\phi - \sum_{\xi=A,B,f,g} c^{+}_\xi \left(\mc{L}_\xi + \psi_\xi\right) - \sum_\xi \frac{\dot e_\xi}{\theta}.
+  \label{eq:2nd_law_expand_2}
+\end{align}
+The $\dot\phi$ term is not independently specifiable.  Because the solid constituents are incompressible ($\alpha_s = J_s$), $\phi$ is kinematically determined by $\mbf{F}_s$ and the accumulated reaction.  Specifically,
+\begin{equation}
+  J_s \dot\phi = (1-\phi)\dot{J}_s - J_s\sum_{\xi=A,B}\frac{c^+_\xi}{\bar\rho_\xi}.
+  \label{eq:phi_dot_sub}
+\end{equation}
+Using $\dot{J}_s = J_s F^{-T}_{ik}\dot{F}_{ik}$ and substituting into~\eqref{eq:2nd_law_expand_2}, the $\dot\phi$ term splits into a contribution proportional to $\dot{F}_{ik}$ (which augments the stress) and a contribution proportional to $c^+_\xi$ (which augments the reaction driving force).  After regrouping:
+\begin{align}
+  0 \leq & \left(\frac{1}{J_s} P'_{s,ik} - \sum_{\xi=A,B} \rho_\xi \left[\p{\psi^{\text{iso}}_\xi}{\bar{F}_{mn}} \frac{\partial \bar{F}_{mn}}{\partial F_{ik}} + \left(\left.\p{\psi^\text{dis}_\xi}{J_s}\right\vert_\phi + \frac{(1-\phi)}{J_s}\left.\p{\psi^\text{dis}_\xi}{\phi}\right\vert_{J_s}\right) J_s F^{-T}_{ik}\right]\right) \dot{F}_{ik} \notag \\
+  & + \left(\frac{\phi_f \bar{p}_f}{\bar\rho_f} - \rho_f \p{\psi_f}{\bar\rho_f}\right) \dot{\bar\rho}_f + \left(\frac{\phi_g \bar{p}_g}{\bar\rho_g} - \rho_g \p{\psi_g}{\bar\rho_g}\right) \dot{\bar\rho}_g \notag \\
+  & - \sum_{\xi=A,B,f,g} c^{+}_\xi \left(\mc{L}_\xi + \psi_\xi\right) + \sum_{\xi=A,B}\frac{\rho_\xi}{\bar\rho_\xi} \left.\p{\psi^\text{dis}_\xi}{\phi}\right\vert_{J_s} c^+_\xi - \sum_\xi \frac{\dot e_\xi}{\theta}.
+  \label{eq:2nd_law_expand_3}
+\end{align}
+A sufficient condition for thermodynamic admissibility is that the coefficients of the independent rates $\dot{F}_{ik}$, $\dot{\bar\rho}_f$, $\dot{\bar\rho}_g$, and $\dot{c}_\xi$ each vanish individually.
+
+\paragraph{Coefficient of $\dot{F}_{ik}$:}
+\begin{align}
+  \frac{1}{J_s} P'_{s,ik} = \sum_{\xi=A,B} \rho_\xi \left[\p{\psi^{\text{iso}}_\xi}{\bar{F}_{mn}} \frac{\partial \bar{F}_{mn}}{\partial F_{ik}} + \left(\left.\p{\psi^{\text{dis}}_\xi}{J_s}\right\vert_\phi + \frac{1-\phi}{J_s}\left.\p{\psi^{\text{dis}}_\xi}{\phi}\right\vert_{J_s}\right) J_s F^{-T}_{ik}\right].
+  \label{eq:Fdot_coeff}
+\end{align}
+Substituting~\eqref{eq:chain_tensor_app}, using $\rho_\xi \partial\psi^{\text{iso}}_\xi / \partial\bar{F}_{mn} = \phi_\xi \bar{P}'_{\xi,mn}$ where $\mbf{\bar P}'_\xi = \partial W^{\text{iso}}_\xi / \partial\mbf{\bar F}_s$ is the undistended intrinsic first Piola--Kirchhoff effective stress, and defining the component distention pressure
+\begin{align}
+  \bar{P}^\star_\xi &= \left.\rho_\xi \frac{\partial \psi^{\text{dis}}_\xi}{\partial J_s}\right\vert_\phi + \frac{1-\phi}{J_s}\left.\rho_\xi\frac{\partial \psi^{\text{dis}}_\xi}{\partial\phi}\right\vert_{J_s}, \\
+   &= \left.\frac{\partial W^{\text{dis}}_\xi}{\partial J_s}\right\vert_\phi + \frac{1-\phi}{J_s}\left.\frac{\partial W^{\text{dis}}_\xi}{\partial\phi}\right\vert_{J_s},
+\end{align}
+this gives
+\begin{align}
+  \mbf{P}'_s = \sum_{\xi=A,B} \left[J_s^{\nicefrac{2}{3}} \phi_\xi \left(\mbf{\bar P}'_\xi - \frac{1}{3}\left(\mbf{\bar P}'_\xi : \mbf{F}_s\right) \mbf{F}_s^{-T}\right) + \phi_\xi \bar{P}^\star_\xi J_s\, \mbf{F}_s^{-T}\right].
+  \label{eq:P_CN_direct}
+\end{align}
+The corresponding Cauchy effective stress is
+\begin{align}
+  \bs\sigma'_s = \sum_{\xi=A,B}\left[J_s^{-\nicefrac{1}{3}} \phi_\xi \left(\mbf{\bar P}'_\xi \mbf{F}_s^T - \frac{1}{3}\left(\mbf{\bar P}'_\xi : \mbf{F}_s\right) \mbf{I}\right) + \phi_\xi \bar{P}^\star_\xi \mbf{I}\right].
+  \label{eq:sigma_CN}
+\end{align}
+
+\paragraph{Coefficient of $\dot{\bar\rho}_f$:}
+\begin{align}
+  \bar{p}_f = \bar\rho_f^2 \p{\psi_f}{\bar\rho_f}.
+  \label{eq:thermo_pressure}
+\end{align}
+
+\paragraph{Coefficient of $\dot{\bar\rho}_g$:}
+\begin{align}
+  \bar{p}_g = \bar\rho_g^2 \p{\psi_g}{\bar\rho_g}.
+  \label{eq:thermo_pressure_g}
+\end{align}
+
+\paragraph{Residual inequality (reactions).}  If the constitutive restrictions~\eqref{eq:P_CN_direct}, \eqref{eq:thermo_pressure}, and \eqref{eq:thermo_pressure_g} are satisfied, the sufficient condition for thermodynamic admissibility away from equilibrium ($\dot{c}_\xi \ne 0$) reduces to
+\begin{align}
+  0 \leq \sum_{\xi = A, B} c^{+}_\xi \left(\phi_\xi \left.\p{\psi^\text{dis}_\xi}{\phi}\right\vert_{J_s} - \mc{L}_\xi - \psi_\xi\right) - c^{+}_f \left(\mc{L}_f + \psi_f\right) - c_g^+ \left(\mc{L}_g + \psi_g\right).
+  \label{eq:thermo_reaction}
+\end{align}
+This leads us to our choice for $\mathcal{L}_A$ in the $\tau$ evolution equation as
+\begin{align}
+ \mc{L}_A = \phi_A \left.\p{\psi^\text{dis}_A}{\phi}\right\vert_{J_s} - \psi_A.
+\end{align}
+
+\paragraph{Evaluation for $W^{\text{dis}}_\xi(J_s, \phi) = K^\star_\xi (\ln J_s)^2 / [2(1-\phi)]$.}  The required partial derivatives are
+\begin{align}
+  \left.\p{W^{\text{dis}}_\xi}{J_s}\right\vert_\phi &= \frac{K^\star_\xi \ln J_s}{(1-\phi)\,J_s}, &
+  \left.\p{W^{\text{dis}}_\xi}{\phi}\right\vert_{J_s} &= \frac{K^\star_\xi (\ln J_s)^2}{2(1-\phi)^2}.
+  \label{eq:Wdis_partials}
+\end{align}
+The partial distention pressure is therefore
+\begin{equation}
+  \bar{P}^\star_\xi = \frac{K^\star_\xi \ln J_s}{(1-\phi)\,J_s}\left(1 + \frac{1}{2}\ln J_s\right).
+  \label{eq:Pstar_explicit}
+\end{equation}
+In the Cauchy effective stress, the effective bulk modulus from the mixture rule gives
+\begin{equation}
+  \bs\sigma'_s = G_{\text{eff}}\, J_s^{-\nicefrac{2}{3}} \mbox{dev}(\mbf{B}_s) + \frac{K^\star_{\text{eff}} \ln J_s}{J_s}\left(1 + \frac{\ln J_s}{2}\right) \mbf{I}.
+  \label{eq:sigma_CN_explicit}
+\end{equation}
+The porosity-conjugate pressure appearing in the variational principle is
+\begin{equation}
+  P^\star_\phi = \sum_{\xi=A,B} \rho_\xi \left.\p{\psi^{\text{dis}}_\xi}{\phi}\right\vert_{J_s} = \frac{K^\star_{\text{eff}} (\ln J_s)^2}{2(1-\phi)}.
+  \label{eq:Pstar_phi_explicit}
+\end{equation}

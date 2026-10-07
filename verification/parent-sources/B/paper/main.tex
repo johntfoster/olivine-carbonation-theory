@@ -1,0 +1,86 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{array}
+\usepackage{authblk}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{placeins}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+% Permit builds from the repository root and from paper/ (LaTeX Workshop).
+\newcommand{\paperinput}[1]{\IfFileExists{paper/#1}{\input{paper/#1}}{\input{#1}}}
+\newcommand{\figureinput}[1]{\IfFileExists{figures/#1}{\input{figures/#1}}{\input{../figures/#1}}}
+\paperinput{defs.tex}
+\graphicspath{{figures/}{../figures/}}
+
+\title{Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity}
+\author[1,2,3]{John T. Foster\thanks{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
+\affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin, Austin, TX 78712, USA}
+\affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin, Austin, TX 78712, USA}
+\affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin, Austin, TX 78712, USA}
+\date{}
+\hypersetup{
+  pdftitle={Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity},
+  pdfauthor={John T. Foster}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Pore pressure changes the mineral and pore volumes of a saturated porous
+solid. Permanent pore-volume changes also affect its subsequent reversible
+response. We derive this pressure coupling from a common stored energy that
+reproduces prescribed logarithmic laws for the drained skeleton and mineral.
+The construction gives a scalar mineral-volume equation and conditions for
+local uniqueness. A pressure Legendre transformation identifies the reversible
+Biot coefficient through both pore-volume sensitivity to deformation and total
+stress sensitivity to pressure. Differentiating the mineral equation gives an
+explicit coefficient and relates the effective stresses defined at fixed
+pressure and fixed mineral density. The multiplier of a finite pressure change
+relative to drained stress generally differs from this reversible coefficient.
+Linearization recovers classical Biot elasticity.
+
+For plastic deformation, we separate mineral shape change from permanent
+pore-volume change and solve the mineral and plastic updates together.
+Automatic differentiation retains their mutual dependence in the Newton
+tangent. Independent checks verify mass conservation, constitutive identities,
+and numerical derivatives. The finite-element formulation recovers the
+analytical Mandel solution and resolves reversible coefficient changes under
+larger compression. Homogeneous loading paths show how plastic history changes
+the coefficient during unloading and how mineral compression affects further
+plastic flow. A coupled compression test verifies plastic fluid storage and
+shows a persistent coefficient increase relative to the elastic value at the
+same pressure and total volume. For the synthetic material, plastic dilation
+reverses fluid exchange from outflow to inflow. Material-specific experimental
+validation remains future work.
+\end{abstract}
+
+\noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
+poroelasticity; poroplasticity; effective stress; automatic differentiation
+
+\paperinput{sections/introduction.tex}
+\paperinput{sections/finite_deformation_biot.tex}
+\paperinput{sections/implicit_ad_implementation.tex}
+\paperinput{sections/poroplastic_results.tex}
+\paperinput{sections/mandel_verification.tex}
+\paperinput{sections/conclusions.tex}
+
+\paperinput{sections/acknowledgements.tex}
+\paperinput{sections/declarations.tex}
+\paperinput{../provenance/ai_use_statement.tex}
+
+\appendix
+\paperinput{sections/mandel_analytical_appendix.tex}
+\paperinput{sections/gajo_equivalence_appendix.tex}
+
+\bibliographystyle{plainnat}
+\IfFileExists{all.bib}{\bibliography{all}}{\bibliography{../all}}
+\end{document}
