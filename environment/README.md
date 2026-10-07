@@ -51,9 +51,14 @@ Image evidence includes the base digest, source revision, executable digest
 and exact compiled-source hashes. Failed tests prevent publication.
 The `main` alias is a convenience for normal Codespaces startup; immutable
 reproduction uses the digest listed in the image-evidence Actions artifact.
-Set the devcontainer `image` to that digest when reproducing a fixed snapshot.
+The optional `.devcontainer/reproducible/devcontainer.json` pins the published
+62e9d2e runtime snapshot by digest. Select that configuration to fix the numerical
+environment. Its provenance records the exact image source revision; use that
+revision in a separate checkout for the corresponding complete source tree.
+The default configuration follows tested main builds. Image and hosted evidence is recorded in
+`verification/environment-results.json`.
 
-The source-matching startup guard reuses a prebuilt executable only if every
+Creation and resume both run the source-matching guard. It reuses a prebuilt executable only if every
 application source/header and Makefile matches its recorded SHA-256. An older
 image therefore cannot silently execute an older application against a new
 workspace. Edited code rebuilds locally. Run build commands through
@@ -76,3 +81,8 @@ Application image builds also compare the source toolchain lock against the
 installed base lock; a mismatch requires a new base build. Codespaces startup
 rejects an image for a different workspace toolchain rather than compiling
 against an outdated environment.
+
+The base includes OpenSSH for Codespaces CLI access. Post-create generates the
+container's SSH host keys, checks its configuration and starts the server on
+port 2222 before source-matched startup. Resume repeats the idempotent server
+start and source check; host private keys are absent from the published image.

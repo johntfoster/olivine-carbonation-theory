@@ -46,7 +46,7 @@
     },
     "codespace": {
       "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
-      "verification": "not-run",
+      "verification": "failed",
       "configuration": ".devcontainer/devcontainer.json",
       "image": "ghcr.io/johntfoster/olivine-carbonation-theory:main"
     },
@@ -62,13 +62,13 @@
     }
   },
   "verification": {
-    "infrastructure": "Pages deployed and source bytes verified; six local startup guards passed. Base and 8c4c3e3 application images published. Hosted Codespaces startup failed because openssh-server was absent; SSH-ready repair and publication pending.",
+    "infrastructure": "SSH-ready base and exact 62e9d2e application images passed and published; six source/artifact/toolchain guards and local key-authenticated SSH pass. All 98 deployed sources/viewers match committed bytes. Fresh hosted SSH RPC timed out while Available; explicit service start and resume source guard are being published.",
     "implementation": "61 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
     "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
     "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 orders approximately 2; nonlinear mass temporal orders approximately 1 for backward Euler and 2 for BDF2.",
     "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
-  "next_milestone": "Publish and verify the companion site and tested base/application development images; verify source-matched startup.",
+  "next_milestone": "Verify explicit SSH startup and source-matched binary reuse on hosted creation/resume, execute hosted numerical checks, and deliver final evidence.",
   "scientific_scope": "Theory and MOOSE implementation of finite-deformation reactive poromechanics: three compressible elastic solids (forsterite, magnesite, silica) and one aqueous CO2-bearing multicomponent fluid; no separate gas phase or plasticity."
 }

@@ -3,6 +3,7 @@
   "image": "ghcr.io/johntfoster/olivine-carbonation-theory:main",
   "remoteUser": "vscode",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
   "waitFor": "postCreateCommand",
   "containerEnv": {"MOOSE_DIR": "/opt/moose"},
   "customizations": {

@@ -9,9 +9,9 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | MOOSE build and residual tests | 61 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | Local base and clean-clone tests passed. Hosted base run 37649110949 published the tested digest. Application run 37655593309 published the tested 8c4c3e3 image (59 checks). The updated local suite passes 61 checks; SSH-ready image publication remains pending |
-| GitHub Pages deployment | Actions run 37649097662 succeeded; seven deployed pages/assets/source targets returned HTTP 200, packaged kernel bytes matched |
-| Hosted Codespaces | Existing environment available; current CLI found missing openssh-server. Hosted scientific tests did not run; SSH-ready base/startup repair in progress |
+| Base/application image build | Local base and clean-clone tests passed. Hosted base run 37649110949 published the tested digest. Application run 37655593309 published the tested 8c4c3e3 image (59 checks). The updated local suite passes 61 checks; SSH-ready run 37661818032 published and passed 61 checks at 62e9d2e; explicit server start and resume guard publication pending |
+| GitHub Pages deployment | Actions run 37661016334 succeeded; all 98 raw sources and viewers match committed 62e9d2e bytes; six main pages/assets returned HTTP 200 |
+| Hosted Codespaces | The original environment lacked openssh-server. A fresh SSH-ready environment is Available but SSH RPC timed out; scientific tests have not run. Explicit service start and resume guard are being verified |
 | Physical validation | Not performed |
 
 The requested sibling `finite-deformation-biot-poromechanics` is absent. The
