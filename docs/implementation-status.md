@@ -9,7 +9,7 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | MOOSE build and residual tests | 59 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | Local base and independent clean-clone application build/test passed. Actions base run 37649110949 is in progress; application publication awaits the base |
+| Base/application image build | Local base and clean-clone tests passed. Hosted base run 37649110949 published the tested digest. The first application build identified a bare-shell Python PATH issue; recording/startup now activate Conda and publication is being retried |
 | GitHub Pages deployment | Actions run 37649097662 succeeded; seven deployed pages/assets/source targets returned HTTP 200, packaged kernel bytes matched |
 | Hosted Codespaces | Not run |
 | Physical validation | Not performed |

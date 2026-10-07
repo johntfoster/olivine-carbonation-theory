@@ -107,11 +107,18 @@
     "cleanup": "verification container removed after report archived"
   },
   "hosted_base": {
-    "status": "in-progress",
-    "run_url": "https://github.com/johntfoster/olivine-carbonation-theory/actions/runs/37649110949"
+    "status": "passed",
+    "run_url": "https://github.com/johntfoster/olivine-carbonation-theory/actions/runs/37649110949",
+    "image": "ghcr.io/johntfoster/olivine-carbonation-theory@sha256:5e24a0ec80e457758077a3afc7530f9b80187d9fa796ea61243414e68922007c",
+    "tag": "base-current",
+    "architecture": "linux/amd64",
+    "anonymous_manifest_access": 200
   },
   "hosted_application": {
-    "status": "awaiting-first-base-publication"
+    "status": "failed-before-tests",
+    "source_revision": "33e21f733e4aa573dfddd792909ff4f743ef9e98",
+    "run_url": "https://github.com/johntfoster/olivine-carbonation-theory/actions/runs/37654742157",
+    "reason": "Bare base shell lacks python3 on PATH; image recording and startup now use the Conda activation wrapper."
   },
   "codespaces": {
     "status": "not-run"
