@@ -71,3 +71,8 @@ settings. Enable main-branch prebuilds for this devcontainer if desired;
 GHCR publication by itself is not a hosted Codespaces startup check.
 The image includes numerical tooling. Install TeX separately for an explicit
 `make paper`; startup never compiles or modifies the manuscript.
+
+Application image builds also compare the source toolchain lock against the
+installed base lock; a mismatch requires a new base build. Codespaces startup
+rejects an image for a different workspace toolchain rather than compiling
+against an outdated environment.

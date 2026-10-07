@@ -4,4 +4,4 @@ from pathlib import Path
 framework = Path(os.environ.get('MOOSE_DIR', Path(__file__).resolve().parents[1]/'.agent-runtime/moose'))
 sys.path.insert(0, str(framework/'python'))
 from TestHarness import TestHarness
-TestHarness.buildAndRun(sys.argv, None)
+TestHarness.buildAndRun(sys.argv, None, str(framework))

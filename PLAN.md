@@ -42,3 +42,11 @@ outside scope. Existing manuscript/review changes are preserved.
 Progress and evidence are maintained in docs/implementation-status.md. GitHub
 Codespaces prebuild configuration is a separate hosted setting; a GHCR image
 alone does not prove a hosted Codespace has started.
+
+## Recorded progress
+
+- Equation contract, kernels/materials and 42 quantitative checks complete.
+- Native TestHarness and five startup-integrity tests pass.
+- Companion site deployed and representative source/assets verified live.
+- Base image building locally and in Actions; application-image publication and
+  hosted startup remain active goal gates.

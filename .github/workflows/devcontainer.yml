@@ -3,10 +3,14 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  workflow_run:
+    workflows: [Build MOOSE base image]
+    types: [completed]
 permissions:
   contents: read
 jobs:
   application:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     permissions:

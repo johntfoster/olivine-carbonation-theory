@@ -9,8 +9,8 @@ publishing were authorized on 7 October 2026. PLAN.md is the current plan.
 | MOOSE build and residual tests | 42 executable checks passed |
 | EG tests and convergence | Scalar 1D/2D/3D and coupled cross-diffusion passed; L2 orders approximately 2 |
 | Site build and source links | Local build and all generated links passed; source bytes hash checked |
-| Base/application image build | Base toolchain installed; local framework build in progress. Workflows prepared |
-| GitHub Pages deployment | Pending |
+| Base/application image build | Local framework compilation and Actions base run 37649110949 in progress. Initial application run awaits the first published base |
+| GitHub Pages deployment | Actions run 37649097662 succeeded; seven deployed pages/assets/source targets returned HTTP 200, packaged kernel bytes matched |
 | Hosted Codespaces | Not run |
 | Physical validation | Not performed |
 
@@ -21,6 +21,10 @@ reference, with attribution and inspected-byte hashes recorded separately.
 
 The mineral root follows the author-requested finite-strain companion Newton/AD
 helper. Three mineral roots and the aggregate Biot coefficient are compared
-against an independent scalar bisection calculation. Four infrastructure tests
+against an independent scalar bisection calculation. Five infrastructure tests
 check source-matched binary reuse and rejection of changed headers, new source
-files and corrupted application shared libraries.
+files, corrupted application shared libraries and a changed toolchain lock.
+
+The native MOOSE TestHarness ran the quantitative suite successfully (1 harness
+test, 42 internal checks, zero skipped/failed). The pinned framework has no
+tracked local modifications. Desktop and mobile site layouts were inspected.

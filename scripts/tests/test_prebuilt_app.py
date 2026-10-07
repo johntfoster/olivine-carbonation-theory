@@ -12,8 +12,10 @@ class GuardTests(unittest.TestCase):
    (root/'moose_app/Makefile').write_text('build rules\n')
    (root/'moose_app/src/a.C').write_text('source\n')
    (root/'moose_app/include/a.h').write_text('header\n')
+   (root/'environment').mkdir(); (root/'environment/moose-linux-64.lock').write_text('locked toolchain\n')
   (self.image/'moose_app/lib').mkdir(); (self.image/'moose_app/lib/libapp.so').write_bytes(b'library')
   (self.image/'moose_app/olivine_carbonation-opt').write_bytes(b'executable')
+  prebuilt.BASE_LOCK=self.image/'environment/moose-linux-64.lock'
   prebuilt.ROOT=self.image; prebuilt.record('a'*40,'ghcr.io/example/base@sha256:'+'b'*64)
   prebuilt.ROOT=self.workspace
  def test_matching_source_reuses_image_binary(self):
@@ -24,6 +26,9 @@ class GuardTests(unittest.TestCase):
  def test_new_source_rejects_binary(self):
   (self.workspace/'moose_app/src/new.C').write_text('new object\n')
   self.assertFalse(prebuilt.reuse(self.image))
+ def test_changed_toolchain_rejects_old_image(self):
+  (self.workspace/'environment/moose-linux-64.lock').write_text('new toolchain\n')
+  with self.assertRaises(RuntimeError): prebuilt.reuse(self.image)
  def test_changed_shared_library_rejects_binary(self):
   (self.image/'moose_app/lib/libapp.so').write_bytes(b'corrupt library')
   self.assertFalse(prebuilt.reuse(self.image))

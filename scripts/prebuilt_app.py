@@ -3,6 +3,7 @@
 import argparse, hashlib, json, os, subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+BASE_LOCK=Path('/opt/olivine-environment.lock')
 def sources(root):
  files=[root/'moose_app/Makefile']
  for surface,glob in [('src','*.C'),('include','*.h')]: files.extend((root/'moose_app'/surface).rglob(glob))
@@ -14,12 +15,17 @@ def artifacts(root):
 def record(revision,base_image):
  binary=ROOT/'moose_app/olivine_carbonation-opt'
  if not binary.is_file(): raise RuntimeError('Compiled application absent')
- data={'source_revision':revision,'base_image':base_image,'source_hashes':sources(ROOT),'executable_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'artifact_hashes':artifacts(ROOT),'architecture':'linux/amd64'}
+ lock_hash=hashlib.sha256((ROOT/'environment/moose-linux-64.lock').read_bytes()).hexdigest()
+ if not BASE_LOCK.is_file() or hashlib.sha256(BASE_LOCK.read_bytes()).hexdigest()!=lock_hash:
+  raise RuntimeError('Application toolchain lock differs from installed base; dispatch the base-image workflow first')
+ data={'toolchain_lock_sha256':lock_hash,'source_revision':revision,'base_image':base_image,'source_hashes':sources(ROOT),'executable_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'artifact_hashes':artifacts(ROOT),'architecture':'linux/amd64'}
  (ROOT/'prebuilt-application.json').write_text(json.dumps(data,indent=2)+'\n')
 def reuse(image):
  metadata=image/'prebuilt-application.json'
  if not metadata.is_file(): return False
  data=json.loads(metadata.read_text()); binary=image/'moose_app/olivine_carbonation-opt'
+ if hashlib.sha256((ROOT/'environment/moose-linux-64.lock').read_bytes()).hexdigest()!=data['toolchain_lock_sha256']:
+  raise RuntimeError('Workspace toolchain changed: wait for its base/application image build, then rebuild the devcontainer with the matching image')
  if data['source_hashes']!=sources(ROOT) or data['artifact_hashes']!=artifacts(image): return False
  target=ROOT/'moose_app/olivine_carbonation-opt'
  if target.is_symlink(): target.unlink()

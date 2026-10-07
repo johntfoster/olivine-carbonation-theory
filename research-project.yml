@@ -42,7 +42,7 @@
   "publication": {
     "site": {
       "url": "https://johntfoster.github.io/olivine-carbonation-theory/",
-      "status": "pending-deployment"
+      "status": "live-verified"
     },
     "codespace": {
       "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
@@ -62,7 +62,7 @@
     }
   },
   "verification": {
-    "infrastructure": "Local project checks, static site links and four startup hash-guard tests passed. Local Docker base build and hosted deployment in progress.",
+    "infrastructure": "GitHub infrastructure and Pages workflows passed; seven live site targets returned HTTP 200 and kernel bytes matched. Five local startup guards passed. Numerical images are building; hosted Codespaces remains unverified.",
     "implementation": "42 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
     "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
     "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 convergence verified; observed orders approximately 2.",

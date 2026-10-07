@@ -15,3 +15,12 @@ moose_app/olivine_carbonation-opt
 moose_app/olivine_carbonation.yaml
 moose_app/test/tests/**/out*
 **/.previous_test_results.json
+**/.git
+.codex
+.aws
+.ssh
+.env
+.env.*
+**/.env
+**/.env.*
+reviews
