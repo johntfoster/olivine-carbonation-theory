@@ -42,7 +42,10 @@
   "publication": {
     "site": {
       "url": "https://johntfoster.github.io/olivine-carbonation-theory/",
-      "status": "live-verified"
+      "status": "live-verified",
+      "equation_contract": "site/implementation-contract.json",
+      "scientific_snapshot": "c58d03d8ed442723ad6c817f67c07ca808c5e301567fc2c80ed2be586ecae7b7",
+      "verification_record": "verification/companion-site-results.json"
     },
     "codespace": {
       "url": "https://codespaces.new/johntfoster/olivine-carbonation-theory",
@@ -62,13 +65,13 @@
     }
   },
   "verification": {
-    "infrastructure": "SSH-ready base and exact f2133b3 image published by Actions; 61 checks and actual/concurrent startup smoke pass. All 102 deployed source/viewer pairs match committed bytes. Pristine full hosted rebuild, standard CLI access, automatic creation/resume guards and same-environment stop/resume pass; exact source/artifact hashes match, all 61 numerical checks pass and manuscript bytes are unchanged.",
-    "implementation": "61 quantitative executable checks passed against pinned MOOSE; source hashes and tolerances in verification/implementation-results.json. Synthetic reductions, not a calibrated full carbonation simulation.",
-    "analytical": "52/52 fresh checks reproduced exactly in scratch: 49 synthetic consistency checks and 3 source/document integrity checks. Not PDE verification or physical validation; independent source-fidelity audit pending.",
-    "convergence": "Scalar EG 1D/2D/3D and two-component cross-diffusion L2 orders approximately 2; nonlinear mass temporal orders approximately 1 for backward Euler and 2 for BDF2.",
+    "infrastructure": "Historical f2133b3 hosted container creation, full rebuild and stop/resume were verified with 61 checks. These records do not certify hosted execution of the later silica extension. Current website equation/code/evidence presentation is separately hash-checked and deployed through Pages.",
+    "implementation": "61 existing residual checks plus 178 actual silica reaction/transport checks and a coupled FD Jacobian check pass. The restricted silica tests compare independent extent/FV references; all three phases remain positive. Synthetic verification, no calibrated full carbonation solve.",
+    "analytical": "52/52 recorded checks: 49 analytical consistency checks and 3 source/document integrity checks. Final numerical reviewers ACCEPT the immutable snapshot c58d03d8; analytical tests do not constitute PDE or physical validation.",
+    "convergence": "Reactor Euler/BDF2 orders approach 1/2; EG column aqueous cell-average RMS errors decrease from 2.88e-3 to 4.59e-5 mol/m3 over 16\u2013128 elements. Fixed-mesh BDF2 self-order 1.869. Existing 1D/2D/3D and cross-diffusion MMS gates still pass.",
     "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
-  "next_milestone": "Maintain quantitative verification and exact-revision image provenance for subsequent source changes.",
+  "next_milestone": "Numerical manuscript acceptance is complete for snapshot c58d03d8. Complete the current companion-site equation/code/evidence publication goal; full reacting aqueous closure and physical calibration remain open.",
   "scientific_scope": "Theory and MOOSE implementation of finite-deformation reactive poromechanics: three compressible elastic solids (forsterite, magnesite, silica) and one aqueous CO2-bearing multicomponent fluid; no separate gas phase or plasticity."
 }

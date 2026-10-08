@@ -1,0 +1,672 @@
+{
+  "description": "Curated assembly responsibilities; equations and code bytes are extracted from their authoritative sources.",
+  "objects": [
+    {
+      "name": "ADReferenceMass",
+      "title": "Complete reference storage",
+      "group": "Storage and geometry",
+      "scope": "Constitutive measure",
+      "source": "moose_app/src/materials/ADReferenceMass.C",
+      "header": "moose_app/include/materials/ADReferenceMass.h",
+      "equations": {
+        "eq:reference_fluid_mass": "Forms the complete fluid component storage M; flux and source are assembled separately.",
+        "eq:reference_solid_mass": "Forms pure-solid storage with eta=1."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_J": "Skeleton determinant J; dimensionless.",
+        "_phi": "Current phase volume fraction phi; dimensionless.",
+        "_density": "Intrinsic density rhobar; kg/m\u00b3.",
+        "_eta": "Component mass fraction eta; dimensionless; omitted for pure solids.",
+        "_storage": "Mass per solid reference volume M; kg/m\u00b3."
+      },
+      "check_prefixes": [
+        "mass_euler",
+        "mass_bdf2",
+        "mass_jacobian"
+      ]
+    },
+    {
+      "name": "ADReferenceMassStorage",
+      "title": "Conservative time residual",
+      "group": "Storage and geometry",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADReferenceMassStorage.C",
+      "header": "moose_app/include/kernels/ADReferenceMassStorage.h",
+      "equations": {
+        "eq:discrete_euler": "Backward Euler, including the first BDF2 step.",
+        "eq:discrete_bdf": "Variable-step BDF2 on the entire stored mass.",
+        "eq:weak_fluid": "Only the tested mass-rate term.",
+        "eq:weak_solid": "Only the tested mass-rate term."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_mass": "Complete AD reference mass at the current step.",
+        "_old, _older": "Fixed historical masses; kg/m\u00b3.",
+        "_dt, _dt_old": "Current and previous step sizes; s.",
+        "_test": "Scalar reference-element test."
+      },
+      "check_prefixes": [
+        "mass_euler",
+        "mass_bdf2",
+        "reference_mass_"
+      ],
+      "equation_line_ranges": {
+        "eq:discrete_euler": [
+          27,
+          28
+        ],
+        "eq:discrete_bdf": [
+          29,
+          34
+        ],
+        "eq:weak_fluid": [
+          37,
+          37
+        ],
+        "eq:weak_solid": [
+          37,
+          37
+        ]
+      },
+      "line_range_source_sha256": "dae16db0d73c49638cf6d91b33ada4d4151a52abadf68c06db059e22c176f734"
+    },
+    {
+      "name": "ADReferenceStorageRate",
+      "title": "Shared EG mass history",
+      "group": "Storage and geometry",
+      "scope": "Residual input",
+      "source": "moose_app/src/materials/ADReferenceStorageRate.C",
+      "header": "moose_app/include/materials/ADReferenceStorageRate.h",
+      "equations": {
+        "eq:discrete_euler": "Same complete-mass backward Euler formula for both EG rows.",
+        "eq:discrete_bdf": "Same variable-step BDF2 formula; histories are not differentiated.",
+        "eq:eg_residual": "Supplies D_t M as an AD property to the volume rows."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_mass": "Complete current reference mass.",
+        "_rate": "Reference mass rate D_t M; kg/(m\u00b3 s).",
+        "r": "Step ratio zeta_n = dt/dt_old."
+      },
+      "check_prefixes": [
+        "precipitation_bdf2",
+        "dissolution_bdf2",
+        "spatial_"
+      ]
+    },
+    {
+      "name": "ADReferenceSpeciesBalance",
+      "title": "Component flux and reaction source",
+      "group": "Balance residuals",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADReferenceSpeciesBalance.C",
+      "header": "moose_app/include/kernels/ADReferenceSpeciesBalance.h",
+      "equations": {
+        "eq:weak_fluid": "Assembles the negative source and negative test-gradient/flux volume terms; storage and boundary terms are separate.",
+        "eq:weak_solid": "Assembles the negative source term with flux omitted."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_source": "Reference production S = J sum nu r; kg/(m\u00b3 s).",
+        "_flux": "Complete reference component flux H; kg/(m\u00b2 s).",
+        "_test, _grad_test": "Scalar test and reference gradient."
+      },
+      "check_prefixes": [
+        "mass_euler",
+        "mass_bdf2",
+        "mass_jacobian"
+      ]
+    },
+    {
+      "name": "ADCarbonationMomentum",
+      "title": "Nominal-stress momentum balance",
+      "group": "Balance residuals",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADCarbonationMomentum.C",
+      "header": "moose_app/include/kernels/ADCarbonationMomentum.h",
+      "equations": {
+        "eq:weak_momentum": "Volume terms only: nominal stress, gravity and material-insertion force. Traction is a separate boundary object."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_P": "Total nominal stress P; Pa.",
+        "_rho_f": "Partial fluid density rho_f = phi_f rhobar_f; kg/m\u00b3.",
+        "_conversion": "Net current aqueous mass production sum dot c_f; kg/(m\u00b3 s).",
+        "_F, _W": "Skeleton deformation F and bulk reference mass flux W_f.",
+        "_component": "Selected displacement row i.",
+        "_J * _rho": "J times total current mixture density; kg/m\u00b3."
+      },
+      "check_prefixes": [
+        "mechanics_",
+        "traction_insertion",
+        "maxwell_traction",
+        "coupled_jacobian",
+        "insertion_jacobian"
+      ]
+    },
+    {
+      "name": "ADTransferPotential",
+      "title": "Transfer-work evolution",
+      "group": "Balance residuals",
+      "scope": "Residual",
+      "source": "moose_app/src/kernels/ADTransferPotential.C",
+      "header": "moose_app/include/kernels/ADTransferPotential.h",
+      "equations": {
+        "eq:weak_tau": "Local tested evolution of tau at fixed solid reference coordinate."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_u_dot": "Time derivative of tau at fixed X.",
+        "_velocity": "Skeleton velocity v_S; m/s.",
+        "_test": "Scalar test; tau has units m\u00b2/s."
+      },
+      "check_prefixes": [
+        "mechanics_tau",
+        "coupled_jacobian",
+        "traction_insertion_tau"
+      ]
+    },
+    {
+      "name": "ADReferenceGauss",
+      "title": "Pulled-back electrostatics",
+      "group": "Balance residuals",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADReferenceGauss.C",
+      "header": "moose_app/include/kernels/ADReferenceGauss.h",
+      "equations": {
+        "eq:weak_gauss": "Dielectric-gradient and negative charge volume terms; outward electric displacement is separate."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_dielectric": "J F^-1 epsilon F^-T.",
+        "_charge": "Reference charge J varrho.",
+        "_grad_u": "Reference gradient of electric potential."
+      },
+      "check_prefixes": [
+        "gauss_outward",
+        "mechanics_electric",
+        "coupled_jacobian"
+      ]
+    },
+    {
+      "name": "ADReferenceOutwardFlux",
+      "title": "Outward mass or electric flux",
+      "group": "Boundary terms",
+      "scope": "Boundary term",
+      "source": "moose_app/src/bcs/ADReferenceOutwardFlux.C",
+      "header": "moose_app/include/bcs/ADReferenceOutwardFlux.h",
+      "equations": {
+        "eq:weak_fluid": "Positive tested prescribed outward component mass flux on Gamma_h.",
+        "eq:weak_gauss": "Positive tested outward electric displacement on Gamma_q."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_flux": "Prescribed outward reference flux; physical units depend on the mass/electric row.",
+        "_test": "Boundary scalar test."
+      },
+      "check_prefixes": [
+        "gauss_outward",
+        "weak_mass_outward",
+        "weak_gauss_outward"
+      ]
+    },
+    {
+      "name": "ADReferenceTraction",
+      "title": "Outward nominal traction",
+      "group": "Boundary terms",
+      "scope": "Boundary term",
+      "source": "moose_app/src/bcs/ADReferenceTraction.C",
+      "header": "moose_app/include/bcs/ADReferenceTraction.h",
+      "equations": {
+        "eq:weak_momentum": "Negative tested prescribed nominal traction on Gamma_T."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_traction": "Reference outward traction P N; Pa.",
+        "_component": "Selected displacement component."
+      },
+      "check_prefixes": [
+        "traction_insertion",
+        "maxwell_traction",
+        "nanson_"
+      ]
+    },
+    {
+      "name": "ADReferencePullback",
+      "title": "Current-to-reference transformations",
+      "group": "Storage and geometry",
+      "scope": "Constitutive transformation",
+      "source": "moose_app/src/materials/ADReferencePullback.C",
+      "header": "moose_app/include/materials/ADReferencePullback.h",
+      "equations": {
+        "eq:piola_flux": "Forms eta W_f + J F^-1 j from supplied current relative flux; it does not solve the mobility closure for W_f.",
+        "eq:reference_fluid_mass": "Reference source S = J times supplied current source.",
+        "eq:weak_gauss": "Forms the pulled-back dielectric and reference charge used by Gauss assembly."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_inverse": "F^-1, dimensionless.",
+        "_j": "Supplied current relative component flux; kg/(m\u00b2 s).",
+        "_W": "Supplied bulk reference fluid flux.",
+        "_source, _charge": "Current production and charge.",
+        "_reference_source, _reference_charge": "J-weighted reference measures."
+      },
+      "check_prefixes": [
+        "piola_",
+        "nonuniform_piola",
+        "coupled_jacobian"
+      ],
+      "equation_line_ranges": {
+        "eq:piola_flux": [
+          36,
+          36
+        ],
+        "eq:reference_fluid_mass": [
+          37,
+          37
+        ],
+        "eq:weak_gauss": [
+          38,
+          39
+        ]
+      },
+      "line_range_source_sha256": "2ea412f66542a3215315b3d8b56278c1d4750836380b11276c2be62f485947d7"
+    },
+    {
+      "name": "ADLogarithmicMinerals",
+      "title": "Compressible elastic mineral branches",
+      "group": "Constitutive materials",
+      "scope": "Constitutive law",
+      "source": "moose_app/src/materials/ADLogarithmicMinerals.C",
+      "header": "moose_app/include/materials/ADLogarithmicMinerals.h",
+      "equations": {
+        "eq:mineral_solve": "Positive-tangent branch root bar J_s; the called helper performs branch selection and AD Newton.",
+        "eq:phase_biot": "Per-phase compression contribution accumulated into the aggregate coefficient.",
+        "eq:biot_aggregate": "Aggregate instantaneous Biot coefficient.",
+        "eq:total_stress": "Effective mineral, pore-pressure and optional Maxwell stresses, pulled back as P = J sigma F^-T."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_K[s], _Ks[s]": "Allocated skeleton modulus K and intrinsic mineral modulus K_s; Pa.",
+        "_phi0[s], phi": "Reference and current solid fractions.",
+        "b_ad": "True mineral volume ratio bar J_s, solved in AD.",
+        "_densities": "Intrinsic mineral densities rho_s0/bar J_s; kg/m\u00b3.",
+        "_B": "Aggregate instantaneous Biot coefficient; dimensionless.",
+        "_P": "Total nominal stress; Pa."
+      },
+      "check_prefixes": [
+        "three_minerals_",
+        "mineral_root",
+        "three_solid_total",
+        "fixed_pressure"
+      ],
+      "equation_line_ranges": {
+        "eq:mineral_solve": [
+          68,
+          72
+        ],
+        "eq:phase_biot": [
+          68,
+          75
+        ],
+        "eq:biot_aggregate": [
+          60,
+          76
+        ],
+        "eq:total_stress": [
+          60,
+          84
+        ]
+      },
+      "line_range_source_sha256": "b13603ac2af20a1997aa25329b40934d39c10087e90c8565827c5f4474c81699"
+    },
+    {
+      "name": "ADSolidReferenceKinematics",
+      "title": "Finite-deformation reference geometry",
+      "group": "Storage and geometry",
+      "scope": "Kinematic definitions",
+      "source": "moose_app/src/materials/ADSolidReferenceKinematics.C",
+      "header": "moose_app/include/materials/ADSolidReferenceKinematics.h",
+      "equations": {
+        "eq:motion": "F = I + Grad_X u and J = det F; rejects J <= 0.",
+        "eq:rates": "Supplies the time rate of J for diagnostics.",
+        "eq:piola_flux": "Supplies F^-1 and J F^-1 to pullback materials."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_F, _J": "Skeleton deformation gradient and its positive determinant.",
+        "_grad_disp": "Reference displacement gradients.",
+        "_J_dot": "J tr(F_dot F^-1); 1/s."
+      },
+      "check_prefixes": [
+        "mechanics_",
+        "mass_jacobian",
+        "coupled_jacobian",
+        "three_minerals_"
+      ]
+    },
+    {
+      "name": "ADSkeletonVelocity",
+      "title": "Skeleton material velocity",
+      "group": "Storage and geometry",
+      "scope": "Kinematic definition",
+      "source": "moose_app/src/materials/ADSkeletonVelocity.C",
+      "header": "moose_app/include/materials/ADSkeletonVelocity.h",
+      "equations": {
+        "eq:motion": "Velocity from displacement time derivatives at fixed X."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_rates": "AD coupled displacement time derivatives.",
+        "_velocity": "Skeleton velocity v_S; m/s."
+      },
+      "check_prefixes": [
+        "mechanics_tau",
+        "coupled_jacobian"
+      ]
+    },
+    {
+      "name": "ADOlivineReconstruction",
+      "title": "Continuous plus constant reconstruction",
+      "group": "Enriched Galerkin",
+      "scope": "Discrete reconstruction",
+      "source": "moose_app/src/materials/ADOlivineReconstruction.C",
+      "header": "moose_app/include/materials/ADOlivineReconstruction.h",
+      "equations": {
+        "eq:eg_space": "Adds the backbone and optional constant enrichment; computes corresponding reference gradients."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_backbone": "Continuous scalar field q_h^c.",
+        "_enrichment": "Optional cellwise constant field q_h^0.",
+        "_value": "Reconstructed scalar; units depend on the field."
+      },
+      "check_prefixes": [
+        "eg_",
+        "reject_nonconstant"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinScalarBalance",
+      "title": "Continuous EG volume row",
+      "group": "Enriched Galerkin",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADEnrichedGalerkinScalarBalance.C",
+      "header": "moose_app/include/kernels/ADEnrichedGalerkinScalarBalance.h",
+      "equations": {
+        "eq:eg_residual": "Element storage/source and broken reference-gradient flux terms only; interior facets and boundary flux are separate."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_source": "Reference source S.",
+        "_reference_flux": "Full supplied H, evaluated on the reconstructed field.",
+        "_reference_component_storage_rate": "Complete-mass AD rate for nonlinear tests; a constant-coefficient mode is available for MMS."
+      },
+      "check_prefixes": [
+        "eg_",
+        "spatial_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinScalarEnrichmentBalance",
+      "title": "Cellwise constant EG volume row",
+      "group": "Enriched Galerkin",
+      "scope": "Residual term",
+      "source": "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C",
+      "header": "moose_app/include/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.h",
+      "equations": {
+        "eq:eg_residual": "P0 storage/source terms. The gradient volume term vanishes. Optional enrichment anchor is zero in the silica tests."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_source": "Same reference source.",
+        "_test": "Constant MONOMIAL test; nonconstant enrichment is rejected.",
+        "_reference_component_storage_rate": "Same complete-mass rate as the continuous row."
+      },
+      "check_prefixes": [
+        "eg_",
+        "spatial_",
+        "reject_nonconstant"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinFluxDG",
+      "title": "Conservative diagonal facet flux",
+      "group": "Enriched Galerkin",
+      "scope": "Interior facet terms",
+      "source": "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C",
+      "header": "moose_app/include/dgkernels/ADEnrichedGalerkinFluxDG.h",
+      "equations": {
+        "eq:eg_flux": "Arithmetic normal flux average plus diagonal mobility penalty, with opposite element/neighbor signs. sigma=12 is specified in the numerical decks; the object default is 4.",
+        "eq:eg_residual": "Facet flux term and adjoint term for the P0 enrichment row (zero gradient in that row). epsilon=-1 gives SIP."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_reference_flux, _reference_flux_neighbor": "Supplied H on the two cells.",
+        "_u - _u_neighbor": "Jump of the P0 enrichment; the continuous field has no jump.",
+        "normal_mobility": "Arithmetic average n\u00b7D\u00b7n; optional frozen absolute penalty only.",
+        "h": "Minimum adjacent element hmin."
+      },
+      "check_prefixes": [
+        "eg_",
+        "spatial_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinSymmetryDG",
+      "title": "Continuous diagonal adjoint facet term",
+      "group": "Enriched Galerkin",
+      "scope": "Interior facet term",
+      "source": "moose_app/src/dgkernels/ADEnrichedGalerkinSymmetryDG.C",
+      "header": "moose_app/include/dgkernels/ADEnrichedGalerkinSymmetryDG.h",
+      "equations": {
+        "eq:eg_residual": "Adjoint-consistency contribution for continuous tests; the field jump comes from the coupled enrichment."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_mobility": "Diagonal reference mobility tensor D.",
+        "_grad_test": "Continuous test gradient on each side.",
+        "_epsilon": "SIP convention: -1."
+      },
+      "check_prefixes": [
+        "eg_",
+        "spatial_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinCrossFluxDG",
+      "title": "Signed cross-mobility facet penalty",
+      "group": "Enriched Galerkin",
+      "scope": "Coupled diffusion extension",
+      "source": "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C",
+      "header": "moose_app/include/dgkernels/ADEnrichedGalerkinCrossFluxDG.h",
+      "equations": {
+        "eq:eg_flux": "Off-diagonal mobility contribution to the facet penalty for a coupled diffusion block; the supplied full row flux is assembled by the diagonal flux object.",
+        "eq:eg_residual": "Signed cross penalty and P0 adjoint contributions; coupled MMS extension of the displayed scalar form."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_mobility": "Signed off-diagonal mobility block; no absolute-value substitution.",
+        "_column_enrichment": "Jump source in the other transported field."
+      },
+      "check_prefixes": [
+        "eg_cross_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinCrossSymmetryDG",
+      "title": "Cross-mobility adjoint facet term",
+      "group": "Enriched Galerkin",
+      "scope": "Coupled diffusion extension",
+      "source": "moose_app/src/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.C",
+      "header": "moose_app/include/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.h",
+      "equations": {
+        "eq:eg_residual": "Signed off-diagonal adjoint-consistency term for continuous tests; coupled diffusion extension of the scalar form."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_mobility": "Off-diagonal reference mobility block.",
+        "_column_enrichment": "Other field whose jump enters the adjoint term."
+      },
+      "check_prefixes": [
+        "eg_cross_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinPenaltyBC",
+      "title": "Weak diagonal Dirichlet boundary",
+      "group": "Boundary terms",
+      "scope": "Weak boundary extension",
+      "source": "moose_app/src/bcs/ADEnrichedGalerkinPenaltyBC.C",
+      "header": "moose_app/include/bcs/ADEnrichedGalerkinPenaltyBC.h",
+      "equations": {
+        "eq:eg_residual": "Weak-Dirichlet extension: physical outward flux, diagonal adjoint term and penalty. The displayed equation uses prescribed natural flux instead; this object is used by MMS, not by the closed silica column."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "mismatch": "Reconstructed field minus prescribed boundary value.",
+        "_sigma / h": "Weak-Dirichlet penalty scale.",
+        "_mobility": "Diagonal reference mobility."
+      },
+      "check_prefixes": [
+        "eg_1d",
+        "eg_2d",
+        "eg_3d"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinCrossPenaltyBC",
+      "title": "Weak cross-coupled Dirichlet boundary",
+      "group": "Boundary terms",
+      "scope": "Weak boundary extension",
+      "source": "moose_app/src/bcs/ADEnrichedGalerkinCrossPenaltyBC.C",
+      "header": "moose_app/include/bcs/ADEnrichedGalerkinCrossPenaltyBC.h",
+      "equations": {
+        "eq:eg_residual": "Signed off-diagonal adjoint/penalty extension for weak Dirichlet data; physical row flux is already supplied by the diagonal boundary object."
+      },
+      "function": "computeQpResidual",
+      "aliases": {
+        "_mobility": "Signed cross mobility block.",
+        "mismatch": "Other reconstructed field minus its boundary value."
+      },
+      "check_prefixes": [
+        "eg_cross_"
+      ]
+    },
+    {
+      "name": "ADEnrichedGalerkinBoundaryFluxIntegral",
+      "title": "Numerical boundary-flux diagnostic",
+      "group": "Verification materials and diagnostics",
+      "scope": "Diagnostic extension",
+      "source": "moose_app/src/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.C",
+      "header": "moose_app/include/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.h",
+      "equations": {
+        "eq:eg_flux": "Boundary counterpart used with weak Dirichlet data: physical flux plus penalty. It is a diagnostic postprocessor, not an additional residual.",
+        "eq:eg_residual": "Integrates the outward numerical boundary flux for the MMS conservation audit."
+      },
+      "function": "computeQpIntegral",
+      "aliases": {
+        "_reference_flux": "Physical reference flux on the boundary.",
+        "_sigma / h": "Same penalty scale as the corresponding boundary object.",
+        "MetaPhysicL::raw_value": "Diagnostic extraction only; this does not enter Newton residual assembly."
+      },
+      "check_prefixes": [
+        "eg_1d",
+        "eg_2d",
+        "eg_3d"
+      ]
+    },
+    {
+      "name": "ADScalarDiffusionReferenceFluxMaterial",
+      "title": "Scalar manufactured diffusion material",
+      "group": "Verification materials and diagnostics",
+      "scope": "Synthetic verification fixture",
+      "source": "moose_app/src/materials/ADScalarDiffusionReferenceFluxMaterial.C",
+      "header": "moose_app/include/materials/ADScalarDiffusionReferenceFluxMaterial.h",
+      "equations": {
+        "eq:eg_flux": "Supplies H=-D Grad_X q and isotropic D for manufactured tests of the displayed numerical flux."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_diffusivity": "Positive constant fixture coefficient.",
+        "_reference_flux": "Supplied synthetic reference scalar flux.",
+        "_mobility": "Isotropic coefficient tensor."
+      },
+      "check_prefixes": [
+        "eg_1d",
+        "eg_2d",
+        "eg_3d",
+        "eg_jacobian"
+      ]
+    },
+    {
+      "name": "ADCrossDiffusionVerification",
+      "title": "SPD two-field manufactured material",
+      "group": "Verification materials and diagnostics",
+      "scope": "Synthetic verification fixture",
+      "source": "moose_app/src/materials/ADCrossDiffusionVerification.C",
+      "header": "moose_app/include/materials/ADCrossDiffusionVerification.h",
+      "equations": {
+        "eq:eg_flux": "Supplies full row fluxes for a synthetic SPD two-field diffusion block: diagonal 1 and 2, cross 0.25. It tests cross assembly and does not implement the full reacting aqueous closure."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "_Dpp, _Dqq": "Fixture diagonal mobilities 1 and 2.",
+        "_Dpq": "Symmetric cross mobility 0.25.",
+        "_flux_p, _flux_q": "Full synthetic row fluxes including cross coupling."
+      },
+      "check_prefixes": [
+        "eg_cross_"
+      ]
+    },
+    {
+      "name": "ADSilicaVerificationChemistry",
+      "title": "Restricted silica reaction and transport",
+      "group": "Constitutive materials",
+      "scope": "Restricted nonlinear test closure",
+      "source": "moose_app/src/materials/ADSilicaVerificationChemistry.C",
+      "header": "moose_app/include/materials/ADSilicaVerificationChemistry.h",
+      "equations": {
+        "eq:silica_coordinate": "Inverts the monotone chemical-potential coordinate using logit Newton in AD.",
+        "eq:silica_diffusion": "Recovers mass fractions and supplies silicic-acid flux; water flux follows by zero sum and is not stored independently.",
+        "eq:silica_rate": "Implements mechanism (3) of the binary silica/water test subsystem, its mass sources and nonnegative reaction power.",
+        "eq:aqueous_mole_fractions": "Uses the two-component restriction to convert mole fraction to mass fraction."
+      },
+      "function": "computeQpProperties",
+      "aliases": {
+        "q": "Total dimensionless potential coordinate, including P0 enrichment.",
+        "MS, MW, MC": "M_7, M_N and M_C; kg/mol.",
+        "_Qeq": "Synthetic equilibrium quotient Q_eq; dimensionless.",
+        "_rate": "k = K_(3) R; mol/(m\u00b3 s), supplied by the input deck.",
+        "_source_f, _source_s": "-M_7 r_(3) and M_C r_(3); kg/(m\u00b3 s).",
+        "_mobility": "ell; kg s/m\u00b3; zero in the batch.",
+        "_D": "ell R theta/M_7 times identity, evaluated in the fixed J=1 test."
+      },
+      "check_prefixes": [
+        "precipitation_",
+        "dissolution_",
+        "spatial_"
+      ],
+      "equation_line_ranges": {
+        "eq:silica_coordinate": [
+          39,
+          52
+        ],
+        "eq:silica_diffusion": [
+          57,
+          67
+        ],
+        "eq:silica_rate": [
+          60,
+          64
+        ],
+        "eq:aqueous_mole_fractions": [
+          57,
+          59
+        ]
+      },
+      "line_range_source_sha256": "b216236dbf110ec912812c0eda1e35e3d914f2a349724dbfbd4b38a1f79b0e62"
+    }
+  ]
+}

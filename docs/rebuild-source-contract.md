@@ -1,5 +1,7 @@
 # Source contract for the foundational rebuild
 
+Historical checkpoint: this document records the 6 October 2026 theory rebuild. Its label/page counts and statements about future implementation describe that stage. The 8 October numerical extension is documented in `docs/implementation-status.md`, `docs/numerical-verification-plan.md`, the current manuscript and source-bound verification reports.
+
 Status: source contract implemented in the candidate; independent source-fidelity review and acceptance remain pending. The contract milestone was delivered before manuscript rewriting. The rejected manuscript, its transfer network, and all 358 historical checks are excluded from the scientific foundation. Source IDs below denote actual author-owned LaTeX, not summaries or imported internet formulations.
 
 ## Hierarchy and exact-byte provenance

@@ -1,0 +1,14 @@
+{
+  "site/assets/silica-batch.svg": {
+    "source": "figures/silica-batch.pdf",
+    "source_sha256": "9c16cafa5bfb2d868815fe351b4ddd9de0c20cac9ab94f673fe39e3105665e7c",
+    "asset_sha256": "a291321ca31368c32843447b2a2fadb0387c381278b982747b394f9e06b29d0c",
+    "conversion": "pdftocairo -svg; vector conversion of the accepted manuscript figure"
+  },
+  "site/assets/silica-column.svg": {
+    "source": "figures/silica-column.pdf",
+    "source_sha256": "1dc2ed56da0f2fccc7a0ac210583683796471ebe7189abffa36fd57cfdb6c5e9",
+    "asset_sha256": "dcf4b618766f7b9db7ce90fc74a5da0fcbe7a54d240c9a953ade6d7295ab37b4",
+    "conversion": "pdftocairo -svg; vector conversion of the accepted manuscript figure"
+  }
+}

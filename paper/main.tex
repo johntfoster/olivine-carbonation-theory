@@ -10,15 +10,15 @@
 \newcommand{\dev}{\operatorname{dev}}
 \title{Finite-deformation theory of olivine carbonation}
 \author{John T. Foster\\The University of Texas at Austin}
-\date{7 October 2026}
+\date{8 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-We develop an isothermal finite-deformation description of olivine carbonation with three compressible elastic solid phases---forsterite, magnesite and silica---and one aqueous phase. Phase and component mass balances couple mineral conversion to aqueous transport and deformation of a common solid skeleton. A logarithmic elastic free energy satisfies the scalar-distention restriction and determines mineral density, stress and Biot coefficients. Aqueous reactions use mass-based stoichiometric coefficients, while a single fluid free energy determines density and component potentials. A common exchange potential supplies the transfer-work contributions to phase-changing reaction rates and fluid momentum. Pullback to the solid reference configuration gives the balances and weak forms. Synthetic checks assess conservation, constitutive derivatives, transfer work and reference transformations.
+We specialize a compositional reacting-mixture theory to an isothermal finite-deformation description of olivine carbonation with three compressible elastic solid phases---forsterite, magnesite and silica---and one aqueous phase. Phase and component mass balances couple mineral conversion to aqueous transport and deformation of a common solid skeleton. A logarithmic elastic free energy satisfies the scalar-distention restriction and determines mineral density, stress and Biot coefficients. Aqueous reactions use mass-based stoichiometric coefficients, while a single fluid free energy determines density and component potentials. A common exchange potential supplies the transfer-work contributions to phase-changing reaction rates and fluid momentum. Pullback to the solid reference configuration gives the balances and weak forms. An automatic-differentiation MOOSE implementation takes time differences of complete reference mass and uses enriched Galerkin diffusion with conservative element fluxes. Actual precipitation and dissolution calculations for a restricted silica-forming reaction are compared with independent reactor and finite-volume reference solutions, including time and mesh refinement. Synthetic checks separately assess constitutive derivatives, transfer work and reference transformations.
 \end{abstract}
 
 \section{Physical setting and assumptions}
-The formulation describes mass transfer, aqueous transport and elastic deformation during carbonation. The solid and fluid constituents occupy a common current region and exchange mass through chemical reactions. Their volume fractions, intrinsic densities and component mass fractions determine local storage. A matched logarithmic elastic energy couples mineral compression to skeleton deformation \citep{matchedlog}.
+We specialize the component balances, transfer-work normalization and reference measures of the compositional reacting-mixture framework \citep{compositional}. The elastic and aqueous free energies are application constitutive choices within that framework. The supplement records the equation-by-equation correspondence to the parent. The formulation describes mass transfer, aqueous transport and elastic deformation during carbonation. The solid and fluid constituents occupy a common current region and exchange mass through chemical reactions. Their volume fractions, intrinsic densities and component mass fractions determine local storage. A matched logarithmic elastic energy couples mineral compression to skeleton deformation \citep{matchedlog}.
 
 The net chemical transformation is
 % provenance: application | C:eq:unified_stoich_current
@@ -571,17 +571,198 @@ The pulled-back Gauss residual is
 \end{equation}
 The positive boundary term follows because electric displacement is minus the dielectric tensor times the potential gradient. As for mass flux, \(\bar q_0\) denotes outward electric displacement.
 
-\subsection{Closed field system and future residual map}
+\subsection{Closed field system and residual responsibilities}
 The closed system in this subsection uses quasi-static solid and fluid momentum: the acceleration terms are set to zero in \eqref{eq:overall_momentum} and \eqref{eq:reference_flux}, while material-insertion forces and transfer work are retained. A convenient choice of fields is the displacement \(\mbf u=\bs\chi-\mbf X\), \(\bar p_f\), three solid volume fractions \(\phi_A,\phi_B,\phi_C\), eight independent aqueous mass fractions \(\eta_f^\alpha\), \(\tau\), and \(\varphi\). Set \(\eta_f^N=1-\sum_{\alpha\ne N}\eta_f^\alpha\) and \(\phi_f=1-\sum_s\phi_s\). The three scalar mineral solves determine \(\bar\rho_s\); the aqueous EOS determines \(\bar\rho_f\); all stresses, specific potentials, fluxes and rates are constitutive outputs, with the reaction/relative-flux block solved together because the transfer offset depends on \(\mbf w_f\) and its resistance depends on reaction rates. Solvability of this nonlinear block must be assessed for the selected parameters and state.
 
 This quasi-static system has 17 scalar fields in three dimensions: three displacement, one pressure, three solid fractions, eight independent mass fractions, one transfer potential and one electric potential. They are supplied by three momentum, three solid mass, nine aqueous mass, one transfer and one Gauss equation. The ninth aqueous mass equation governs aqueous phase storage. Material multipliers can be recovered from \(\pi_\xi^\alpha=\rho_\xi^\alpha(\hat\mu_\xi^\alpha-\psi_\xi)\); \(L\) follows from \eqref{eq:transfer_recovery}. Distention is recovered from \eqref{eq:distention}. Initial data must satisfy volume and mass-fraction normalization, positive masses, the mineral and fluid EOS, Gauss compatibility and the specified \(\tau\) gauge.
 
 Retaining fluid inertia makes \eqref{eq:reference_flux} an evolution relation for fluid velocity or relative flux. A dynamic formulation therefore includes that vector field, its momentum equation and initial velocity data, together with the inertial form of the mixture momentum balance.
 
-The weak forms define the residual and constitutive responsibilities for a future implementation. A mechanics residual implements \eqref{eq:weak_momentum}; nine component residuals implement \eqref{eq:weak_fluid}; three solid residuals implement \eqref{eq:weak_solid}; local transfer and electrical residuals implement \eqref{eq:weak_tau} and \eqref{eq:weak_gauss}. Constitutive materials provide \eqref{eq:mineral_solve}--\eqref{eq:total_stress}, \eqref{eq:aqueous_eos}--\eqref{eq:solid_potential}, and the coupled \eqref{eq:reaction_kinetics}, \eqref{eq:relative_transport}, \eqref{eq:reference_flux} block. Differentiation must include the implicit mineral roots, reacted mass weights and phase-conversion resistance. Stabilization, time integration, finite-element spaces, active-phase treatment and solver tolerances are future implementation decisions.
+The weak forms define the residual and constitutive responsibilities of the implementation. A mechanics residual implements \eqref{eq:weak_momentum}; nine component residuals implement \eqref{eq:weak_fluid}; three solid residuals implement \eqref{eq:weak_solid}; local transfer and electrical residuals implement \eqref{eq:weak_tau} and \eqref{eq:weak_gauss}. Constitutive materials provide \eqref{eq:mineral_solve}--\eqref{eq:total_stress}, \eqref{eq:aqueous_eos}--\eqref{eq:solid_potential}, and the coupled \eqref{eq:reaction_kinetics}, \eqref{eq:relative_transport}, \eqref{eq:reference_flux} block. Differentiation must include the implicit mineral roots, reacted mass weights and phase-conversion resistance. The following section specifies the implemented time integration, finite-element spaces and diffusive facet terms. Active-phase treatment and calibration of the complete reacting constitutive block remain open.
+
+\section{Discretization and implementation}
+\label{sec:numerics}
+The reference balances are implemented in a MOOSE finite-element application \citep{moose2025}. Residual kernels assemble the weak forms on the undisplaced solid reference mesh. Materials supply complete mass storage, nominal stress, reaction sources and pulled-back fluxes. The same mass residuals can therefore test a constitutive reduction and implement the general theory. The implementation provides the balance, mechanics, transfer and Gauss operators; the numerical examples below exercise a restricted chemical material. A calibrated constitutive material coupling all seven reactions to the reacting fluid-flux relation remains to be supplied.
+
+\subsection{Conservative time integration and constitutive differentiation}
+Let \(M\) denote either \(J\phi_f\bar\rho_f\eta_f^\alpha\) or \(J\phi_s\bar\rho_s\). We difference this entire mass per reference volume. Differencing only the mass fraction would omit changes in pore volume, density and deformation. Backward Euler and variable-step BDF2 use
+% provenance: application | C:eq:solid_reference_fluid_component_balance,C:eq:solid_reference_solid_component_balance
+\begin{align}
+ \mc D_tM^n&=\frac{M^n-M^{n-1}}{\Delta t_n}, &&\text{backward Euler},\label{eq:discrete_euler}\\
+ \mc D_tM^n&=\frac1{\Delta t_n}\left[
+ \frac{1+2\zeta_n}{1+\zeta_n}M^n-(1+\zeta_n)M^{n-1}
+ +\frac{\zeta_n^2}{1+\zeta_n}M^{n-2}\right],
+ &&\zeta_n=\frac{\Delta t_n}{\Delta t_{n-1}}.
+ \label{eq:discrete_bdf}
+\end{align}
+BDF2 starts with one backward-Euler step. Current storage is an automatic-differentiation (AD) material property, while the previous two values are stored histories. The monolithic Newton Jacobian therefore includes the dependence of storage on every coupled field. MOOSE propagates these derivatives through material evaluations using MetaPhysicL \citep{moosead}. The three mineral-volume roots are obtained with bracket selection followed by Newton updates in AD, following our elastic companion implementation. This differentiates the converged local roots together with the outer residual; it does not freeze mineral compression during the global Newton solve.
+
+\subsection{Enriched Galerkin transport}
+A component balance should conserve mass on each element, including when diffusion crosses a material interface. We use the enriched Galerkin (EG) construction \citep{eg2016}, adapting the corresponding operators in the compositional companion. On the line meshes below, a transported scalar \(q_h\) is represented by
+% provenance: application | C:eq:solid_reference_fluid_component_balance
+\begin{equation}
+ q_h=q_h^c+q_h^0,\qquad q_h^c\in V_h^1\subset H^1(\mc B_0),
+ \qquad q_h^0\in V_h^0,
+ \label{eq:eg_space}
+\end{equation}
+where \(V_h^1\) contains continuous piecewise linear functions and \(V_h^0\) contains elementwise constants. On tensor-product meshes the backbone is continuous multilinear. The continuous and elementwise constant tests use the same reconstructed storage and source. Constitutive materials evaluate the total field. Its gradient within each element equals the backbone gradient. The piecewise constant tests expose element mass balances.
+
+For a diffusive reference flux \(\mbf H=-\mbf D\nabla_{\mbf X}q_h\), choose one normal \(\mbf n\) from the plus element to the minus element, define \([q]=q^+-q^-\), and let braces denote the arithmetic average. The implemented interior numerical outward flux from the plus element is
+% provenance: application | C:eq:solid_reference_fluid_component_balance
+\begin{equation}
+ \widehat h=\{\mbf H\}\cdot\mbf n+
+ \frac{\sigma}{h_e}\{\mbf n\cdot\mbf D\mbf n\}[q_h],
+ \qquad h_e=\min(h^+,h^-),\quad \sigma=12
+ \label{eq:eg_flux}
+\end{equation}
+for the examples here. The two facet residuals use opposite signs. Symmetric interior penalty also adds the adjoint-consistency term, giving the scalar residual
+% provenance: application | C:eq:solid_reference_fluid_component_balance
+\begin{align}
+ R_h(v_h)={}&\sum_K\int_K
+ \left[v_h(\mc D_tM-S)-\nabla_{\mbf X}v_h\cdot\mbf H\right]\dVblank\notag\\
+ &+\sum_{e\ \text{interior}}\int_e
+ \left([v_h]\widehat h-\{\mbf D\nabla_{\mbf X}v_h\}\cdot\mbf n[q_h]\right)\,{\rm d}A
+ +\int_{\Gamma_h}v_h\bar h\,{\rm d}A.
+ \label{eq:eg_residual}
+\end{align}
+Here \(S\) is the reference mass source. For a cellwise constant test, the volume gradient and adjoint term vanish. The remaining terms give that cell's mass balance through storage, source and facet flux. Shared facet fluxes cancel on summation. The code also supplies signed off-diagonal mobility penalty and adjoint terms for coupled diffusion; their manufactured-solution tests are discussed below. The displayed form describes the diffusion block and does not establish an advection-stabilization method for the full reacting system.
+
+The decomposition in \eqref{eq:eg_space} admits a constant shift between its two parts. In the closed column we fix one backbone boundary value and leave the enrichment unconstrained. The total field retains a free physical boundary value while this choice fixes its representation. Its initial backbone value matches the prescribed initial field. Zero total outward flux is the physical boundary condition. Fluxless mineral fractions use elementwise constants directly; no enrichment anchor is added to their evolution.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{p{0.33\linewidth}p{0.25\linewidth}p{0.34\linewidth}}
+\toprule
+Implemented object & Governing equation & Responsibility\\
+\midrule
+\texttt{ADReferenceMass}, \texttt{ADReferenceMassStorage} & \eqref{eq:weak_fluid}, \eqref{eq:weak_solid} & Complete storage and its history difference\\
+\texttt{ADReferenceSpeciesBalance} & \eqref{eq:weak_fluid}, \eqref{eq:weak_solid} & Reference source and volume flux\\
+\texttt{ADCarbonationMomentum}, \texttt{ADTransferPotential} & \eqref{eq:weak_momentum}, \eqref{eq:weak_tau} & Nominal stress, insertion force and skeleton transfer rate\\
+\texttt{ADReferenceGauss}, \texttt{ADReferencePullback} & \eqref{eq:weak_gauss}, \eqref{eq:piola_flux} & Reference dielectric, charge and flux transformation\\
+\texttt{ADLogarithmicMinerals} & \eqref{eq:mineral_solve}, \eqref{eq:total_stress} & AD mineral roots, density, stress and Biot response\\
+\texttt{ADEnrichedGalerkin*}, \texttt{ADReferenceStorageRate} & \eqref{eq:eg_residual}, \eqref{eq:discrete_bdf} & Paired rows, facet terms and a shared complete storage rate\\
+\texttt{ADSilicaVerificationChemistry} & \eqref{eq:aqueous_potentials}, \eqref{eq:reaction_kinetics} & Binary aqueous silica reduction described below\\
+\bottomrule
+\end{tabular}
+\caption{Residual and material responsibilities. The names identify source objects in the accompanying implementation; their presence does not imply a solved full carbonation network.}
+\label{tab:implementation}
+\end{table}
+
+\section{Numerical verification with mineral reaction}
+\label{sec:reaction_verification}
+We test a mineral-forming step of carbonation, mechanism (3), in two settings. A closed uniform reactor discriminates precipitation from dissolution and tests the time discretization against an independent extent equation. A closed column adds chemical-potential-driven diffusion and tests spatial refinement and element conservation against an independent finite-volume calculation. The parameters deliberately isolate the chemical mass and transport operators. They are synthetic and supply numerical verification rather than calibrated silica kinetics or experimental validation of olivine carbonation.
+
+\subsection{Exact restricted branch and chemical potential coordinate}
+Retain positive forsterite, magnesite and silica phases, with \(\phi_A=0.2\), \(\phi_B=0.1\), and initially \(\phi_C=0.05\). The aqueous subsystem retains silicic acid (component 7) and water (component \(N\)); the other aqueous components and the other six mechanisms are excluded from this particular subsystem. This is a restriction to one reaction, rather than an assertion that the complete nine-component kinetic system preserves zero concentrations. Both retained aqueous masses and all three mineral masses stay positive.
+
+Prescribe \(\mbf F=\mbf I\), \(J=1\), \(\bar p_f=p_0=0\), \(\theta=298.15\) K, and initially uniform \(\tau=0\). There is no body force or electric field. Choose the same reference intrinsic density \(\rho_*=1000\) kg/m\(^3\) for every phase and \(v_\alpha^0=M_\alpha/\rho_*\) in \eqref{eq:aqueous_gibbs}. Then \(\bar v_f^0=1/\rho_*\), \(\bar\rho_f=\rho_*\), and all mineral roots in \eqref{eq:mineral_solve} equal one. The finite positive elastic moduli can satisfy the inequalities of \eqref{eq:solid_energy} without affecting this unstressed branch. Thus the total stress is zero for any retained phase fractions. Fluid momentum admits \(\mbf W_f=0\); the solid normalization preserves \(\tau=0\), and the transfer offset vanishes. These prescribed fields satisfy the full mechanical and electrical equations, which are not independently exercised by these examples.
+
+Let \(M_7=0.096113\), \(M_N=0.018015\), and \(M_C=0.060083\), in kg/mol. Since \(M_7=M_C+2M_N\), reaction mass transfer also transfers exactly compensating volume for the chosen equal densities. Relative mass diffusion is separately zero sum. Consequently \(\phi_f=0.7-\phi_C\) remains consistent with constant pressure and total mixture mass, including with spatially varying reaction.
+
+Choose \(g_7^0=g_N^0=0\) and \(\psi_C^0=R\theta\ln Q_{\rm eq}/M_C\), where \(Q_{\rm eq}>0\) is a dimensionless synthetic equilibrium quotient. Write \(x=x_f^7\) and \(x_f^N=1-x\). Equations \eqref{eq:aqueous_potentials}, \eqref{eq:solid_potential} and \eqref{eq:reaction_force} give
+% provenance: derived | C:eq:MC_onsager_reaction_rate,C:eq:MC_affinity_projection,C:eq:MC_absolute_neutral_component_potential
+\begin{equation}
+ \mc A_{(3)}=R\theta\ln\frac{x}{(1-x)^2Q_{\rm eq}},
+ \qquad r_{(3)}=k\ln\frac{x}{(1-x)^2Q_{\rm eq}},
+ \qquad k=K_{(3)}R.
+ \label{eq:silica_rate}
+\end{equation}
+The rate reverses at equilibrium and \(r_{(3)}\mc A_{(3)}\ge0\). No prescribed reaction history or manufactured chemical source is used in either example.
+
+To keep the diffusive force linear in the transported coordinate while retaining nonlinear storage, define an invertible, scaled chemical-potential difference:
+% provenance: derived | C:eq:MC_absolute_neutral_component_potential,C:eq:MC_relative_transport_closures
+\begin{align}
+ q&=\frac{M_7}{R\theta}(\hat\mu_f^7-\hat\mu_f^N)
+ =\ln x-\frac{M_7}{M_N}\ln(1-x),\label{eq:silica_coordinate}\\
+ \eta_f^7&=\frac{M_7x}{M_7x+M_N(1-x)},
+ \quad \eta_f^N=1-\eta_f^7,
+ \quad \mbf j_f^7=-\ell\frac{R\theta}{M_7}\nabla_{\mbf X}q,
+ \quad \mbf j_f^N=-\mbf j_f^7.
+ \label{eq:silica_diffusion}
+\end{align}
+The derivative \(\mathrm dq/\mathrm dx=1/x+(M_7/M_N)/(1-x)>0\) makes this a change of constitutive coordinate on \(0<x<1\). Newton inversion in AD recovers \(x\) and its derivatives. The governing equations still difference \(\rho_*\phi_f\eta_f^7\) and \(\rho_*\phi_C\), in kg/m\(^3\), with sources \(-M_7r_{(3)}\) and \(M_Cr_{(3)}\). Mole amounts below are diagnostics derived from these mass measures, not replacement primary balances. The solvent balance follows by subtracting the silicic-acid balance from the aqueous phase balance; its production is \(2M_Nr_{(3)}\).
+
+In both examples \(k=1\) mol/(m\(^3\)s). Set \(Q_{\rm eq}\) using \(n_7=5\) mol/m\(^3\) and \(\phi_C=0.05\), with \(n_7=\rho_*\phi_f\eta_f^7/M_7\), \(n_N=(\rho_*\phi_f-M_7n_7)/M_N\), and \(x=n_7/(n_7+n_N)\). Closed-batch equilibria differ slightly from this reference state because the solvent amount changes during reaction. The column uses \(\ell=10^{-6}\) kg\,s/m\(^3\); the batch sets diffusion to zero. These choices define the test rather than measured mineral properties.
+
+\subsection{Closed reactor: opposite reaction directions and time refinement}
+The reactor starts with either \(n_7=10\) or \(n_7=1\) mol/m\(^3\). The first state precipitates silica and the second dissolves it. For an independent reference, let \(b(t)\) be molar reaction extent per mixture volume, with \(b(0)=0\). Conservation gives
+% provenance: derived | C:eq:solid_reference_fluid_component_balance,C:eq:solid_reference_solid_component_balance
+\begin{equation}
+ n_7=n_7(0)-b,\qquad n_C=n_C(0)+b,
+ \qquad n_N=n_N(0)+2b,\qquad \partial_tb=r_{(3)}.
+ \label{eq:silica_extent}
+\end{equation}
+Here \(n_C=\rho_*\phi_C/M_C\). The independent scalar reference uses DOP853 with relative tolerance \(2\times10^{-12}\) and absolute tolerance \(10^{-13}\), evaluating \eqref{eq:silica_rate} directly from the conserved mole amounts. The MOOSE calculation instead solves two mass residuals for \(q\) and \(\phi_C\). Its BDF2 histories and the independent reference are compared in Figure~\ref{fig:silica_batch}.
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/silica-batch.pdf}
+\caption{Actual closed-reactor precipitation and dissolution. Lines are MOOSE BDF2 results; open markers in the aqueous panel are independent scalar-extent reference values. The mineral amount increases as dissolved silica decreases, and decreases in the initially undersaturated reactor.}
+\label{fig:silica_batch}
+\end{figure}
+
+Over \(40\) s with \(\Delta t=0.0125\) s, the precipitating reactor transfers \(4.999652\) mol/m\(^3\) of Si into the mineral, while the dissolving reactor transfers \(4.000984\) mol/m\(^3\) out of it. Maximum aqueous trajectory errors against the independent reference are \(8.07\times10^{-6}\) and \(1.69\times10^{-4}\) mol/m\(^3\), respectively. Both approach their own mass-constrained equilibrium, with final absolute rates below \(0.002\) mol/(m\(^3\)s). Si, H and O inventories are conserved to relative error below \(10^{-9}\), and sampled reaction power is nonnegative.
+
+For a time-accuracy test independent of near-equilibrium flattening, compare the aqueous amount at \(5\) s on successively halved time steps. Table~\ref{tab:silica_time} reports the actual errors. The observed order is computed as \(\log_2(E_{\Delta t}/E_{\Delta t/2})\). The finest-pair orders are \(1.000\) and \(0.999\) for backward Euler and \(2.000\) and \(1.993\) for BDF2. This test exercises the nonlinear mass storage and solution-dependent reaction source together.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{ccccc}
+\toprule
+\(\Delta t\) (s) & \multicolumn{2}{c}{Precipitation error (mol/m\(^3\))} & \multicolumn{2}{c}{Dissolution error (mol/m\(^3\))}\\
+ & Euler & BDF2 & Euler & BDF2\\
+\midrule
+0.1 & \(1.13\times10^{-2}\) & \(2.47\times10^{-4}\) & \(2.24\times10^{-2}\) & \(4.49\times10^{-4}\)\\
+0.05 & \(5.66\times10^{-3}\) & \(6.15\times10^{-5}\) & \(1.13\times10^{-2}\) & \(1.20\times10^{-4}\)\\
+0.025 & \(2.83\times10^{-3}\) & \(1.53\times10^{-5}\) & \(5.66\times10^{-3}\) & \(3.11\times10^{-5}\)\\
+0.0125 & \(1.42\times10^{-3}\) & \(3.83\times10^{-6}\) & \(2.84\times10^{-3}\) & \(7.94\times10^{-6}\)\\
+0.00625 & \(7.09\times10^{-4}\) & \(9.57\times10^{-7}\) & \(1.42\times10^{-3}\) & \(2.00\times10^{-6}\)\\
+0.003125 & \(3.55\times10^{-4}\) & \(2.39\times10^{-7}\) & \(7.10\times10^{-4}\) & \(5.04\times10^{-7}\)\\
+\bottomrule
+\end{tabular}
+\caption{Closed-reactor time refinement against the independent extent solution at the same final time. Errors are in the aqueous Si amount per mixture volume.}
+\label{tab:silica_time}
+\end{table}
+
+\subsection{Closed column: reaction with conservative diffusion}
+On \(0<X<1\) m prescribe \(n_7(X,0)=5+4\cos(\pi X)\) mol/m\(^3\), uniform initial mineral fractions, and zero outward mass flux at both ends. The left part initially precipitates silica, while the right part dissolves it. EG transports \(q\), and the elementwise constant silica fraction evolves through its local mass equation. The entire nonlinear storage and reaction block is solved together. The Newton relative and absolute residual tolerances are \(10^{-11}\), with a direct LU linear solve and backtracking. This solver choice establishes the small verification calculations, not scalable performance for the full field system.
+
+The independent reference uses cell-centered finite volumes, centered potential-difference fluxes, and SciPy BDF method-of-lines integration at relative tolerance \(2\times10^{-10}\) and absolute tolerance \(10^{-11}\). It evolves aqueous and mineral Si diagnostics with opposite reaction terms, calculates solvent mass by closure, and evaluates \eqref{eq:silica_rate} and \eqref{eq:silica_coordinate} directly. It imports no MOOSE residual or constitutive implementation. Exact cell averages initialize its cosine profile. MOOSE instead interpolates the initial potential in the continuous backbone; this introduces an initial projection error that is included in the mesh comparison.
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/silica-column.pdf}
+\caption{Reaction and counterdiffusion in the closed column. Lines show EG profiles, and open markers in the aqueous panel show the independently refined finite-volume reference. Positive mineral change denotes precipitation and negative change denotes dissolution. The initial aqueous gradient smooths while the locally immobile mineral records the reaction history.}
+\label{fig:silica_column}
+\end{figure}
+
+The finite-volume reference uses \(512\) and \(1024\) cells; their final aqueous profiles differ by \(4.59\times10^{-7}\) mol/m\(^3\) in cell-average root-mean-square norm after aggregating fine cells. The EG mesh comparison uses \(16\), \(32\), \(64\) and \(128\) elements with \(\Delta t=0.005\) s. Reference cell averages are aggregated onto each comparison mesh. Table~\ref{tab:silica_space} reports the aqueous and mineral profile errors at \(5\) s. These comparisons measure agreement with a refined independent discretization. They do not measure error against a closed-form continuum solution.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{cccc}
+\toprule
+Elements & Aqueous RMS error (mol/m\(^3\)) & Mineral RMS error (mol/m\(^3\)) & Aqueous order\\
+\midrule
+16 & \(2.88\times10^{-3}\) & \(5.00\times10^{-3}\) & ---\\
+32 & \(7.22\times10^{-4}\) & \(1.25\times10^{-3}\) & 1.994\\
+64 & \(1.81\times10^{-4}\) & \(3.13\times10^{-4}\) & 1.994\\
+128 & \(4.59\times10^{-5}\) & \(7.80\times10^{-5}\) & 1.980\\
+\bottomrule
+\end{tabular}
+\caption{Spatial comparison at a fixed small time step. RMS norms compare cell averages of aqueous and mineral Si; the mineral fraction is represented by elementwise constants.}
+\label{tab:silica_space}
+\end{table}
+
+On the finest mesh the largest local mineral gain is \(1.019777\) mol/m\(^3\) and the largest loss is \(1.114963\) mol/m\(^3\). Global Si, H and O relative inventory drift is below \(10^{-9}\) throughout the column runs. Reconstructing the shared numerical flux in \eqref{eq:eg_flux} from the sampled backbone and enrichment, and evaluating the BDF2 storage difference and local reaction term on every cell and time step, gives a maximum absolute aqueous mass-balance residual of \(3.16\times10^{-10}\) kg/(m\(^3\)s). This checks local balance as well as global cancellation. Participating phase masses remain positive.
+
+A separate fixed-mesh study on \(64\) elements uses time steps \(0.04\), \(0.02\) and \(0.01\) s. Successive final-profile differences give a BDF2 self-convergence order of \(1.869\). This isolates temporal refinement from the mesh study. A finite-difference check of the coupled reaction, nonlinear mass and EG Jacobian gives a maximum relative matrix discrepancy of \(7.4\times10^{-11}\). Together with the independent profile comparison, these tests discriminate the material-state derivatives, reaction signs and conservative facet assembly.
+
+\subsection{Reproduction and evidence boundaries}
+The supplement contains the three input decks, all application sources and pinned environment requirements. It also includes raw time histories, selected spatial profiles, compressed solver logs, independent reference data and the scripts that generate the figures and error tables. From repository root, \texttt{make moose} builds the application, \texttt{make test} reruns the residual suite, and \texttt{make verification-examples} reruns the two examples and reference calculations. For an extracted supplement, \texttt{environment/README.md} provides direct commands that bypass repository workflow helpers. The executable reports bind source, input, toolchain and data hashes to actual commands and return codes. The framework is pinned at \texttt{abafb58b67a6037c6723ffeb19647c84484466da}. Its separately installed dependency is required to rebuild; the supplement does not bundle a binary as a substitute for source reproduction.
+
+The existing residual suite separately checks finite-deformation mechanics and insertion forces, three-mineral roots and Biot response in compression and tension, transfer evolution, dielectric pullback and outward boundary signs. Scalar EG manufactured solutions in one, two and three dimensions and a two-component cross-diffusion problem discriminate spatial accuracy. A time-dependent source with nonlinear mass storage discriminates backward Euler from BDF2. Those tests are distinct from the actual mineral reaction examples. Neither group provides physical validation, an active-phase extension, or a solution of the calibrated full carbonation network. Together they provide a reproducible basis for extending the implementation to those additional cases.
 
 \section{Scope of the consistency checks}
-The companion verification script checks atom, mass and charge stoichiometry; transfer normalization and offsets; mass-source cancellation; the single-solid elastic limit; constitutive pressure and stress derivatives; the scalar-distention restriction; Biot tangents; reference transformations of virtual work and flux; reacting-flux inversion; the Darcy limit; and nonnegative force--rate products. Its report records the inspected file digests, parameters, errors, tolerances and commands. These synthetic checks establish the tested algebraic and constitutive identities. Continuum solutions, convergence studies and experimental comparisons remain subsequent stages of assessment.
+The companion analytical script checks atom, mass and charge stoichiometry; transfer normalization and offsets; mass-source cancellation; the single-solid elastic limit; constitutive pressure and stress derivatives; the scalar-distention restriction; Biot tangents; reference transformations of virtual work and flux; reacting-flux inversion; the Darcy limit; and nonnegative force--rate products. Its report records inspected file digests, parameters, errors, tolerances and commands. These synthetic checks establish the tested algebraic and constitutive identities; the numerical evidence in Section~\ref{sec:reaction_verification} addresses the stated discrete residuals and restricted reaction solutions.
 
 Quantitative application requires compatible chemical standard potentials, activity models, mineral moduli, permeability, species mobilities and reaction mobilities. Phase disappearance and nucleation require a derived active-phase extension. The present equations describe the elastic, positive-mass branch of the reacting mixture.
 

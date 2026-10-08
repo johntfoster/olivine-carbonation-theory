@@ -60,3 +60,31 @@ Reaction rates, the conversion-corrected fluid resistance, chemical potentials
 and species mobilities must be supplied consistently by application materials.
 These residual objects make that boundary explicit. They do not claim a
 calibrated coupled 17-field carbonation simulation or phase-appearance solver.
+
+## Actual mineral reaction examples (8 October 2026)
+
+`moose_app/examples/silica/{batch,dissolution,spatial}.i` exercise the exact
+binary-aqueous restriction in `eq:silica_rate`–`eq:silica_diffusion`. The new
+`ADSilicaVerificationChemistry` material consumes the reconstructed scaled
+potential q, P0 silica fraction, synthetic equilibrium quotient, reaction
+coefficient and diffusion mobility. It returns mass fractions, the complementary
+fluid volume fraction, mass-based sources and a reference flux. F=I and p=0
+are prescribed; equal specific volumes make that branch volume consistent.
+The other minerals are positive and inert. This does not implement all nine
+species/seven reactions or calibrated deformation-driven carbonation.
+
+`ADReferenceStorageRate` consumes complete reconstructed fluid mass, its stored
+old/older states and the actual field TimeIntegrator. It supplies the **same**
+AD mass rate to both EG rows. The solid mass operator acts directly on P0
+silica fraction. This is equivalent to the paired complete-mass time kernels
+above, with no constant-coefficient approximation. Facet mobility is
+ell R theta/M7 for the scaled potential coordinate. A single backbone boundary
+value fixes the decomposition; enrichment remains free and the physical
+boundary condition is zero total outward flux.
+
+`scripts/run_silica_verification.py` executes actual solves, computes independent
+extent and finite-volume references, conservation and convergence errors, and
+reconstructs each element's numerical flux balance from sampled backbone and
+P0 fields. `verification/silica-results.json` and `data/silica/` contain the
+recorded results and raw observations. No source or tolerance is weakened to
+turn a failed check into a pass.

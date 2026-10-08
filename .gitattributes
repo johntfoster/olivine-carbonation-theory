@@ -1,3 +1,8 @@
 # Immutable author-source snapshots retain exact inspected bytes and hashes.
 # Whitespace normalization would corrupt the source-provenance contract.
 verification/parent-sources/** -whitespace
+# Independent review bytes are hash-bound; their two-space Markdown hard breaks
+# are intentional. Preserve them without weakening whitespace checks elsewhere.
+reviews/numerical-20261008-01/reviewer-2.md whitespace=-blank-at-eol
+reviews/numerical-20261008-01/reviewer-3.md whitespace=-blank-at-eol
+reviews/numerical-20261008-final/reviewer-2.md whitespace=-blank-at-eol

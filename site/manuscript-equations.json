@@ -1,0 +1,534 @@
+{
+  "source_hashes": {
+    "paper/main.tex": "1cefdb5f2810524935070737f9e6c8b9ea8cc846a01e7dcbf81635da3b327a3c",
+    "paper/defs.tex": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130"
+  },
+  "pdf_sha256": "aa5ebc1955c4825b9c5789a72c0f5bb3e0f3eb115b17e94cc7288452906f423c",
+  "equations": [
+    {
+      "label": "eq:application_reaction",
+      "number": 1,
+      "source_line": 25,
+      "source_latex": "\\mathrm{Mg_2SiO_4}+2\\mathrm{CO_2(aq)}\\longrightarrow\n 2\\mathrm{MgCO_3}+\\mathrm{SiO_2}.\n \\label{eq:application_reaction}",
+      "display_latex": "\\begin{equation}\\mathrm{Mg_2SiO_4}+2\\mathrm{CO_2(aq)}\\longrightarrow\n 2\\mathrm{MgCO_3}+\\mathrm{SiO_2}.\\tag{1}\\end{equation}"
+    },
+    {
+      "label": "eq:densities",
+      "number": 2,
+      "source_line": 37,
+      "source_latex": "\\rho_\\xi=\\phi_\\xi\\bar\\rho_\\xi=\\sum_\\alpha\\rho_\\xi^\\alpha,\n \\quad \\rho_\\xi^\\alpha=\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha,\n \\quad \\sum_\\alpha\\eta_\\xi^\\alpha=1,\n \\quad \\phi_f+\\sum_{s\\in\\mc S}\\phi_s=1.\n \\label{eq:densities}",
+      "display_latex": "\\begin{equation}\\rho_\\xi=\\phi_\\xi\\bar\\rho_\\xi=\\sum_\\alpha\\rho_\\xi^\\alpha,\n \\quad \\rho_\\xi^\\alpha=\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha,\n \\quad \\sum_\\alpha\\eta_\\xi^\\alpha=1,\n \\quad \\phi_f+\\sum_{s\\in\\mc S}\\phi_s=1.\\tag{2}\\end{equation}"
+    },
+    {
+      "label": "eq:motion",
+      "number": 3,
+      "source_line": 46,
+      "source_latex": "\\mbf x&=\\bs\\chi(\\mbf X,t),\\quad \\mbf F=\\nabla_{\\mbf X}\\bs\\chi,\n \\quad J=\\det\\mbf F>0,\\quad \\mbf v_{\\mc S}=\\partial_t\\bs\\chi|_{\\mbf X},\\label{eq:motion}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mbf x&=\\bs\\chi(\\mbf X,t),\\quad \\mbf F=\\nabla_{\\mbf X}\\bs\\chi,\n \\quad J=\\det\\mbf F>0,\\quad \\mbf v_{\\mc S}=\\partial_t\\bs\\chi|_{\\mbf X},\\end{aligned}\\tag{3}\\end{equation}"
+    },
+    {
+      "label": "eq:rates",
+      "number": 4,
+      "source_line": 46,
+      "source_latex": "\\phasedot\\Gamma&=D_{\\mc S}\\Gamma/Dt,\n \\qquad D_\\xi\\Gamma/Dt=\\phasedot\\Gamma+\n (\\mbf v_\\xi-\\mbf v_{\\mc S})\\cdot\\nabla_{\\mbf x}\\Gamma.\n \\label{eq:rates}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\phasedot\\Gamma&=D_{\\mc S}\\Gamma/Dt,\n \\qquad D_\\xi\\Gamma/Dt=\\phasedot\\Gamma+\n (\\mbf v_\\xi-\\mbf v_{\\mc S})\\cdot\\nabla_{\\mbf x}\\Gamma.\\end{aligned}\\tag{4}\\end{equation}"
+    },
+    {
+      "label": "eq:material_measure",
+      "number": 5,
+      "source_line": 58,
+      "source_latex": "\\rho_{\\xi0}^\\alpha+\\mc C_\\xi^\\alpha\n &=J_\\xi\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha,\\label{eq:material_measure}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\rho_{\\xi0}^\\alpha+\\mc C_\\xi^\\alpha\n &=J_\\xi\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha,\\end{aligned}\\tag{5}\\end{equation}"
+    },
+    {
+      "label": "eq:material_rate",
+      "number": 6,
+      "source_line": 58,
+      "source_latex": "\\dot c_\\xi^\\alpha=\\frac{\\dot{\\mc C}_\\xi^\\alpha}{J_\\xi}\n &=\\sum_m\\nu_{\\xi(m)}^\\alpha r_{(m)}\n -\\nabla_{\\mbf x}\\cdot(\\mbf j_{\\xi,{\\rm disp}}^\\alpha+\\mbf j_{\\xi,{\\rm diff}}^\\alpha).\n \\label{eq:material_rate}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\dot c_\\xi^\\alpha=\\frac{\\dot{\\mc C}_\\xi^\\alpha}{J_\\xi}\n &=\\sum_m\\nu_{\\xi(m)}^\\alpha r_{(m)}\n -\\nabla_{\\mbf x}\\cdot(\\mbf j_{\\xi,{\\rm disp}}^\\alpha+\\mbf j_{\\xi,{\\rm diff}}^\\alpha).\\end{aligned}\\tag{6}\\end{equation}"
+    },
+    {
+      "label": "eq:zero_sum_flux",
+      "number": 7,
+      "source_line": 68,
+      "source_latex": "\\sum_\\alpha\\mbf j_{\\xi,k}^\\alpha&=\\mbf0,\n \\quad k\\in\\{{\\rm disp},{\\rm diff}\\},\\label{eq:zero_sum_flux}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\sum_\\alpha\\mbf j_{\\xi,k}^\\alpha&=\\mbf0,\n \\quad k\\in\\{{\\rm disp},{\\rm diff}\\},\\end{aligned}\\tag{7}\\end{equation}"
+    },
+    {
+      "label": "eq:spatial_component_balance",
+      "number": 8,
+      "source_line": 68,
+      "source_latex": "\\partial_t\\rho_\\xi^\\alpha+\\nabla_{\\mbf x}\\cdot\n (\\rho_\\xi^\\alpha\\mbf v_\\xi+\\mbf j_{\\xi,{\\rm disp}}^\\alpha+\\mbf j_{\\xi,{\\rm diff}}^\\alpha)\n &=\\sum_m\\nu_{\\xi(m)}^\\alpha r_{(m)}.\\label{eq:spatial_component_balance}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\partial_t\\rho_\\xi^\\alpha+\\nabla_{\\mbf x}\\cdot\n (\\rho_\\xi^\\alpha\\mbf v_\\xi+\\mbf j_{\\xi,{\\rm disp}}^\\alpha+\\mbf j_{\\xi,{\\rm diff}}^\\alpha)\n &=\\sum_m\\nu_{\\xi(m)}^\\alpha r_{(m)}.\\end{aligned}\\tag{8}\\end{equation}"
+    },
+    {
+      "label": "eq:distention",
+      "number": 9,
+      "source_line": 79,
+      "source_latex": "\\mbf F=\\mbf A_s\\bar{\\mbf F}_s,\n \\quad \\mbf A_s=a_s^{1/3}\\mbf I,\n \\quad J=a_s\\bar J_s,\n \\quad \\bar J_s=\\det\\bar{\\mbf F}_s=\\frac{\\bar\\rho_{s0}}{\\bar\\rho_s}.\n \\label{eq:distention}",
+      "display_latex": "\\begin{equation}\\mbf F=\\mbf A_s\\bar{\\mbf F}_s,\n \\quad \\mbf A_s=a_s^{1/3}\\mbf I,\n \\quad J=a_s\\bar J_s,\n \\quad \\bar J_s=\\det\\bar{\\mbf F}_s=\\frac{\\bar\\rho_{s0}}{\\bar\\rho_s}.\\tag{9}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_material_mass",
+      "number": 10,
+      "source_line": 88,
+      "source_latex": "J\\phi_s\\bar\\rho_s&=\\phi_{s0}\\bar\\rho_{s0}+\\mc C_s,\n \\quad a_s\\phi_s=\\phi_{s0}+\\mc C_s/\\bar\\rho_{s0},\\label{eq:solid_material_mass}",
+      "display_latex": "\\begin{equation}\\begin{aligned}J\\phi_s\\bar\\rho_s&=\\phi_{s0}\\bar\\rho_{s0}+\\mc C_s,\n \\quad a_s\\phi_s=\\phi_{s0}+\\mc C_s/\\bar\\rho_{s0},\\end{aligned}\\tag{10}\\end{equation}"
+    },
+    {
+      "label": "eq:distention_rate",
+      "number": 11,
+      "source_line": 88,
+      "source_latex": "\\frac{\\phasedot a_s}{a_s}&=\\nabla_{\\mbf x}\\cdot\\mbf v_{\\mc S}\n +\\frac{\\phasedot{\\bar\\rho}_s}{\\bar\\rho_s},\n \\quad \\phasedot{\\mc C}_s=J\\sum_m\\nu_{s(m)}r_{(m)}.\\label{eq:distention_rate}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\frac{\\phasedot a_s}{a_s}&=\\nabla_{\\mbf x}\\cdot\\mbf v_{\\mc S}\n +\\frac{\\phasedot{\\bar\\rho}_s}{\\bar\\rho_s},\n \\quad \\phasedot{\\mc C}_s=J\\sum_m\\nu_{s(m)}r_{(m)}.\\end{aligned}\\tag{11}\\end{equation}"
+    },
+    {
+      "label": "eq:variational_principle",
+      "number": 12,
+      "source_line": 100,
+      "source_latex": "\\delta\\int_{t_1}^{t_2}(T-U)\\dt+\n \\int_{t_1}^{t_2}\\left(\\delta W+\\sum_{k=1}^4\\delta C_k\\right)\\dt=0.\n \\label{eq:variational_principle}",
+      "display_latex": "\\begin{equation}\\delta\\int_{t_1}^{t_2}(T-U)\\dt+\n \\int_{t_1}^{t_2}\\left(\\delta W+\\sum_{k=1}^4\\delta C_k\\right)\\dt=0.\\tag{12}\\end{equation}"
+    },
+    {
+      "label": "eq:energies",
+      "number": 13,
+      "source_line": 107,
+      "source_latex": "T&=\\sum_\\xi\\int_{\\mc B}\\tfrac12\\rho_\\xi|\\mbf v_\\xi|^2\\dv,\n \\quad U=\\sum_\\xi\\int_{\\mc B}(\\rho_\\xi\\psi_\\xi+\\phi_\\xi\\omega_\\xi^+)\\dv,\\label{eq:energies}",
+      "display_latex": "\\begin{equation}\\begin{aligned}T&=\\sum_\\xi\\int_{\\mc B}\\tfrac12\\rho_\\xi|\\mbf v_\\xi|^2\\dv,\n \\quad U=\\sum_\\xi\\int_{\\mc B}(\\rho_\\xi\\psi_\\xi+\\phi_\\xi\\omega_\\xi^+)\\dv,\\end{aligned}\\tag{13}\\end{equation}"
+    },
+    {
+      "label": "eq:virtual_work",
+      "number": 14,
+      "source_line": 107,
+      "source_latex": "\\delta W&=\\int_{\\mc B}\\left[\\sum_\\xi(\\rho_\\xi\\mbf g+\\mbf b_\\xi)\\cdot\\delta\\mbf x_\\xi\n +\\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\frac{\\delta\\mc C_\\xi^\\alpha}{J_\\xi}\n -\\varrho\\delta\\varphi\\right]\\dv\\notag\\\\\n &\\quad+\\sum_\\xi\\int_{\\partial\\mc B}\\mbf t_\\xi\\cdot\\delta\\mbf x_\\xi\\,{\\rm d}a\n +\\int_{\\partial\\mc B}\\bar q\\delta\\varphi\\,{\\rm d}a.\\label{eq:virtual_work}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\delta W&=\\int_{\\mc B}\\left[\\sum_\\xi(\\rho_\\xi\\mbf g+\\mbf b_\\xi)\\cdot\\delta\\mbf x_\\xi\n +\\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\frac{\\delta\\mc C_\\xi^\\alpha}{J_\\xi}\n -\\varrho\\delta\\varphi\\right]\\dv\\\\\n &\\quad+\\sum_\\xi\\int_{\\partial\\mc B}\\mbf t_\\xi\\cdot\\delta\\mbf x_\\xi\\,{\\rm d}a\n +\\int_{\\partial\\mc B}\\bar q\\delta\\varphi\\,{\\rm d}a.\\end{aligned}\\tag{14}\\end{equation}"
+    },
+    {
+      "label": "eq:constraints",
+      "number": 15,
+      "source_line": 118,
+      "source_latex": "C_1&=\\int_{\\mc B}\\lambda(\\sum_\\xi\\phi_\\xi-1)\\dv,\\notag\\\\\n C_2&=\\sum_{\\xi,\\alpha}\\int_{\\mc B_{\\xi0}}\\pi_\\xi^\\alpha\n \\left(J_\\xi-\\frac{\\rho_{\\xi0}^\\alpha+\\mc C_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha}\\right)\\dVxi,\\notag\\\\\n C_3&=\\sum_\\xi\\int_{\\mc B}\\Pi_\\xi(\\sum_\\alpha\\eta_\\xi^\\alpha-1)\\dv,\\notag\\\\\n C_4&=\\int_{\\mc B}\\tau\\sum_{\\xi,\\alpha}\\frac{\\dot{\\mc C}_\\xi^\\alpha}{J_\\xi}\\dv.\n \\label{eq:constraints}",
+      "display_latex": "\\begin{equation}\\begin{aligned}C_1&=\\int_{\\mc B}\\lambda(\\sum_\\xi\\phi_\\xi-1)\\dv,\\\\\n C_2&=\\sum_{\\xi,\\alpha}\\int_{\\mc B_{\\xi0}}\\pi_\\xi^\\alpha\n \\left(J_\\xi-\\frac{\\rho_{\\xi0}^\\alpha+\\mc C_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha}\\right)\\dVxi,\\\\\n C_3&=\\sum_\\xi\\int_{\\mc B}\\Pi_\\xi(\\sum_\\alpha\\eta_\\xi^\\alpha-1)\\dv,\\\\\n C_4&=\\int_{\\mc B}\\tau\\sum_{\\xi,\\alpha}\\frac{\\dot{\\mc C}_\\xi^\\alpha}{J_\\xi}\\dv.\\end{aligned}\\tag{15}\\end{equation}"
+    },
+    {
+      "label": "eq:transfer_variation",
+      "number": 16,
+      "source_line": 134,
+      "source_latex": "\\frac{D_\\xi\\tau}{Dt}&=\\tfrac12|\\mbf v_\\xi|^2+L_\\xi^\\alpha\n -\\frac{\\pi_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha},\\label{eq:transfer_variation}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\frac{D_\\xi\\tau}{Dt}&=\\tfrac12|\\mbf v_\\xi|^2+L_\\xi^\\alpha\n -\\frac{\\pi_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha},\\end{aligned}\\tag{16}\\end{equation}"
+    },
+    {
+      "label": "eq:component_euler",
+      "number": 17,
+      "source_line": 134,
+      "source_latex": "\\hat\\mu_\\xi^\\alpha&=\\psi_\\xi+\n \\frac{\\pi_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha},\n \\quad \\mu_\\xi^\\alpha=\\hat\\mu_\\xi^\\alpha+z_\\xi^\\alpha\\varphi.\\label{eq:component_euler}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\hat\\mu_\\xi^\\alpha&=\\psi_\\xi+\n \\frac{\\pi_\\xi^\\alpha}{\\phi_\\xi\\bar\\rho_\\xi\\eta_\\xi^\\alpha},\n \\quad \\mu_\\xi^\\alpha=\\hat\\mu_\\xi^\\alpha+z_\\xi^\\alpha\\varphi.\\end{aligned}\\tag{17}\\end{equation}"
+    },
+    {
+      "label": "eq:tau_evolution",
+      "number": 18,
+      "source_line": 145,
+      "source_latex": "\\psi_{s_\\star}+L_{s_\\star}^{N}&=\\hat\\mu_{s_\\star}^{N},\n \\qquad \\phasedot\\tau=\\tfrac12|\\mbf v_{\\mc S}|^2,\\label{eq:tau_evolution}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\psi_{s_\\star}+L_{s_\\star}^{N}&=\\hat\\mu_{s_\\star}^{N},\n \\qquad \\phasedot\\tau=\\tfrac12|\\mbf v_{\\mc S}|^2,\\end{aligned}\\tag{18}\\end{equation}"
+    },
+    {
+      "label": "eq:transfer_recovery",
+      "number": 19,
+      "source_line": 145,
+      "source_latex": "L_\\xi^\\alpha&=\\hat\\mu_\\xi^\\alpha-\\psi_\\xi+\n D_\\xi\\tau/Dt-\\tfrac12|\\mbf v_\\xi|^2.\\label{eq:transfer_recovery}",
+      "display_latex": "\\begin{equation}\\begin{aligned}L_\\xi^\\alpha&=\\hat\\mu_\\xi^\\alpha-\\psi_\\xi+\n D_\\xi\\tau/Dt-\\tfrac12|\\mbf v_\\xi|^2.\\end{aligned}\\tag{19}\\end{equation}"
+    },
+    {
+      "label": "eq:fluid_transfer_offset",
+      "number": 20,
+      "source_line": 155,
+      "source_latex": "\\frac{D_s\\tau}{Dt}-\\tfrac12|\\mbf v_{\\mc S}|^2=0,\n \\quad \\frac{D_f\\tau}{Dt}-\\tfrac12|\\mbf v_f|^2\n =\\frac{\\mbf w_f}{\\rho_f}\\cdot(\\nabla_{\\mbf x}\\tau-\\mbf v_{\\mc S})\n -\\tfrac12\\left|\\frac{\\mbf w_f}{\\rho_f}\\right|^2.\n \\label{eq:fluid_transfer_offset}",
+      "display_latex": "\\begin{equation}\\frac{D_s\\tau}{Dt}-\\tfrac12|\\mbf v_{\\mc S}|^2=0,\n \\quad \\frac{D_f\\tau}{Dt}-\\tfrac12|\\mbf v_f|^2\n =\\frac{\\mbf w_f}{\\rho_f}\\cdot(\\nabla_{\\mbf x}\\tau-\\mbf v_{\\mc S})\n -\\tfrac12\\left|\\frac{\\mbf w_f}{\\rho_f}\\right|^2.\\tag{20}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_restrictions",
+      "number": 21,
+      "source_line": 169,
+      "source_latex": "\\bar p_s=\\bar\\rho_s^2\\left.\\p{\\psi_s}{\\bar\\rho_s}\\right|_{\\bar{\\mbf F}_s,a_s},\n \\quad \\bs\\sigma_s'=\\rho_s\\left.\\p{\\psi_s}{\\bar{\\mbf F}_s}\\right|_{a_s,\\bar\\rho_s}\\bar{\\mbf F}_s^T,\n \\quad \\tfrac13\\operatorname{tr}\\bs\\sigma_s'=\\rho_s a_s\\left.\\p{\\psi_s}{a_s}\\right|_{\\bar{\\mbf F}_s,\\bar\\rho_s}.\n \\label{eq:solid_restrictions}",
+      "display_latex": "\\begin{equation}\\bar p_s=\\bar\\rho_s^2\\left.\\p{\\psi_s}{\\bar\\rho_s}\\right|_{\\bar{\\mbf F}_s,a_s},\n \\quad \\bs\\sigma_s'=\\rho_s\\left.\\p{\\psi_s}{\\bar{\\mbf F}_s}\\right|_{a_s,\\bar\\rho_s}\\bar{\\mbf F}_s^T,\n \\quad \\tfrac13\\operatorname{tr}\\bs\\sigma_s'=\\rho_s a_s\\left.\\p{\\psi_s}{a_s}\\right|_{\\bar{\\mbf F}_s,\\bar\\rho_s}.\\tag{21}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_energy",
+      "number": 22,
+      "source_line": 179,
+      "source_latex": "\\psi_s={}&\\psi_s^0+\\frac1{\\bar\\rho_{s0}}\\left\\{\n \\frac{G_s}{2}[J^{-2/3}\\mbf F:\\mbf F-3]\n +\\frac{K}{2\\phi_{s0}(1-K/(\\phi_{s0}K_s))}\\left[\\ln\\frac{J}{\\bar\\rho_{s0}/\\bar\\rho_s}\\right]^2\n +\\frac{K_s}2\\left[\\ln\\frac{\\bar\\rho_{s0}}{\\bar\\rho_s}\\right]^2\\right\\}.\n \\label{eq:solid_energy}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\psi_s={}&\\psi_s^0+\\frac1{\\bar\\rho_{s0}}\\left\\{\n \\frac{G_s}{2}[J^{-2/3}\\mbf F:\\mbf F-3]\n +\\frac{K}{2\\phi_{s0}(1-K/(\\phi_{s0}K_s))}\\left[\\ln\\frac{J}{\\bar\\rho_{s0}/\\bar\\rho_s}\\right]^2\n +\\frac{K_s}2\\left[\\ln\\frac{\\bar\\rho_{s0}}{\\bar\\rho_s}\\right]^2\\right\\}.\\end{aligned}\\tag{22}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_pressure",
+      "number": 23,
+      "source_line": 190,
+      "source_latex": "\\bar p_s&=\\frac{[K/(\\phi_{s0}(1-K/(\\phi_{s0}K_s)))]\\ln(J/\\bar J_s)-K_s\\ln\\bar J_s}{\\bar J_s},\\label{eq:solid_pressure}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\bar p_s&=\\frac{[K/(\\phi_{s0}(1-K/(\\phi_{s0}K_s)))]\\ln(J/\\bar J_s)-K_s\\ln\\bar J_s}{\\bar J_s},\\end{aligned}\\tag{23}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_single_prime",
+      "number": 24,
+      "source_line": 190,
+      "source_latex": "\\bs\\sigma_s'&=\\frac{\\rho_s}{\\bar\\rho_{s0}}\\left[\n G_sJ^{-2/3}\\dev(\\mbf F\\mbf F^T)+\\frac{K\\ln(J/\\bar J_s)}{\\phi_{s0}(1-K/(\\phi_{s0}K_s))}\\mbf I\\right].\\label{eq:solid_single_prime}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\bs\\sigma_s'&=\\frac{\\rho_s}{\\bar\\rho_{s0}}\\left[\n G_sJ^{-2/3}\\dev(\\mbf F\\mbf F^T)+\\frac{K\\ln(J/\\bar J_s)}{\\phi_{s0}(1-K/(\\phi_{s0}K_s))}\\mbf I\\right].\\end{aligned}\\tag{24}\\end{equation}"
+    },
+    {
+      "label": "eq:intrinsic_mineral_mean",
+      "number": 25,
+      "source_line": 201,
+      "source_latex": "\\frac{1}{3\\phi_s}\\operatorname{tr}\\bs\\sigma_s'-\\bar p_s\n =\\frac{K_s\\ln\\bar J_s}{\\bar J_s}.\n \\label{eq:intrinsic_mineral_mean}",
+      "display_latex": "\\begin{equation}\\frac{1}{3\\phi_s}\\operatorname{tr}\\bs\\sigma_s'-\\bar p_s\n =\\frac{K_s\\ln\\bar J_s}{\\bar J_s}.\\tag{25}\\end{equation}"
+    },
+    {
+      "label": "eq:electric_closure",
+      "number": 26,
+      "source_line": 212,
+      "source_latex": "\\mbf E&=-\\nabla_{\\mbf x}\\varphi,\n \\quad \\omega_\\xi^+=-\\tfrac12\\epsilon|\\mbf E|^2,\n \\quad \\mbf d_\\xi=\\epsilon\\mbf E,\n \\quad \\mbf d=\\sum_\\xi\\phi_\\xi\\mbf d_\\xi=\\epsilon\\mbf E,\\label{eq:electric_closure}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mbf E&=-\\nabla_{\\mbf x}\\varphi,\n \\quad \\omega_\\xi^+=-\\tfrac12\\epsilon|\\mbf E|^2,\n \\quad \\mbf d_\\xi=\\epsilon\\mbf E,\n \\quad \\mbf d=\\sum_\\xi\\phi_\\xi\\mbf d_\\xi=\\epsilon\\mbf E,\\end{aligned}\\tag{26}\\end{equation}"
+    },
+    {
+      "label": "eq:pressure_gauss",
+      "number": 27,
+      "source_line": 212,
+      "source_latex": "\\bar p_\\xi-\\omega_\\xi^+&=\\bar p_E=-\\lambda,\n \\quad \\bar p_s=\\bar p_f,\n \\quad \\nabla_{\\mbf x}\\cdot\\mbf d=\\varrho\n =\\sum_\\alpha z_f^\\alpha\\phi_f\\bar\\rho_f\\eta_f^\\alpha.\\label{eq:pressure_gauss}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\bar p_\\xi-\\omega_\\xi^+&=\\bar p_E=-\\lambda,\n \\quad \\bar p_s=\\bar p_f,\n \\quad \\nabla_{\\mbf x}\\cdot\\mbf d=\\varrho\n =\\sum_\\alpha z_f^\\alpha\\phi_f\\bar\\rho_f\\eta_f^\\alpha.\\end{aligned}\\tag{27}\\end{equation}"
+    },
+    {
+      "label": "eq:mineral_solve",
+      "number": 28,
+      "source_line": 226,
+      "source_latex": "K_s\\ln\\bar J_s+\\left(1-\\frac{K}{\\phi_{s0}K_s}\\right)\\bar p_f\\bar J_s-\\frac{K}{\\phi_{s0}}\\ln J=0.\n \\label{eq:mineral_solve}",
+      "display_latex": "\\begin{equation}K_s\\ln\\bar J_s+\\left(1-\\frac{K}{\\phi_{s0}K_s}\\right)\\bar p_f\\bar J_s-\\frac{K}{\\phi_{s0}}\\ln J=0.\\tag{28}\\end{equation}"
+    },
+    {
+      "label": "eq:phase_biot",
+      "number": 29,
+      "source_line": 236,
+      "source_latex": "\\left.\\p{\\bar J_s}{J}\\right|_{\\bar p_E,\\mbf E}\n =\\frac{K\\bar J_s}{\\phi_{s0}J[K_s+\\left(1-K/(\\phi_{s0}K_s)\\right)\\bar p_f\\bar J_s]},\n \\quad 1-\\bar B_s=a_s\\left.\\p{\\bar J_s}{J}\\right|_{\\bar p_E,\\mbf E}.\n \\label{eq:phase_biot}",
+      "display_latex": "\\begin{equation}\\left.\\p{\\bar J_s}{J}\\right|_{\\bar p_E,\\mbf E}\n =\\frac{K\\bar J_s}{\\phi_{s0}J[K_s+\\left(1-K/(\\phi_{s0}K_s)\\right)\\bar p_f\\bar J_s]},\n \\quad 1-\\bar B_s=a_s\\left.\\p{\\bar J_s}{J}\\right|_{\\bar p_E,\\mbf E}.\\tag{29}\\end{equation}"
+    },
+    {
+      "label": "eq:biot_stress",
+      "number": 30,
+      "source_line": 245,
+      "source_latex": "\\bs\\sigma_s''&=\\bs\\sigma_s'-\\phi_s(1-\\bar B_s)\\bar p_E\\mbf I,\n \\quad \\bs\\sigma''=\\sum_s\\bs\\sigma_s'',\\label{eq:biot_stress}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\bs\\sigma_s''&=\\bs\\sigma_s'-\\phi_s(1-\\bar B_s)\\bar p_E\\mbf I,\n \\quad \\bs\\sigma''=\\sum_s\\bs\\sigma_s'',\\end{aligned}\\tag{30}\\end{equation}"
+    },
+    {
+      "label": "eq:biot_aggregate",
+      "number": 31,
+      "source_line": 245,
+      "source_latex": "B&=1-\\sum_s\\phi_s(1-\\bar B_s),\n \\quad \\mbf P''=J\\bs\\sigma''\\mbf F^{-T},\\label{eq:biot_aggregate}",
+      "display_latex": "\\begin{equation}\\begin{aligned}B&=1-\\sum_s\\phi_s(1-\\bar B_s),\n \\quad \\mbf P''=J\\bs\\sigma''\\mbf F^{-T},\\end{aligned}\\tag{31}\\end{equation}"
+    },
+    {
+      "label": "eq:total_stress",
+      "number": 32,
+      "source_line": 245,
+      "source_latex": "\\bs\\sigma&=\\bs\\sigma''-B\\bar p_E\\mbf I+\\mbf E\\otimes\\mbf d\n =\\sum_s\\bs\\sigma_s'-\\bar p_f\\mbf I+\n \\epsilon(\\mbf E\\otimes\\mbf E-\\tfrac12|\\mbf E|^2\\mbf I).\\label{eq:total_stress}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\bs\\sigma&=\\bs\\sigma''-B\\bar p_E\\mbf I+\\mbf E\\otimes\\mbf d\n =\\sum_s\\bs\\sigma_s'-\\bar p_f\\mbf I+\n \\epsilon(\\mbf E\\otimes\\mbf E-\\tfrac12|\\mbf E|^2\\mbf I).\\end{aligned}\\tag{32}\\end{equation}"
+    },
+    {
+      "label": "eq:linear_limit",
+      "number": 33,
+      "source_line": 267,
+      "source_latex": "B_0=1-\\sum_s\\frac{\\phi_s K}{\\phi_{s0}K_s},\n \\qquad K_{\\rm drained}=\\sum_s\\frac{\\phi_s K}{\\phi_{s0}},\n \\qquad G_{\\rm drained}=\\sum_s\\phi_s G_s.\n \\label{eq:linear_limit}",
+      "display_latex": "\\begin{equation}B_0=1-\\sum_s\\frac{\\phi_s K}{\\phi_{s0}K_s},\n \\qquad K_{\\rm drained}=\\sum_s\\frac{\\phi_s K}{\\phi_{s0}},\n \\qquad G_{\\rm drained}=\\sum_s\\phi_s G_s.\\tag{33}\\end{equation}"
+    },
+    {
+      "label": "eq:aqueous_mole_fractions",
+      "number": 34,
+      "source_line": 304,
+      "source_latex": "x_f^\\alpha&=\\frac{\\eta_f^\\alpha/M_\\alpha}{\\sum_\\beta\\eta_f^\\beta/M_\\beta},\n \\qquad \\bar v_f^0=\\sum_\\alpha\\frac{\\eta_f^\\alpha v_\\alpha^0}{M_\\alpha},\\label{eq:aqueous_mole_fractions}",
+      "display_latex": "\\begin{equation}\\begin{aligned}x_f^\\alpha&=\\frac{\\eta_f^\\alpha/M_\\alpha}{\\sum_\\beta\\eta_f^\\beta/M_\\beta},\n \\qquad \\bar v_f^0=\\sum_\\alpha\\frac{\\eta_f^\\alpha v_\\alpha^0}{M_\\alpha},\\end{aligned}\\tag{34}\\end{equation}"
+    },
+    {
+      "label": "eq:aqueous_gibbs",
+      "number": 35,
+      "source_line": 304,
+      "source_latex": "g_f(\\bar p_f,\\{\\eta_f^\\alpha\\})&=\n \\sum_\\alpha\\frac{\\eta_f^\\alpha}{M_\\alpha}\n \\left[g_\\alpha^0+R\\theta\\ln x_f^\\alpha\n +v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})\\right].\\label{eq:aqueous_gibbs}",
+      "display_latex": "\\begin{equation}\\begin{aligned}g_f(\\bar p_f,\\{\\eta_f^\\alpha\\})&=\n \\sum_\\alpha\\frac{\\eta_f^\\alpha}{M_\\alpha}\n \\left[g_\\alpha^0+R\\theta\\ln x_f^\\alpha\n +v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})\\right].\\end{aligned}\\tag{35}\\end{equation}"
+    },
+    {
+      "label": "eq:aqueous_eos",
+      "number": 36,
+      "source_line": 316,
+      "source_latex": "\\frac1{\\bar\\rho_f}=\\left.\\p{g_f}{\\bar p_f}\\right|_{\\eta}\n &=\\bar v_f^0e^{-(\\bar p_f-p_0)/K_f},\n \\quad \\bar p_f=p_0+K_f\\ln(\\bar\\rho_f\\bar v_f^0),\\label{eq:aqueous_eos}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\frac1{\\bar\\rho_f}=\\left.\\p{g_f}{\\bar p_f}\\right|_{\\eta}\n &=\\bar v_f^0e^{-(\\bar p_f-p_0)/K_f},\n \\quad \\bar p_f=p_0+K_f\\ln(\\bar\\rho_f\\bar v_f^0),\\end{aligned}\\tag{36}\\end{equation}"
+    },
+    {
+      "label": "eq:aqueous_helmholtz",
+      "number": 37,
+      "source_line": 316,
+      "source_latex": "\\psi_f(\\bar\\rho_f,\\eta)&=g_f(\\bar p_f(\\bar\\rho_f,\\eta),\\eta)-\\frac{\\bar p_f(\\bar\\rho_f,\\eta)}{\\bar\\rho_f},\\label{eq:aqueous_helmholtz}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\psi_f(\\bar\\rho_f,\\eta)&=g_f(\\bar p_f(\\bar\\rho_f,\\eta),\\eta)-\\frac{\\bar p_f(\\bar\\rho_f,\\eta)}{\\bar\\rho_f},\\end{aligned}\\tag{37}\\end{equation}"
+    },
+    {
+      "label": "eq:aqueous_potentials",
+      "number": 38,
+      "source_line": 316,
+      "source_latex": "\\hat\\mu_f^\\alpha&=\\frac1{M_\\alpha}\n [g_\\alpha^0+R\\theta\\ln x_f^\\alpha+v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})].\\label{eq:aqueous_potentials}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\hat\\mu_f^\\alpha&=\\frac1{M_\\alpha}\n [g_\\alpha^0+R\\theta\\ln x_f^\\alpha+v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})].\\end{aligned}\\tag{38}\\end{equation}"
+    },
+    {
+      "label": "eq:solid_potential",
+      "number": 39,
+      "source_line": 327,
+      "source_latex": "\\hat\\mu_s=\\psi_s+\\bar p_s/\\bar\\rho_s,\n \\qquad s\\in\\{A,B,C\\}.\n \\label{eq:solid_potential}",
+      "display_latex": "\\begin{equation}\\hat\\mu_s=\\psi_s+\\bar p_s/\\bar\\rho_s,\n \\qquad s\\in\\{A,B,C\\}.\\tag{39}\\end{equation}"
+    },
+    {
+      "label": "eq:mechanisms",
+      "number": 40,
+      "source_line": 337,
+      "source_latex": "(1):\\quad A+4\\mathrm H^+&\\rightleftharpoons2\\mathrm{Mg}^{2+}+\\mathrm{H_4SiO_4},\\notag\\\\\n (2):\\quad\\mathrm{Mg}^{2+}+\\mathrm{HCO_3^-}&\\rightleftharpoons B+\\mathrm H^+,\\notag\\\\\n (3):\\quad\\mathrm{H_4SiO_4}&\\rightleftharpoons C+2\\mathrm{H_2O},\\notag\\\\\n (4):\\quad\\mathrm{H_2O}&\\rightleftharpoons\\mathrm H^++\\mathrm{OH^-},\\notag\\\\\n (5):\\quad\\mathrm{CO_2(aq)}+\\mathrm{H_2O}&\\rightleftharpoons\\mathrm H^++\\mathrm{HCO_3^-},\\notag\\\\\n (6):\\quad\\mathrm{HCO_3^-}&\\rightleftharpoons\\mathrm H^++\\mathrm{CO_3^{2-}},\\notag\\\\\n (7):\\quad\\mathrm{H_4SiO_4}&\\rightleftharpoons\\mathrm H^++\\mathrm{H_3SiO_4^-}.\n \\label{eq:mechanisms}",
+      "display_latex": "\\begin{equation}\\begin{aligned}(1):\\quad A+4\\mathrm H^+&\\rightleftharpoons2\\mathrm{Mg}^{2+}+\\mathrm{H_4SiO_4},\\\\\n (2):\\quad\\mathrm{Mg}^{2+}+\\mathrm{HCO_3^-}&\\rightleftharpoons B+\\mathrm H^+,\\\\\n (3):\\quad\\mathrm{H_4SiO_4}&\\rightleftharpoons C+2\\mathrm{H_2O},\\\\\n (4):\\quad\\mathrm{H_2O}&\\rightleftharpoons\\mathrm H^++\\mathrm{OH^-},\\\\\n (5):\\quad\\mathrm{CO_2(aq)}+\\mathrm{H_2O}&\\rightleftharpoons\\mathrm H^++\\mathrm{HCO_3^-},\\\\\n (6):\\quad\\mathrm{HCO_3^-}&\\rightleftharpoons\\mathrm H^++\\mathrm{CO_3^{2-}},\\\\\n (7):\\quad\\mathrm{H_4SiO_4}&\\rightleftharpoons\\mathrm H^++\\mathrm{H_3SiO_4^-}.\\end{aligned}\\tag{40}\\end{equation}"
+    },
+    {
+      "label": "eq:mechanism_conservation",
+      "number": 41,
+      "source_line": 354,
+      "source_latex": "\\sum_{\\xi,\\alpha}\\nu_{\\xi(m)}^\\alpha=0,\n \\qquad \\sum_{\\xi,\\alpha}z_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha=0,\n \\qquad \\sum_{\\xi,\\alpha}\\frac{n_e^{\\xi\\alpha}}{M_{\\xi\\alpha}}\\nu_{\\xi(m)}^\\alpha=0.\n \\label{eq:mechanism_conservation}",
+      "display_latex": "\\begin{equation}\\sum_{\\xi,\\alpha}\\nu_{\\xi(m)}^\\alpha=0,\n \\qquad \\sum_{\\xi,\\alpha}z_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha=0,\n \\qquad \\sum_{\\xi,\\alpha}\\frac{n_e^{\\xi\\alpha}}{M_{\\xi\\alpha}}\\nu_{\\xi(m)}^\\alpha=0.\\tag{41}\\end{equation}"
+    },
+    {
+      "label": "eq:reaction_kinetics",
+      "number": 42,
+      "source_line": 365,
+      "source_latex": "r_{(m)}&=-\\frac{K_{(m)}}{\\theta}\n \\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha,\n \\qquad K_{(m)}>0,\\label{eq:reaction_kinetics}",
+      "display_latex": "\\begin{equation}\\begin{aligned}r_{(m)}&=-\\frac{K_{(m)}}{\\theta}\n \\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha,\n \\qquad K_{(m)}>0,\\end{aligned}\\tag{42}\\end{equation}"
+    },
+    {
+      "label": "eq:affinity",
+      "number": 43,
+      "source_line": 365,
+      "source_latex": "\\mc A_{(m)}&=-\\sum_{\\xi,\\alpha}\\mu_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha\n =-\\sum_{\\xi,\\alpha}\\hat\\mu_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha,\\label{eq:affinity}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mc A_{(m)}&=-\\sum_{\\xi,\\alpha}\\mu_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha\n =-\\sum_{\\xi,\\alpha}\\hat\\mu_\\xi^\\alpha\\nu_{\\xi(m)}^\\alpha,\\end{aligned}\\tag{43}\\end{equation}"
+    },
+    {
+      "label": "eq:reaction_force",
+      "number": 44,
+      "source_line": 365,
+      "source_latex": "-\\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha\n &=\\mc A_{(m)}-\n \\left(D_f\\tau/Dt-\\tfrac12|\\mbf v_f|^2\\right)\\sum_\\alpha\\nu_{f(m)}^\\alpha.\n \\label{eq:reaction_force}",
+      "display_latex": "\\begin{equation}\\begin{aligned}-\\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha\n &=\\mc A_{(m)}-\n \\left(D_f\\tau/Dt-\\tfrac12|\\mbf v_f|^2\\right)\\sum_\\alpha\\nu_{f(m)}^\\alpha.\\end{aligned}\\tag{44}\\end{equation}"
+    },
+    {
+      "label": "eq:speciation",
+      "number": 45,
+      "source_line": 380,
+      "source_latex": "\\prod_\\alpha(x_f^\\alpha)^{\\nu_{f(m)}^\\alpha/M_\\alpha}\n =\\exp\\left[-\\frac1{R\\theta}\\sum_\\alpha\n \\frac{\\nu_{f(m)}^\\alpha}{M_\\alpha}\n \\{g_\\alpha^0+v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})\\}\\right],\n \\quad m=4,\\ldots,7.\n \\label{eq:speciation}",
+      "display_latex": "\\begin{equation}\\prod_\\alpha(x_f^\\alpha)^{\\nu_{f(m)}^\\alpha/M_\\alpha}\n =\\exp\\left[-\\frac1{R\\theta}\\sum_\\alpha\n \\frac{\\nu_{f(m)}^\\alpha}{M_\\alpha}\n \\{g_\\alpha^0+v_\\alpha^0K_f(1-e^{-(\\bar p_f-p_0)/K_f})\\}\\right],\n \\quad m=4,\\ldots,7.\\tag{45}\\end{equation}"
+    },
+    {
+      "label": "eq:relative_transport",
+      "number": 46,
+      "source_line": 392,
+      "source_latex": "\\mbf j_{f,k}^\\alpha&=-\\sum_{\\beta\\ne N}\\mbf D_{f,k}^{\\alpha\\beta}\n [\\nabla_{\\mbf x}(\\hat\\mu_f^\\beta-\\hat\\mu_f^N)\n +(z_f^\\beta-z_f^N)\\nabla_{\\mbf x}\\varphi],\\quad\\alpha\\ne N,\\notag\\\\\n \\mbf j_{f,k}^N&=-\\sum_{\\alpha\\ne N}\\mbf j_{f,k}^\\alpha,\n \\qquad k\\in\\{{\\rm diff},{\\rm disp}\\}.\n \\label{eq:relative_transport}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mbf j_{f,k}^\\alpha&=-\\sum_{\\beta\\ne N}\\mbf D_{f,k}^{\\alpha\\beta}\n [\\nabla_{\\mbf x}(\\hat\\mu_f^\\beta-\\hat\\mu_f^N)\n +(z_f^\\beta-z_f^N)\\nabla_{\\mbf x}\\varphi],\\quad\\alpha\\ne N,\\\\\n \\mbf j_{f,k}^N&=-\\sum_{\\alpha\\ne N}\\mbf j_{f,k}^\\alpha,\n \\qquad k\\in\\{{\\rm diff},{\\rm disp}\\}.\\end{aligned}\\tag{46}\\end{equation}"
+    },
+    {
+      "label": "eq:charge_balance",
+      "number": 47,
+      "source_line": 404,
+      "source_latex": "\\mbf i=\\sum_\\alpha z_f^\\alpha\n (\\rho_f^\\alpha\\mbf v_f+\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha),\n \\quad \\partial_t\\varrho+\\nabla_{\\mbf x}\\cdot\\mbf i=0.\n \\label{eq:charge_balance}",
+      "display_latex": "\\begin{equation}\\mbf i=\\sum_\\alpha z_f^\\alpha\n (\\rho_f^\\alpha\\mbf v_f+\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha),\n \\quad \\partial_t\\varrho+\\nabla_{\\mbf x}\\cdot\\mbf i=0.\\tag{47}\\end{equation}"
+    },
+    {
+      "label": "eq:fluid_momentum",
+      "number": 48,
+      "source_line": 415,
+      "source_latex": "\\rho_f\\mbf a_f=\\rho_f\\mbf g+\\mbf b_f\n -\\phi_f\\nabla_{\\mbf x}\\bar p_E\n +\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\n +\\sum_\\alpha\\dot c_f^\\alpha(\\nabla_{\\mbf x}\\tau-\\mbf v_f).\n \\label{eq:fluid_momentum}",
+      "display_latex": "\\begin{equation}\\rho_f\\mbf a_f=\\rho_f\\mbf g+\\mbf b_f\n -\\phi_f\\nabla_{\\mbf x}\\bar p_E\n +\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\n +\\sum_\\alpha\\dot c_f^\\alpha(\\nabla_{\\mbf x}\\tau-\\mbf v_f).\\tag{48}\\end{equation}"
+    },
+    {
+      "label": "eq:drag",
+      "number": 49,
+      "source_line": 424,
+      "source_latex": "\\mbf w_f=\\rho_f(\\mbf v_f-\\mbf v_{\\mc S}),\n \\qquad \\mbf b_f=-\\frac{\\mu_f^{\\rm visc}\\phi_f}{\\bar\\rho_f}\\bs\\kappa_f^{-1}\\mbf w_f,\n \\quad \\bs\\kappa_f=\\bs\\kappa_f^T>0.\n \\label{eq:drag}",
+      "display_latex": "\\begin{equation}\\mbf w_f=\\rho_f(\\mbf v_f-\\mbf v_{\\mc S}),\n \\qquad \\mbf b_f=-\\frac{\\mu_f^{\\rm visc}\\phi_f}{\\bar\\rho_f}\\bs\\kappa_f^{-1}\\mbf w_f,\n \\quad \\bs\\kappa_f=\\bs\\kappa_f^T>0.\\tag{49}\\end{equation}"
+    },
+    {
+      "label": "eq:flux_linear_system",
+      "number": 50,
+      "source_line": 432,
+      "source_latex": "\\frac1{\\rho_f}\\left(\\phi_f^2\\mu_f^{\\rm visc}\\bs\\kappa_f^{-1}\n +\\sum_\\alpha\\dot c_f^\\alpha\\mbf I\\right)\\mbf w_f\n ={}&\\rho_f(\\mbf g-\\mbf a_f)-\\phi_f\\nabla_{\\mbf x}\\bar p_E\\notag\\\\\n &+\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\n +\\sum_\\alpha\\dot c_f^\\alpha(\\nabla_{\\mbf x}\\tau-\\mbf v_{\\mc S}),\\label{eq:flux_linear_system}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\frac1{\\rho_f}\\left(\\phi_f^2\\mu_f^{\\rm visc}\\bs\\kappa_f^{-1}\n +\\sum_\\alpha\\dot c_f^\\alpha\\mbf I\\right)\\mbf w_f\n ={}&\\rho_f(\\mbf g-\\mbf a_f)-\\phi_f\\nabla_{\\mbf x}\\bar p_E\\\\\n &+\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\n +\\sum_\\alpha\\dot c_f^\\alpha(\\nabla_{\\mbf x}\\tau-\\mbf v_{\\mc S}),\\end{aligned}\\tag{50}\\end{equation}"
+    },
+    {
+      "label": "eq:corrected_mobility",
+      "number": 51,
+      "source_line": 432,
+      "source_latex": "\\widetilde{\\bs\\lambda}_f&=\n \\left(\\phi_f^2\\mu_f^{\\rm visc}\\bs\\kappa_f^{-1}\n +\\sum_\\alpha\\dot c_f^\\alpha\\mbf I\\right)^{-1}.\\label{eq:corrected_mobility}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\widetilde{\\bs\\lambda}_f&=\n \\left(\\phi_f^2\\mu_f^{\\rm visc}\\bs\\kappa_f^{-1}\n +\\sum_\\alpha\\dot c_f^\\alpha\\mbf I\\right)^{-1}.\\end{aligned}\\tag{51}\\end{equation}"
+    },
+    {
+      "label": "eq:resistance_domain",
+      "number": 52,
+      "source_line": 446,
+      "source_latex": "\\sum_\\alpha\\dot c_f^\\alpha>\n -\\frac{\\phi_f^2\\mu_f^{\\rm visc}}{\\kappa_{f,\\max}}.\n \\label{eq:resistance_domain}",
+      "display_latex": "\\begin{equation}\\sum_\\alpha\\dot c_f^\\alpha>\n -\\frac{\\phi_f^2\\mu_f^{\\rm visc}}{\\kappa_{f,\\max}}.\\tag{52}\\end{equation}"
+    },
+    {
+      "label": "eq:darcy_limit",
+      "number": 53,
+      "source_line": 453,
+      "source_latex": "\\phi_f(\\mbf v_f-\\mbf v_{\\mc S})=\n -\\frac{\\bs\\kappa_f}{\\mu_f^{\\rm visc}}\n (\\nabla_{\\mbf x}\\bar p_f-\\bar\\rho_f\\mbf g).\n \\label{eq:darcy_limit}",
+      "display_latex": "\\begin{equation}\\phi_f(\\mbf v_f-\\mbf v_{\\mc S})=\n -\\frac{\\bs\\kappa_f}{\\mu_f^{\\rm visc}}\n (\\nabla_{\\mbf x}\\bar p_f-\\bar\\rho_f\\mbf g).\\tag{53}\\end{equation}"
+    },
+    {
+      "label": "eq:overall_momentum",
+      "number": 54,
+      "source_line": 463,
+      "source_latex": "\\sum_\\xi\\rho_\\xi\\mbf a_\\xi=\n \\nabla_{\\mbf x}\\cdot\\bs\\sigma+\\rho\\mbf g\n -\\left(\\sum_\\alpha\\dot c_f^\\alpha\\right)(\\mbf v_f-\\mbf v_{\\mc S}),\n \\quad \\rho=\\sum_\\xi\\rho_\\xi.\n \\label{eq:overall_momentum}",
+      "display_latex": "\\begin{equation}\\sum_\\xi\\rho_\\xi\\mbf a_\\xi=\n \\nabla_{\\mbf x}\\cdot\\bs\\sigma+\\rho\\mbf g\n -\\left(\\sum_\\alpha\\dot c_f^\\alpha\\right)(\\mbf v_f-\\mbf v_{\\mc S}),\n \\quad \\rho=\\sum_\\xi\\rho_\\xi.\\tag{54}\\end{equation}"
+    },
+    {
+      "label": "eq:dissipation",
+      "number": 55,
+      "source_line": 475,
+      "source_latex": "0\\le{}&-\\frac1\\theta\\sum_mr_{(m)}\n \\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha\\notag\\\\\n &-\\frac1\\theta\\sum_{k,\\alpha\\ne N}\\mbf j_{f,k}^\\alpha\\cdot\n [\\nabla_{\\mbf x}(\\hat\\mu_f^\\alpha-\\hat\\mu_f^N)\n +(z_f^\\alpha-z_f^N)\\nabla_{\\mbf x}\\varphi]\n -\\frac1\\theta\\mbf b_f\\cdot(\\mbf v_f-\\mbf v_{\\mc S})\\notag\\\\\n ={}&\\sum_m\\frac{r_{(m)}^2}{K_{(m)}}+\n \\frac1\\theta\\sum_{k,\\alpha,\\beta\\ne N}\\mbf j_{f,k}^\\alpha\\cdot\n (\\mbf D_{f,k}^{-1})^{\\alpha\\beta}\\mbf j_{f,k}^\\beta\n +\\frac{\\phi_f^2\\mu_f^{\\rm visc}}\\theta\n (\\mbf v_f-\\mbf v_{\\mc S})\\cdot\\bs\\kappa_f^{-1}(\\mbf v_f-\\mbf v_{\\mc S}).\n \\label{eq:dissipation}",
+      "display_latex": "\\begin{equation}\\begin{aligned}0\\le{}&-\\frac1\\theta\\sum_mr_{(m)}\n \\sum_{\\xi,\\alpha}(\\psi_\\xi+L_\\xi^\\alpha)\\nu_{\\xi(m)}^\\alpha\\\\\n &-\\frac1\\theta\\sum_{k,\\alpha\\ne N}\\mbf j_{f,k}^\\alpha\\cdot\n [\\nabla_{\\mbf x}(\\hat\\mu_f^\\alpha-\\hat\\mu_f^N)\n +(z_f^\\alpha-z_f^N)\\nabla_{\\mbf x}\\varphi]\n -\\frac1\\theta\\mbf b_f\\cdot(\\mbf v_f-\\mbf v_{\\mc S})\\\\\n ={}&\\sum_m\\frac{r_{(m)}^2}{K_{(m)}}+\n \\frac1\\theta\\sum_{k,\\alpha,\\beta\\ne N}\\mbf j_{f,k}^\\alpha\\cdot\n (\\mbf D_{f,k}^{-1})^{\\alpha\\beta}\\mbf j_{f,k}^\\beta\n +\\frac{\\phi_f^2\\mu_f^{\\rm visc}}\\theta\n (\\mbf v_f-\\mbf v_{\\mc S})\\cdot\\bs\\kappa_f^{-1}(\\mbf v_f-\\mbf v_{\\mc S}).\\end{aligned}\\tag{55}\\end{equation}"
+    },
+    {
+      "label": "eq:piola_flux",
+      "number": 56,
+      "source_line": 494,
+      "source_latex": "\\nabla_{\\mbf x}=\\mbf F^{-T}\\nabla_{\\mbf X},\\quad\n \\mbf W_f=J\\mbf F^{-1}\\mbf w_f,\\quad\n \\widetilde{\\bs\\Lambda}_f=J\\mbf F^{-1}\\widetilde{\\bs\\lambda}_f\\mbf F^{-T},\n \\quad J\\nabla_{\\mbf x}\\cdot\\mbf w_f=\\nabla_{\\mbf X}\\cdot\\mbf W_f.\n \\label{eq:piola_flux}",
+      "display_latex": "\\begin{equation}\\nabla_{\\mbf x}=\\mbf F^{-T}\\nabla_{\\mbf X},\\quad\n \\mbf W_f=J\\mbf F^{-1}\\mbf w_f,\\quad\n \\widetilde{\\bs\\Lambda}_f=J\\mbf F^{-1}\\widetilde{\\bs\\lambda}_f\\mbf F^{-T},\n \\quad J\\nabla_{\\mbf x}\\cdot\\mbf w_f=\\nabla_{\\mbf X}\\cdot\\mbf W_f.\\tag{56}\\end{equation}"
+    },
+    {
+      "label": "eq:reference_flux",
+      "number": 57,
+      "source_line": 503,
+      "source_latex": "\\mbf W_f=\\rho_f\\widetilde{\\bs\\Lambda}_f\\bigg[&\n \\rho_f\\mbf F^T(\\mbf g-\\mbf a_f)-\\phi_f\\nabla_{\\mbf X}\\bar p_E\n +\\mbf F^T\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\\notag\\\\\n &+\\sum_\\alpha\\dot c_f^\\alpha\n (\\nabla_{\\mbf X}\\tau-\\mbf F^T\\mbf v_{\\mc S})\\bigg].\n \\label{eq:reference_flux}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mbf W_f=\\rho_f\\widetilde{\\bs\\Lambda}_f\\bigg[&\n \\rho_f\\mbf F^T(\\mbf g-\\mbf a_f)-\\phi_f\\nabla_{\\mbf X}\\bar p_E\n +\\mbf F^T\\nabla_{\\mbf x}\\cdot(\\phi_f\\mbf E\\otimes\\mbf d_f)\\\\\n &+\\sum_\\alpha\\dot c_f^\\alpha\n (\\nabla_{\\mbf X}\\tau-\\mbf F^T\\mbf v_{\\mc S})\\bigg].\\end{aligned}\\tag{57}\\end{equation}"
+    },
+    {
+      "label": "eq:reference_fluid_mass",
+      "number": 58,
+      "source_line": 513,
+      "source_latex": "\\partial_t(J\\phi_f\\bar\\rho_f\\eta_f^\\alpha)|_{\\mbf X}\n +\\nabla_{\\mbf X}\\cdot\\left[\n \\eta_f^\\alpha\\mbf W_f+J\\mbf F^{-1}\n (\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha)\\right]\n &=J\\sum_m\\nu_{f(m)}^\\alpha r_{(m)},\\label{eq:reference_fluid_mass}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\partial_t(J\\phi_f\\bar\\rho_f\\eta_f^\\alpha)|_{\\mbf X}\n +\\nabla_{\\mbf X}\\cdot\\left[\n \\eta_f^\\alpha\\mbf W_f+J\\mbf F^{-1}\n (\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha)\\right]\n &=J\\sum_m\\nu_{f(m)}^\\alpha r_{(m)},\\end{aligned}\\tag{58}\\end{equation}"
+    },
+    {
+      "label": "eq:reference_solid_mass",
+      "number": 59,
+      "source_line": 513,
+      "source_latex": "\\partial_t(J\\phi_s\\bar\\rho_s)|_{\\mbf X}&=J\\sum_m\\nu_{s(m)}r_{(m)}.\n \\label{eq:reference_solid_mass}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\partial_t(J\\phi_s\\bar\\rho_s)|_{\\mbf X}&=J\\sum_m\\nu_{s(m)}r_{(m)}.\\end{aligned}\\tag{59}\\end{equation}"
+    },
+    {
+      "label": "eq:reference_total_mass",
+      "number": 60,
+      "source_line": 524,
+      "source_latex": "\\partial_t(J\\rho)|_{\\mbf X}+\\nabla_{\\mbf X}\\cdot\\mbf W_f=0.\n \\label{eq:reference_total_mass}",
+      "display_latex": "\\begin{equation}\\partial_t(J\\rho)|_{\\mbf X}+\\nabla_{\\mbf X}\\cdot\\mbf W_f=0.\\tag{60}\\end{equation}"
+    },
+    {
+      "label": "eq:reference_momentum",
+      "number": 61,
+      "source_line": 533,
+      "source_latex": "\\mbf0=\\nabla_{\\mbf X}\\cdot\\mbf P+J\\rho\\mbf g\n -\\frac{\\sum_\\alpha\\dot c_f^\\alpha}{\\rho_f}\\mbf F\\mbf W_f.\n \\label{eq:reference_momentum}",
+      "display_latex": "\\begin{equation}\\mbf0=\\nabla_{\\mbf X}\\cdot\\mbf P+J\\rho\\mbf g\n -\\frac{\\sum_\\alpha\\dot c_f^\\alpha}{\\rho_f}\\mbf F\\mbf W_f.\\tag{61}\\end{equation}"
+    },
+    {
+      "label": "eq:weak_fluid",
+      "number": 62,
+      "source_line": 543,
+      "source_latex": "0={}&\\int_{\\mc B_0}\\delta\\eta_f^\\alpha\n [\\partial_t(J\\phi_f\\bar\\rho_f\\eta_f^\\alpha)-J\\sum_m\\nu_{f(m)}^\\alpha r_{(m)}]\\dVblank\\notag\\\\\n &-\\int_{\\mc B_0}\\nabla_{\\mbf X}\\delta\\eta_f^\\alpha\\cdot\n [\\eta_f^\\alpha\\mbf W_f+J\\mbf F^{-1}(\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha)]\\dVblank\n +\\int_{\\Gamma_h}\\delta\\eta_f^\\alpha\\bar h_f^\\alpha\\,{\\rm d}A.\n \\label{eq:weak_fluid}",
+      "display_latex": "\\begin{equation}\\begin{aligned}0={}&\\int_{\\mc B_0}\\delta\\eta_f^\\alpha\n [\\partial_t(J\\phi_f\\bar\\rho_f\\eta_f^\\alpha)-J\\sum_m\\nu_{f(m)}^\\alpha r_{(m)}]\\dVblank\\\\\n &-\\int_{\\mc B_0}\\nabla_{\\mbf X}\\delta\\eta_f^\\alpha\\cdot\n [\\eta_f^\\alpha\\mbf W_f+J\\mbf F^{-1}(\\mbf j_{f,{\\rm disp}}^\\alpha+\\mbf j_{f,{\\rm diff}}^\\alpha)]\\dVblank\n +\\int_{\\Gamma_h}\\delta\\eta_f^\\alpha\\bar h_f^\\alpha\\,{\\rm d}A.\\end{aligned}\\tag{62}\\end{equation}"
+    },
+    {
+      "label": "eq:weak_solid",
+      "number": 63,
+      "source_line": 553,
+      "source_latex": "0&=\\int_{\\mc B_0}\\delta\\phi_s[\\partial_t(J\\phi_s\\bar\\rho_s)-J\\sum_m\\nu_{s(m)}r_{(m)}]\\dVblank,\\label{eq:weak_solid}",
+      "display_latex": "\\begin{equation}\\begin{aligned}0&=\\int_{\\mc B_0}\\delta\\phi_s[\\partial_t(J\\phi_s\\bar\\rho_s)-J\\sum_m\\nu_{s(m)}r_{(m)}]\\dVblank,\\end{aligned}\\tag{63}\\end{equation}"
+    },
+    {
+      "label": "eq:weak_tau",
+      "number": 64,
+      "source_line": 553,
+      "source_latex": "0&=\\int_{\\mc B_0}\\delta\\tau[\\partial_t\\tau-\\tfrac12|\\mbf v_{\\mc S}|^2]\\dVblank,\\label{eq:weak_tau}",
+      "display_latex": "\\begin{equation}\\begin{aligned}0&=\\int_{\\mc B_0}\\delta\\tau[\\partial_t\\tau-\\tfrac12|\\mbf v_{\\mc S}|^2]\\dVblank,\\end{aligned}\\tag{64}\\end{equation}"
+    },
+    {
+      "label": "eq:weak_momentum",
+      "number": 65,
+      "source_line": 553,
+      "source_latex": "0&=\\int_{\\mc B_0}\\left[\\nabla_{\\mbf X}\\delta\\mbf u:\\mbf P\n -\\delta\\mbf u\\cdot J\\rho\\mbf g\n +\\delta\\mbf u\\cdot\\frac{\\sum_\\alpha\\dot c_f^\\alpha}{\\rho_f}\\mbf F\\mbf W_f\\right]\\dVblank\n -\\int_{\\Gamma_T}\\delta\\mbf u\\cdot\\bar{\\mbf T}\\,{\\rm d}A.\\label{eq:weak_momentum}",
+      "display_latex": "\\begin{equation}\\begin{aligned}0&=\\int_{\\mc B_0}\\left[\\nabla_{\\mbf X}\\delta\\mbf u:\\mbf P\n -\\delta\\mbf u\\cdot J\\rho\\mbf g\n +\\delta\\mbf u\\cdot\\frac{\\sum_\\alpha\\dot c_f^\\alpha}{\\rho_f}\\mbf F\\mbf W_f\\right]\\dVblank\n -\\int_{\\Gamma_T}\\delta\\mbf u\\cdot\\bar{\\mbf T}\\,{\\rm d}A.\\end{aligned}\\tag{65}\\end{equation}"
+    },
+    {
+      "label": "eq:weak_gauss",
+      "number": 66,
+      "source_line": 565,
+      "source_latex": "0=\\int_{\\mc B_0}\\nabla_{\\mbf X}\\delta\\varphi\\cdot\n (J\\mbf F^{-1}\\epsilon\\mbf F^{-T}\\nabla_{\\mbf X}\\varphi)\\dVblank\n -\\int_{\\mc B_0}\\delta\\varphi J\\varrho\\dVblank\n +\\int_{\\Gamma_q}\\delta\\varphi\\bar q_0\\,{\\rm d}A.\n \\label{eq:weak_gauss}",
+      "display_latex": "\\begin{equation}0=\\int_{\\mc B_0}\\nabla_{\\mbf X}\\delta\\varphi\\cdot\n (J\\mbf F^{-1}\\epsilon\\mbf F^{-T}\\nabla_{\\mbf X}\\varphi)\\dVblank\n -\\int_{\\mc B_0}\\delta\\varphi J\\varrho\\dVblank\n +\\int_{\\Gamma_q}\\delta\\varphi\\bar q_0\\,{\\rm d}A.\\tag{66}\\end{equation}"
+    },
+    {
+      "label": "eq:discrete_euler",
+      "number": 67,
+      "source_line": 590,
+      "source_latex": "\\mc D_tM^n&=\\frac{M^n-M^{n-1}}{\\Delta t_n}, &&\\text{backward Euler},\\label{eq:discrete_euler}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mc D_tM^n&=\\frac{M^n-M^{n-1}}{\\Delta t_n}, &&\\text{backward Euler},\\end{aligned}\\tag{67}\\end{equation}"
+    },
+    {
+      "label": "eq:discrete_bdf",
+      "number": 68,
+      "source_line": 590,
+      "source_latex": "\\mc D_tM^n&=\\frac1{\\Delta t_n}\\left[\n \\frac{1+2\\zeta_n}{1+\\zeta_n}M^n-(1+\\zeta_n)M^{n-1}\n +\\frac{\\zeta_n^2}{1+\\zeta_n}M^{n-2}\\right],\n &&\\zeta_n=\\frac{\\Delta t_n}{\\Delta t_{n-1}}.\n \\label{eq:discrete_bdf}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\mc D_tM^n&=\\frac1{\\Delta t_n}\\left[\n \\frac{1+2\\zeta_n}{1+\\zeta_n}M^n-(1+\\zeta_n)M^{n-1}\n +\\frac{\\zeta_n^2}{1+\\zeta_n}M^{n-2}\\right],\n &&\\zeta_n=\\frac{\\Delta t_n}{\\Delta t_{n-1}}.\\end{aligned}\\tag{68}\\end{equation}"
+    },
+    {
+      "label": "eq:eg_space",
+      "number": 69,
+      "source_line": 603,
+      "source_latex": "q_h=q_h^c+q_h^0,\\qquad q_h^c\\in V_h^1\\subset H^1(\\mc B_0),\n \\qquad q_h^0\\in V_h^0,\n \\label{eq:eg_space}",
+      "display_latex": "\\begin{equation}q_h=q_h^c+q_h^0,\\qquad q_h^c\\in V_h^1\\subset H^1(\\mc B_0),\n \\qquad q_h^0\\in V_h^0,\\tag{69}\\end{equation}"
+    },
+    {
+      "label": "eq:eg_flux",
+      "number": 70,
+      "source_line": 612,
+      "source_latex": "\\widehat h=\\{\\mbf H\\}\\cdot\\mbf n+\n \\frac{\\sigma}{h_e}\\{\\mbf n\\cdot\\mbf D\\mbf n\\}[q_h],\n \\qquad h_e=\\min(h^+,h^-),\\quad \\sigma=12\n \\label{eq:eg_flux}",
+      "display_latex": "\\begin{equation}\\widehat h=\\{\\mbf H\\}\\cdot\\mbf n+\n \\frac{\\sigma}{h_e}\\{\\mbf n\\cdot\\mbf D\\mbf n\\}[q_h],\n \\qquad h_e=\\min(h^+,h^-),\\quad \\sigma=12\\tag{70}\\end{equation}"
+    },
+    {
+      "label": "eq:eg_residual",
+      "number": 71,
+      "source_line": 620,
+      "source_latex": "R_h(v_h)={}&\\sum_K\\int_K\n \\left[v_h(\\mc D_tM-S)-\\nabla_{\\mbf X}v_h\\cdot\\mbf H\\right]\\dVblank\\notag\\\\\n &+\\sum_{e\\ \\text{interior}}\\int_e\n \\left([v_h]\\widehat h-\\{\\mbf D\\nabla_{\\mbf X}v_h\\}\\cdot\\mbf n[q_h]\\right)\\,{\\rm d}A\n +\\int_{\\Gamma_h}v_h\\bar h\\,{\\rm d}A.\n \\label{eq:eg_residual}",
+      "display_latex": "\\begin{equation}\\begin{aligned}R_h(v_h)={}&\\sum_K\\int_K\n \\left[v_h(\\mc D_tM-S)-\\nabla_{\\mbf X}v_h\\cdot\\mbf H\\right]\\dVblank\\\\\n &+\\sum_{e\\ \\text{interior}}\\int_e\n \\left([v_h]\\widehat h-\\{\\mbf D\\nabla_{\\mbf X}v_h\\}\\cdot\\mbf n[q_h]\\right)\\,{\\rm d}A\n +\\int_{\\Gamma_h}v_h\\bar h\\,{\\rm d}A.\\end{aligned}\\tag{71}\\end{equation}"
+    },
+    {
+      "label": "eq:silica_rate",
+      "number": 72,
+      "source_line": 664,
+      "source_latex": "\\mc A_{(3)}=R\\theta\\ln\\frac{x}{(1-x)^2Q_{\\rm eq}},\n \\qquad r_{(3)}=k\\ln\\frac{x}{(1-x)^2Q_{\\rm eq}},\n \\qquad k=K_{(3)}R.\n \\label{eq:silica_rate}",
+      "display_latex": "\\begin{equation}\\mc A_{(3)}=R\\theta\\ln\\frac{x}{(1-x)^2Q_{\\rm eq}},\n \\qquad r_{(3)}=k\\ln\\frac{x}{(1-x)^2Q_{\\rm eq}},\n \\qquad k=K_{(3)}R.\\tag{72}\\end{equation}"
+    },
+    {
+      "label": "eq:silica_coordinate",
+      "number": 73,
+      "source_line": 674,
+      "source_latex": "q&=\\frac{M_7}{R\\theta}(\\hat\\mu_f^7-\\hat\\mu_f^N)\n =\\ln x-\\frac{M_7}{M_N}\\ln(1-x),\\label{eq:silica_coordinate}",
+      "display_latex": "\\begin{equation}\\begin{aligned}q&=\\frac{M_7}{R\\theta}(\\hat\\mu_f^7-\\hat\\mu_f^N)\n =\\ln x-\\frac{M_7}{M_N}\\ln(1-x),\\end{aligned}\\tag{73}\\end{equation}"
+    },
+    {
+      "label": "eq:silica_diffusion",
+      "number": 74,
+      "source_line": 674,
+      "source_latex": "\\eta_f^7&=\\frac{M_7x}{M_7x+M_N(1-x)},\n \\quad \\eta_f^N=1-\\eta_f^7,\n \\quad \\mbf j_f^7=-\\ell\\frac{R\\theta}{M_7}\\nabla_{\\mbf X}q,\n \\quad \\mbf j_f^N=-\\mbf j_f^7.\n \\label{eq:silica_diffusion}",
+      "display_latex": "\\begin{equation}\\begin{aligned}\\eta_f^7&=\\frac{M_7x}{M_7x+M_N(1-x)},\n \\quad \\eta_f^N=1-\\eta_f^7,\n \\quad \\mbf j_f^7=-\\ell\\frac{R\\theta}{M_7}\\nabla_{\\mbf X}q,\n \\quad \\mbf j_f^N=-\\mbf j_f^7.\\end{aligned}\\tag{74}\\end{equation}"
+    },
+    {
+      "label": "eq:silica_extent",
+      "number": 75,
+      "source_line": 690,
+      "source_latex": "n_7=n_7(0)-b,\\qquad n_C=n_C(0)+b,\n \\qquad n_N=n_N(0)+2b,\\qquad \\partial_tb=r_{(3)}.\n \\label{eq:silica_extent}",
+      "display_latex": "\\begin{equation}n_7=n_7(0)-b,\\qquad n_C=n_C(0)+b,\n \\qquad n_N=n_N(0)+2b,\\qquad \\partial_tb=r_{(3)}.\\tag{75}\\end{equation}"
+    }
+  ]
+}

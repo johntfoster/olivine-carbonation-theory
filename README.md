@@ -108,3 +108,16 @@ Python once. Every push builds and tests a SHA-tagged application image in GHCR.
 Codespaces startup compares complete application source hashes before reusing
 its binary. The [environment guide](environment/README.md) explains immutable
 image reproduction and the separate Codespaces prebuild setting.
+
+## Numerical manuscript examples
+
+The 8 October extension adds conservative complete-storage time integration,
+AD implementation details and enriched Galerkin diffusion to the manuscript.
+Two actual silica reaction examples verify closed-reactor precipitation and
+dissolution and a spatial reaction-diffusion column against independent extent
+and finite-volume references. Run `make verification-examples` after building
+MOOSE, plus `tools/moose-run python3 scripts/check_silica_jacobian.py`. The
+[plan](docs/numerical-verification-plan.md), [recorded numerical results](verification/silica-results.json)
+and [raw observations](data/silica/README.md) specify scope and reproduction.
+All 178 example checks pass; this restricted synthetic verification does not
+claim calibrated full carbonation or experimental validation.

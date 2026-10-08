@@ -1,0 +1,56 @@
+{
+  "status": "complete",
+  "snapshot_id": "c58d03d8ed442723ad6c817f67c07ca808c5e301567fc2c80ed2be586ecae7b7",
+  "reviewers": [
+    {
+      "seat": 1,
+      "report": "reviews/numerical-20261008-final/reviewer-1.md",
+      "sha256": "31c277bd5636374338ffe8f5d54e67f13c1e0d0532e45bd07803a50dd6cf230b",
+      "verdict": "ACCEPT",
+      "required_revisions": 0
+    },
+    {
+      "seat": 2,
+      "report": "reviews/numerical-20261008-final/reviewer-2.md",
+      "sha256": "1c25a5111f0825dc5ebfa6621e481c4d5c9857a2a1e2c2c8b7d1c3521b82c024",
+      "verdict": "ACCEPT",
+      "required_revisions": 0
+    },
+    {
+      "seat": 3,
+      "report": "reviews/numerical-20261008-final/reviewer-3.md",
+      "sha256": "6256de0d6aa5de97dd97105c3f244153b1b5c08b13df8a3c8af530273fce5a63",
+      "verdict": "ACCEPT",
+      "required_revisions": 0
+    }
+  ],
+  "foster_cycles": [
+    {
+      "cycle": 1,
+      "memo": "reviews/numerical-foster-cycles/cycle-1.md",
+      "invariants": "reviews/numerical-foster-cycles/cycle-1-invariants.json",
+      "validation": "reviews/numerical-foster-cycles/cycle-1-validation.json"
+    },
+    {
+      "cycle": 2,
+      "memo": "reviews/numerical-foster-cycles/cycle-2.md",
+      "invariants": "reviews/numerical-foster-cycles/cycle-2-invariants.json",
+      "validation": "reviews/numerical-foster-cycles/cycle-2-validation.json"
+    },
+    {
+      "cycle": 3,
+      "memo": "reviews/numerical-foster-cycles/cycle-3.md",
+      "invariants": "reviews/numerical-foster-cycles/cycle-3-invariants.json",
+      "validation": "reviews/numerical-foster-cycles/cycle-3-validation.json"
+    }
+  ],
+  "archive": "build/olivine-carbonation-numerical-supplement-20261008.zip",
+  "archive_sha256": "54336b3ba042aeda2b4100d2771535eb47b8c261f6112302871d3103fc6abfb3",
+  "pdf": "build/main.pdf",
+  "pdf_sha256": "aa5ebc1955c4825b9c5789a72c0f5bb3e0f3eb115b17e94cc7288452906f423c",
+  "payload_files_verified": 278,
+  "no_active_scientific_writers": true,
+  "delivery_target": "shared workspace and final chat links",
+  "download_receipt": "not observable",
+  "timestamp_utc": "2026-10-08T14:40:56.196405+00:00"
+}

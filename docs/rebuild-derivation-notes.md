@@ -1,5 +1,7 @@
 # Candidate derivation checkpoint for source-fidelity audit
 
+Historical checkpoint: this document records the 6 October 2026 theory rebuild. Its label/page counts and statements about future implementation describe that stage. The 8 October numerical extension is documented in `docs/implementation-status.md`, `docs/numerical-verification-plan.md`, the current manuscript and source-bound verification reports.
+
 ## Governing choice
 
 John's clarification (Telegram 7418) selects a special case of the compositional paper in its notation. It does not authorize blending older reacting-mixture transfer prescriptions into that parent. The source contract was delivered before manuscript rewriting; the new root is a replacement of the rejected scientific content, not a notation patch.

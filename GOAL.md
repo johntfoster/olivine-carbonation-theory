@@ -1,3 +1,7 @@
+# Numerical manuscript extension — 8 October 2026
+
+The author explicitly requests discretization and implementation discussion, two convincing actual mineral precipitation/dissolution/mineralization numerical examples, their conception/planning/execution, and then the full reviewer acceptance cycle on the completed manuscript. `docs/numerical-verification-plan.md` fixes the reductions and checks. This authorizes the necessary manuscript and implementation edits, simulation runs and independent simulated AI reviews. Preserve the compositional source contract and three-solid/single-aqueous elastic scope. Physical validation requires separate evidence. Delivery for this request is the revised PDF and reproducible numerical evidence in this workspace/chat; a new commit or deployment is not required.
+
 # Implementation goal — 7 October 2026
 
 The author explicitly authorizes MOOSE kernels and tests, enriched Galerkin as needed, a completed companion website, a manually triggered base MOOSE/scientific-Python image and exact-revision application images on every push for Codespaces. This supersedes every earlier implementation deferral below. Plasticity remains excluded. The current manuscript and compositional source contract control implementation. See PLAN.md and docs/implementation-status.md. The platform goal records the full author request. Implementation and hosted verification evidence is recorded in verification/environment-results.json. Historical platform/tool and scope statements below describe earlier work only.
@@ -65,3 +69,22 @@ Liu et al. (2024) provides aqueous experimental motivation, not achieved validat
 
 ## Scope-change baseline
 The recovered, uncommitted gas-only candidate and its analytical evidence are preserved under ignored `.agent-runtime/baselines/gas-only-20261006/` with file hashes. They are superseded development artifacts, not accepted theory. Earlier runtime-local worker handles are not addressable in the current native tree; recover artifacts before assigning a new sole writer and do not count missing completion events as reviews.
+
+## Companion-site verification goal — 8 October 2026
+
+The author requests publication of the latest numerical evidence with a clear,
+rendered equation-to-C++ interface. The site presents the accepted numerical
+snapshot, exports all 75 numbered displays from canonical LaTeX, and maps all 26
+registered local objects to their precise assembly responsibilities. The same
+contract generates equation-to-object and object-to-equation links. Source-line
+links, highlighted C++, material-property definitions, input decks and report
+rows support independent checking. Synthetic fixtures, partial residual terms,
+full constitutive laws and weak-boundary extensions have explicit scope labels.
+
+Completion requires hash checks on the accepted PDF/supplement and scientific
+sources, local links and browser rendering, a clean-clone build, successful
+Pages deployment, and checks of deployed equations, code and raw artifact bytes.
+The website task does not alter the accepted science or rerun the simulations.
+Historical hosted environment evidence retains its exact revision scope.
+Physical validation remains absent. The publication audit is recorded separately
+in `verification/companion-site-results.json` and the ignored goal checkpoint.

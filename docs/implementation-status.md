@@ -41,3 +41,19 @@ Temporal manufactured mass convergence verifies backward Euler (orders 1.012
 and 1.006) and BDF2 (1.981 and 1.990) using a time-varying source and nonlinear
 complete storage. The constant-source conservation test alone cannot
 distinguish those methods.
+
+## Numerical manuscript extension — 8 October 2026
+
+The manuscript now describes actual storage discretization, AD responsibilities
+and conservative EG diffusion. Two silica reaction examples use the exact
+restricted binary-aqueous, unstressed, equal-density branch. Closed-reactor
+precipitation/dissolution agree with independent extent histories; a coupled
+EG column agrees with an independently refined finite-volume reference.
+All 178 quantitative example checks pass. The coupled Jacobian discrepancy is
+7.4e-11 relative; the existing 61 executable and 52 analytical checks also pass.
+Raw observations, logs, source/data hashes and errors are in data/silica/ and
+verification/silica-results.json. The maximum column cell mass residual is
+3.16e-10 kg/(m3 s). These are numerical verification results, not measured
+mineral properties or a full seven-mechanism carbonation prediction.
+Historical hosted image and site evidence above concerns earlier source bytes;
+this manuscript extension has not been deployed or published as an image.

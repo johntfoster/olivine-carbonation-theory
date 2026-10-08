@@ -1,0 +1,39 @@
+CONDA_ENV moose
+CONDA_PREFIX /home/jfoster/miniconda3/envs/moose
+PACKAGE moose-dev 2026.02.20 openmpi https://conda.software.inl.gov/public
+PACKAGE moose-libmesh 2026.02.18_f8a1758 openmpi_0 https://conda.software.inl.gov/public
+PACKAGE moose-tools 2026.02.16 py314hc4e95f2_0 https://conda.software.inl.gov/public
+PACKAGE pandas 3.0.1 py314hb4ffadd_0 conda-forge
+MOOSE_PATH .agent-runtime/moose
+MOOSE_COMMIT abafb58b67a6
+LIBMESH_VERSION 1.9.0-pre
+PANDAS_VERSION 3.0.1
+VERIFIED conda activation, MPI compiler, libMesh, pandas, and framework checkout
+completed precipitation
+completed precipitation_implicit-euler_0.1
+completed precipitation_implicit-euler_0.05
+completed precipitation_implicit-euler_0.025
+completed precipitation_implicit-euler_0.0125
+completed precipitation_bdf2_0.1
+completed precipitation_bdf2_0.05
+completed precipitation_bdf2_0.025
+completed precipitation_bdf2_0.0125
+completed dissolution
+completed dissolution_implicit-euler_0.1
+completed dissolution_implicit-euler_0.05
+completed dissolution_implicit-euler_0.025
+completed dissolution_implicit-euler_0.0125
+completed dissolution_bdf2_0.1
+completed dissolution_bdf2_0.05
+completed dissolution_bdf2_0.025
+completed dissolution_bdf2_0.0125
+completed spatial_16
+Traceback (most recent call last):
+  File "/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/scripts/run_silica_verification.py", line 248, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/scripts/run_silica_verification.py", line 176, in main
+    final=profiles[5.]
+          ~~~~~~~~^^^^
+KeyError: 5.0
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/run_silica_verification.py` failed. (See above for error)

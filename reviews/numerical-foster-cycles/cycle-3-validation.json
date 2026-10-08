@@ -1,0 +1,14 @@
+{
+  "invariants_passed": true,
+  "files_compared": 261,
+  "manual_claim_diff": "passed; reference interpretation and supplement items unchanged, pin unchanged",
+  "build_command": "make paper",
+  "exit_code": 0,
+  "pdf_sha256": "aa5ebc1955c4825b9c5789a72c0f5bb3e0f3eb115b17e94cc7288452906f423c",
+  "page_images_inspected": [
+    16,
+    17,
+    18
+  ],
+  "observations": "Time/mesh tables, column figure, reference limits and reproduction paragraph legible; no overfull boxes or unresolved references in final log. Initial wording caused a prose box overflow; shorter equivalent pin wording corrected it within this cycle."
+}

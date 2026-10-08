@@ -1,0 +1,2355 @@
+{
+  "status": "passed",
+  "scope": "Actual MOOSE mineral precipitation/dissolution PDE and ODE verification on an exact synthetic silica reduction; no physical validation or full carbonation-network simulation.",
+  "python": "3.14.0",
+  "numpy": "2.4.2",
+  "scipy": "1.17.1",
+  "moose_revision": "abafb58b67a6037c6723ffeb19647c84484466da",
+  "framework_modifications": "",
+  "executable_sha256": "e7dd797846556bd0b65630a65df4d712fe026552f63504ee77a1d59cc20a41d3",
+  "sources": {
+    "environment/moose-linux-64.lock": "b91fd79bd6d66e463ec57edc99b7472d59da2d87b73564a534f83447ec73c256",
+    "environment/toolchain.json": "96782f700d3932d03a1f6d5183b586898b551c0f7034db1dea80f08ea7bf7089",
+    "moose_app/examples/silica/batch.i": "46b1608acdb860855bd197d8ec19d71e2e6c781e19a7d837ecde8bd3b9af49a8",
+    "moose_app/examples/silica/dissolution.i": "470995e356d2d897dd7805b37fee5d871a9ccf01ccbad15c6e2b4133a5112c76",
+    "moose_app/examples/silica/spatial.i": "7c5f1fe7ed1d50c1d7ee735fcf311e68f9d297fee1e5dc7a7a5ac6880049cf84",
+    "moose_app/include/base/OlivineCarbonationApp.h": "253ffd82e8bd3b3d02d23740046eb18708fd98ad1aef6af88495259e23dd0a89",
+    "moose_app/include/bcs/ADEnrichedGalerkinCrossPenaltyBC.h": "891620e5abbbc2eb9cca549de9294a7bf9b5f5703a11bed8b489abad699dda08",
+    "moose_app/include/bcs/ADEnrichedGalerkinPenaltyBC.h": "e007a86075888f2d490f562446dff6a895453335e8ce19adafc320d0fb8a6c25",
+    "moose_app/include/bcs/ADReferenceOutwardFlux.h": "1f25b7673159d8a34ee0705b22b27ff0ea0540958c3f418411f751cbdf024a19",
+    "moose_app/include/bcs/ADReferenceTraction.h": "75e2fba9258421b969faaf9c3a4787740aa8e75fa158f875605402b938a09268",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinCrossFluxDG.h": "890ff6c7ef6562dfcee1fdfe1d3233315795ce527970db07336af36306e813b2",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.h": "d2f35de2c1343997ac255c3b75f1246a0e15e1dacab54d916a332064b74e00c3",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinFluxDG.h": "90f566954fd2b6f737eea5bbd7a51be804ae69b2f835d3adc48b3dadedb92e00",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinSymmetryDG.h": "4e90d8d28ed90480d16a91af243639487b16268c37ad3d00d0c6308b200bb48e",
+    "moose_app/include/kernels/ADCarbonationMomentum.h": "5474d13ca2f19d5cb16e8428d0d69b7ad9abeb79de567a3f41c3ed6a2a721776",
+    "moose_app/include/kernels/ADEnrichedGalerkinScalarBalance.h": "8e40dcff26420a0bd96f4e98600d53edf384978f45b2d0793e89182b6ebcda93",
+    "moose_app/include/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.h": "8d79ff13485c545aaae26db5d5b99430c597a35c356f05f38f80b9e636d3db25",
+    "moose_app/include/kernels/ADReferenceGauss.h": "787fc0a6503edd3b8b2418b7c618cfd1370c8b40846b0bbda9933414d3ed27e0",
+    "moose_app/include/kernels/ADReferenceMassStorage.h": "b8e9ff117ea80529a0e71aeabf8694caf03e4044239e4068d72fee14b583ccaa",
+    "moose_app/include/kernels/ADReferenceSpeciesBalance.h": "4f29eeb21a2588aaf18cea8bb73ea4b857d75a8ab11f89fa3ca35f4de6429d8f",
+    "moose_app/include/kernels/ADTransferPotential.h": "d5b7e0bfe00f7df725b58ddade5bb70237644f48975da0be46871e49a36fefd3",
+    "moose_app/include/materials/ADCrossDiffusionVerification.h": "75fbd5474384d827d5252816a5ed22fa282f6f2d768e9d6bf5afbd0080f3e211",
+    "moose_app/include/materials/ADLogarithmicMinerals.h": "ebfb8d4b026cf8081f9f5e59e597e636bb3a4cedbe5458f33dd6858856c6fb26",
+    "moose_app/include/materials/ADOlivineReconstruction.h": "71e529221c7fc1293079e5048f9896e690c6f1939065ddd527ba7e663b5eb397",
+    "moose_app/include/materials/ADReferenceMass.h": "c955094e4d2b1e221123c93b0f47ec759ea15e478ff05eba4e0c98aad8ad82e0",
+    "moose_app/include/materials/ADReferencePullback.h": "aab7620491ea6723c4771c8837af56faf85f743d1a80f4a42f6e65eb3e5b7aea",
+    "moose_app/include/materials/ADReferenceStorageRate.h": "0ad6909a2d52b0d57afa7ef31aab9ad544559c310e4c3e5e011b2b508e0bc83b",
+    "moose_app/include/materials/ADScalarDiffusionReferenceFluxMaterial.h": "d1b85887c3e5ef023e035aa245eba9fef974b763fc6180f056b2c7c02c5c8af7",
+    "moose_app/include/materials/ADSilicaVerificationChemistry.h": "4c31f1a3a3f83f5801001e9c25241aff872affea98c5f0df6fef410cd7da8a65",
+    "moose_app/include/materials/ADSkeletonVelocity.h": "562bb22525e1c8482f2bc2527c09e4ed2f23827c757c744cd26ade1dd64f6d6a",
+    "moose_app/include/materials/ADSolidReferenceKinematics.h": "f0d0c837aee31fb61c3aa644c748512aa1929f5e22d677c9901eaeec56d9fdac",
+    "moose_app/include/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.h": "065043e7d1a2e9678da34f07375bd7470f6aabfa201249b56df72682bae6e159",
+    "moose_app/include/utils/MatchedLogMineralState.h": "40e7014160ed99409b03d496eca321147cedd1ce93ae000f247e510a8162a7dd",
+    "moose_app/src/base/OlivineCarbonationApp.C": "0cf9c13144dd951850ccb98078ea473f906a9380a761c55d2a5a4fea24a9a331",
+    "moose_app/src/bcs/ADEnrichedGalerkinCrossPenaltyBC.C": "d3f05a6884486afea8d5776da62c30149c7ea692288e25bcc4c3048a217dc8a1",
+    "moose_app/src/bcs/ADEnrichedGalerkinPenaltyBC.C": "ca327ce5aa45ee4594f2ffe5789c5cd29b3d9a66e92f02569645961141a6a1c4",
+    "moose_app/src/bcs/ADReferenceOutwardFlux.C": "27db306f401509e584ed94332c9f6a8a0cf9146e4eb18b765a61714d9d960f0f",
+    "moose_app/src/bcs/ADReferenceTraction.C": "f0f7a3ffe371e84632f618e2cdbb5225ed24b1c1567204a330aa11d6ea4f90ee",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C": "de901e1b754bd30643bec1537bd7fab24d3295ad149e3ee7113d9d53dbc9840f",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.C": "3344297bd23a3ee5d40e02bd484cb75a2b0a1b03b85973626fadcce645ff4924",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C": "8a0747d86c9fe086436910cc4f17552723d7f2b5addbee50863066c138459c3b",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinSymmetryDG.C": "9c530423ff6df4b55a79e359baffcd73306d757052ee4896f7c08e46ec7b2972",
+    "moose_app/src/kernels/ADCarbonationMomentum.C": "430d6fe5b65e3ec2cbfc02be0930bf835c771ff759dc5480fc2a06a52ffd244d",
+    "moose_app/src/kernels/ADEnrichedGalerkinScalarBalance.C": "cb495a5aafd74acb1c26cfa80b6f279aa1d5cc0a88e534a01ae52a5ed9c852a4",
+    "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C": "2c6a24159f0caac6bffc15572eb2088e5b1f8df951c986b8b2c4d289d93dc967",
+    "moose_app/src/kernels/ADReferenceGauss.C": "ecf040f51e1f3ebbe708f01410576f9771eecc939628af638906a3becc8d491e",
+    "moose_app/src/kernels/ADReferenceMassStorage.C": "dae16db0d73c49638cf6d91b33ada4d4151a52abadf68c06db059e22c176f734",
+    "moose_app/src/kernels/ADReferenceSpeciesBalance.C": "f6769826857a12fdbc0595e60303f0297cc5ca7424037854e469581ae0cf83e6",
+    "moose_app/src/kernels/ADTransferPotential.C": "43689f0826236dea746f845610b18620a2e56bc828c469aa627fafc7dffd90d0",
+    "moose_app/src/main.C": "29b2614bd0dd20d114cbdd035bf836ff714c5ee36af742bf5d5f0adfdb78a90d",
+    "moose_app/src/materials/ADCrossDiffusionVerification.C": "89d3ad018219db21b5481543d841bcbdcde7ce290b28497e0c652dd202c1ce50",
+    "moose_app/src/materials/ADLogarithmicMinerals.C": "b13603ac2af20a1997aa25329b40934d39c10087e90c8565827c5f4474c81699",
+    "moose_app/src/materials/ADOlivineReconstruction.C": "6e0c92f15b109d8e2bf3b9c1c01d0e228c3835639de52cd10f4dd2b884c05808",
+    "moose_app/src/materials/ADReferenceMass.C": "501e38281869a60aaba77db6dccb50b65031586eb9f166642f6852a7812594af",
+    "moose_app/src/materials/ADReferencePullback.C": "2ea412f66542a3215315b3d8b56278c1d4750836380b11276c2be62f485947d7",
+    "moose_app/src/materials/ADReferenceStorageRate.C": "75a9b5cf30b07e741e24ef850173bf3efaf6c25bd071125053284d9e233cc1b8",
+    "moose_app/src/materials/ADScalarDiffusionReferenceFluxMaterial.C": "6e2edbc1e661c0ff1f6b328bdd33a09ce94b5d6ac3b0dde03c3f0e56f4f484bc",
+    "moose_app/src/materials/ADSilicaVerificationChemistry.C": "b216236dbf110ec912812c0eda1e35e3d914f2a349724dbfbd4b38a1f79b0e62",
+    "moose_app/src/materials/ADSkeletonVelocity.C": "354533eb2b32d9cb31fb6612ac62bcd9ac30c64787502d3aca1deb814cd73949",
+    "moose_app/src/materials/ADSolidReferenceKinematics.C": "05280423f0b5f2239f8eb6662e6e11b1d953b62b4a75b7875519159c5cbf02b4",
+    "moose_app/src/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.C": "e6e36f0471bdc80b0ffb396f86203c46276a37fcb638c0953baca8cdc8a4f2c6",
+    "scripts/run_silica_verification.py": "482c1d5a5d6b47e7cd7ab81deb09fa5b2e9f06c9f3987edd4289e839289d06ae"
+  },
+  "parameters": {
+    "rho": 1000.0,
+    "phi_A": 0.2,
+    "phi_B": 0.1,
+    "phi_C_initial": 0.05,
+    "M_Si": 0.096113,
+    "M_water": 0.018015,
+    "M_C": 0.060083,
+    "RT": 2478.957029602388,
+    "Qeq": 0.00013869868505433515,
+    "rate_coefficient": 1.0,
+    "mobility": 1e-06,
+    "spatial_length": 1.0,
+    "sigma": 12
+  },
+  "reference_methods": {
+    "batch": "scalar extent, DOP853, rtol=2e-12 atol=1e-13",
+    "spatial": "cell-centered conservative MOL, BDF, rtol=2e-10 atol=1e-11, 512/1024 cells"
+  },
+  "commands": [
+    {
+      "name": "precipitation",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation",
+        "Executioner/dt=0.0125"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.1",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.1",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.1.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.05",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.05",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.05.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.025",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.025",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.025.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.0125",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.0125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.0125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.00625",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.00625",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.00625.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_implicit-euler_0.003125",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.003125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_implicit-euler_0.003125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.1",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.1",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.1",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.1.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.05",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.05",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.05",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.05.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.025",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.025",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.025",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.025.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.0125",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.0125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.0125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.00625",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.00625",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.00625.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/batch.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/precipitation_bdf2_0.003125",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.003125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/precipitation_bdf2_0.003125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution",
+        "Executioner/dt=0.0125"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.1",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.1",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.1.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.05",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.05",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.05.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.025",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.025",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.025.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.0125",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.0125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.0125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.00625",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.00625",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.00625.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_implicit-euler_0.003125",
+        "Executioner/scheme=implicit-euler",
+        "Executioner/dt=0.003125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_implicit-euler_0.003125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.1",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.1",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.1",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.1.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.05",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.05",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.05",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.05.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.025",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.025",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.025",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.025.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.0125",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.0125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.0125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.00625",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.00625",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.00625.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/dissolution.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/dissolution_bdf2_0.003125",
+        "Executioner/scheme=bdf2",
+        "Executioner/dt=0.003125",
+        "Executioner/end_time=5"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/dissolution_bdf2_0.003125.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_16",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_16",
+        "Mesh/nx=16",
+        "Executioner/dt=0.005"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_16.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_32",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_32",
+        "Mesh/nx=32",
+        "Executioner/dt=0.005"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_32.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_64",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_64",
+        "Mesh/nx=64",
+        "Executioner/dt=0.005"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_64.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_128",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_128",
+        "Mesh/nx=128",
+        "Executioner/dt=0.005"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_128.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_time_0.04",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_time_0.04",
+        "Mesh/nx=64",
+        "Executioner/dt=0.04"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_time_0.04.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_time_0.02",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_time_0.02",
+        "Mesh/nx=64",
+        "Executioner/dt=0.02"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_time_0.02.log.gz",
+      "execution": "reused completed actual solve"
+    },
+    {
+      "name": "spatial_time_0.01",
+      "command": [
+        "moose_app/olivine_carbonation-opt",
+        "-i",
+        "moose_app/examples/silica/spatial.i",
+        "Outputs/file_base=/home/jfoster/projects/research/reactive_transport/olivine-carbonation-theory/.agent-runtime/silica-verification/spatial_time_0.01",
+        "Mesh/nx=64",
+        "Executioner/dt=0.01"
+      ],
+      "exit_code": 0,
+      "log": "data/silica/spatial_time_0.01.log.gz",
+      "execution": "reused completed actual solve"
+    }
+  ],
+  "checks": [
+    {
+      "name": "precipitation_Si_conservation",
+      "error": 3.52055993435662e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_H_conservation",
+      "error": 3.5927971701401585e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_O_conservation",
+      "error": 1.928322583817217e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_trajectory",
+      "error": 8.066050455113327e-06,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_direction",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_equilibrium",
+      "error": 0.0005324010549117,
+      "tolerance": 0.002,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1_Si_conservation",
+      "error": 9.854328037117839e-15,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1_H_conservation",
+      "error": 1.8569513463645764e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1_O_conservation",
+      "error": 1.8126232287881838e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.1_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05_Si_conservation",
+      "error": 9.719337242088828e-15,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05_H_conservation",
+      "error": 1.836767092599744e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05_O_conservation",
+      "error": 1.7547735512736673e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.05_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025_Si_conservation",
+      "error": 2.1423039171104125e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025_H_conservation",
+      "error": 1.897319853894241e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025_O_conservation",
+      "error": 1.8126232287881838e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.025_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125_Si_conservation",
+      "error": 1.9924641346282097e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125_H_conservation",
+      "error": 2.3817419442502176e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125_O_conservation",
+      "error": 1.581224518730118e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.0125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625_Si_conservation",
+      "error": 2.915801172626648e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625_H_conservation",
+      "error": 1.8165828388349118e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625_O_conservation",
+      "error": 1.7740567771118396e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.00625_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125_Si_conservation",
+      "error": 1.1744199167524e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125_H_conservation",
+      "error": 1.8771356001294086e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125_O_conservation",
+      "error": 1.793340002950012e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_implicit-euler_0.003125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_implicit-euler_order",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence",
+      "errors": [
+        0.011288788594514543,
+        0.005660597538015288,
+        0.002834369717814589,
+        0.0014182050995152906,
+        0.0007093578751149465,
+        0.0003547428131476238
+      ],
+      "orders": [
+        0.9958644196411859,
+        0.9979263963353732,
+        0.9989617681160075,
+        0.9994806247332518,
+        0.9997402025035138
+      ],
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ]
+    },
+    {
+      "name": "precipitation_implicit-euler_fine_error",
+      "error": 0.0003547428131476238,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "precipitation_bdf2_0.1_Si_conservation",
+      "error": 9.719337242088828e-15,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.1_H_conservation",
+      "error": 1.7560300775404146e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.1_O_conservation",
+      "error": 1.696923873759151e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.1_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.1_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_0.05_Si_conservation",
+      "error": 9.98931883214685e-15,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.05_H_conservation",
+      "error": 1.836767092599744e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.05_O_conservation",
+      "error": 1.7740567771118396e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.05_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.05_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_0.025_Si_conservation",
+      "error": 2.4163352310193058e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.025_H_conservation",
+      "error": 1.7963985850700793e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.025_O_conservation",
+      "error": 1.7354903254354953e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.025_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.025_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125_Si_conservation",
+      "error": 2.9657477667873826e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125_H_conservation",
+      "error": 3.0881908260193495e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125_O_conservation",
+      "error": 1.716207099597323e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.0125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625_Si_conservation",
+      "error": 5.27814008563435e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625_H_conservation",
+      "error": 1.8569513463645764e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625_O_conservation",
+      "error": 1.7547735512736673e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.00625_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125_Si_conservation",
+      "error": 1.2959116322785104e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125_H_conservation",
+      "error": 1.897319853894241e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125_O_conservation",
+      "error": 1.793340002950012e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "precipitation_bdf2_0.003125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "precipitation_bdf2_order",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence",
+      "errors": [
+        0.0002473380500154221,
+        6.153252251461794e-05,
+        1.5346070314947724e-05,
+        3.832085715416156e-06,
+        9.574288153402222e-07,
+        2.392822473495926e-07
+      ],
+      "orders": [
+        2.0070631563778165,
+        2.003479866386324,
+        2.001667533891469,
+        2.00089269936133,
+        2.000451861418762
+      ],
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ]
+    },
+    {
+      "name": "precipitation_bdf2_fine_error",
+      "error": 2.392822473495926e-07,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "dissolution_Si_conservation",
+      "error": 4.989938473018007e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_H_conservation",
+      "error": 6.050238167761885e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_O_conservation",
+      "error": 3.739754817020093e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_trajectory",
+      "error": 0.00016918756589134887,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_direction",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_equilibrium",
+      "error": 0.00017304712402932,
+      "tolerance": 0.002,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1_Si_conservation",
+      "error": 4.0525341167250425e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1_H_conservation",
+      "error": 2.7024397149336417e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1_O_conservation",
+      "error": 2.486744182451505e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.1_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05_Si_conservation",
+      "error": 2.4287914908318437e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05_H_conservation",
+      "error": 2.5007651093415787e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05_O_conservation",
+      "error": 2.3710816623374815e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.05_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025_Si_conservation",
+      "error": 7.395533640622805e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025_H_conservation",
+      "error": 2.5209325699007852e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025_O_conservation",
+      "error": 2.293973315594799e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.025_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125_Si_conservation",
+      "error": 1.3931438832243328e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125_H_conservation",
+      "error": 3.4083008345058614e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125_O_conservation",
+      "error": 2.7180692226795518e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.0125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625_Si_conservation",
+      "error": 1.1911994221888762e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625_H_conservation",
+      "error": 3.287296071150624e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625_O_conservation",
+      "error": 2.6409608759368696e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.00625_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125_Si_conservation",
+      "error": 9.032921162531914e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125_H_conservation",
+      "error": 3.085621465558561e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125_O_conservation",
+      "error": 2.583129615879858e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_implicit-euler_0.003125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_implicit-euler_order",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence",
+      "errors": [
+        0.022405890512956272,
+        0.011281327715956024,
+        0.005660699493255983,
+        0.002835415724456336,
+        0.0014189816320562265,
+        0.0007098101762084141
+      ],
+      "orders": [
+        0.9899411963362194,
+        0.9948846274486638,
+        0.9974200615697121,
+        0.9987043618687299,
+        0.9993507517310655
+      ],
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ]
+    },
+    {
+      "name": "dissolution_implicit-euler_fine_error",
+      "error": 0.0007098101762084141,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "dissolution_bdf2_0.1_Si_conservation",
+      "error": 3.2474852517863976e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.1_H_conservation",
+      "error": 2.4604301882231665e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.1_O_conservation",
+      "error": 2.2746962289091286e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.1_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.1_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_0.05_Si_conservation",
+      "error": 3.233840355770488e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.05_H_conservation",
+      "error": 2.5612674910191978e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.05_O_conservation",
+      "error": 2.3325274889661402e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.05_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.05_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_0.025_Si_conservation",
+      "error": 1.0915916812727388e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.025_H_conservation",
+      "error": 2.420095267104754e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.025_O_conservation",
+      "error": 2.351804575651811e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.025_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.025_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125_Si_conservation",
+      "error": 1.3835924560131964e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125_H_conservation",
+      "error": 3.3477984528282424e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125_O_conservation",
+      "error": 2.6987921359938812e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.0125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625_Si_conservation",
+      "error": 1.2689753294795588e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625_H_conservation",
+      "error": 3.30746353170983e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625_O_conservation",
+      "error": 2.6602379626225402e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.00625_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125_Si_conservation",
+      "error": 1.0247316907947835e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125_H_conservation",
+      "error": 3.14612384723618e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125_O_conservation",
+      "error": 2.6409608759368696e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "dissolution_bdf2_0.003125_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "dissolution_bdf2_order",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence",
+      "errors": [
+        0.0004490768235561049,
+        0.00011999393665629299,
+        3.113114515596038e-05,
+        7.936526156271384e-06,
+        2.0041555561789437e-06,
+        5.035853085644248e-07
+      ],
+      "orders": [
+        1.904000760174996,
+        1.9465309554089842,
+        1.971779068919453,
+        1.9855131828604335,
+        1.9926863902156937
+      ],
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ]
+    },
+    {
+      "name": "dissolution_bdf2_fine_error",
+      "error": 5.035853085644248e-07,
+      "tolerance": 0.001,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "fv_512_conservation",
+      "error": 1.2221731458368823e-15,
+      "tolerance": 1e-10,
+      "passed": true,
+      "category": "analytical",
+      "solver": {
+        "nfev": 943,
+        "njev": 4,
+        "relative_silicon_drift": 1.2221731458368823e-15
+      }
+    },
+    {
+      "name": "fv_1024_conservation",
+      "error": 1.6295641944491763e-15,
+      "tolerance": 1e-10,
+      "passed": true,
+      "category": "analytical",
+      "solver": {
+        "nfev": 936,
+        "njev": 4,
+        "relative_silicon_drift": 1.6295641944491763e-15
+      }
+    },
+    {
+      "name": "fv_reference_refinement",
+      "error": 4.587676956499775e-07,
+      "tolerance": 0.0001,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "spatial_16_Si_conservation",
+      "error": 8.908352307421112e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_16_H_conservation",
+      "error": 2.2192399706768832e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_16_O_conservation",
+      "error": 2.1400589492310203e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_16_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_16_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "spatial_16_both_directions",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_16_cell_balance",
+      "error": 6.633506244302367e-11,
+      "tolerance": 1e-07,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_Si_conservation",
+      "error": 1.1461290115321388e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_H_conservation",
+      "error": 2.199066036272038e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_O_conservation",
+      "error": 1.677343785089045e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "spatial_32_both_directions",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_32_cell_balance",
+      "error": 9.336498241196978e-11,
+      "tolerance": 1e-07,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_Si_conservation",
+      "error": 1.4625345651772983e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_H_conservation",
+      "error": 2.8244888009433428e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_O_conservation",
+      "error": 2.1014997741408618e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "spatial_64_both_directions",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_64_cell_balance",
+      "error": 1.4052872754355406e-10,
+      "tolerance": 1e-07,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_Si_conservation",
+      "error": 1.876714988750476e-13,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_H_conservation",
+      "error": 2.1990663419038192e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_O_conservation",
+      "error": 1.908701650035795e-14,
+      "tolerance": 1e-09,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_positive_phases",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_nonnegative_reaction_power",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "analytical"
+    },
+    {
+      "name": "spatial_128_both_directions",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_128_cell_balance",
+      "error": 3.1570357439392183e-10,
+      "tolerance": 1e-07,
+      "passed": true,
+      "category": "implementation"
+    },
+    {
+      "name": "spatial_monotone_refinement",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "spatial_fine_relative_profile_error",
+      "error": 9.099451057372695e-06,
+      "tolerance": 0.01,
+      "passed": true,
+      "category": "convergence"
+    },
+    {
+      "name": "spatial_time_self_convergence",
+      "error": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "category": "convergence",
+      "differences": [
+        3.0392011073999278e-05,
+        8.318819979930561e-06
+      ],
+      "order": 1.8692413403047354
+    }
+  ],
+  "batch": {
+    "precipitation": {
+      "initial_aqueous_si": 10.0,
+      "final_aqueous_si": 5.0003484222078,
+      "mineral_change_mol": 4.999651578083644,
+      "max_trajectory_error": 8.066050455113327e-06
+    },
+    "dissolution": {
+      "initial_aqueous_si": 1.0,
+      "final_aqueous_si": 5.0009844416001,
+      "mineral_change_mol": -4.0009844411897255,
+      "max_trajectory_error": 0.00016918756589134887
+    }
+  },
+  "time_convergence": {
+    "precipitation_implicit-euler": {
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ],
+      "errors": [
+        0.011288788594514543,
+        0.005660597538015288,
+        0.002834369717814589,
+        0.0014182050995152906,
+        0.0007093578751149465,
+        0.0003547428131476238
+      ],
+      "orders": [
+        0.9958644196411859,
+        0.9979263963353732,
+        0.9989617681160075,
+        0.9994806247332518,
+        0.9997402025035138
+      ]
+    },
+    "precipitation_bdf2": {
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ],
+      "errors": [
+        0.0002473380500154221,
+        6.153252251461794e-05,
+        1.5346070314947724e-05,
+        3.832085715416156e-06,
+        9.574288153402222e-07,
+        2.392822473495926e-07
+      ],
+      "orders": [
+        2.0070631563778165,
+        2.003479866386324,
+        2.001667533891469,
+        2.00089269936133,
+        2.000451861418762
+      ]
+    },
+    "dissolution_implicit-euler": {
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ],
+      "errors": [
+        0.022405890512956272,
+        0.011281327715956024,
+        0.005660699493255983,
+        0.002835415724456336,
+        0.0014189816320562265,
+        0.0007098101762084141
+      ],
+      "orders": [
+        0.9899411963362194,
+        0.9948846274486638,
+        0.9974200615697121,
+        0.9987043618687299,
+        0.9993507517310655
+      ]
+    },
+    "dissolution_bdf2": {
+      "steps": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125,
+        0.00625,
+        0.003125
+      ],
+      "errors": [
+        0.0004490768235561049,
+        0.00011999393665629299,
+        3.113114515596038e-05,
+        7.936526156271384e-06,
+        2.0041555561789437e-06,
+        5.035853085644248e-07
+      ],
+      "orders": [
+        1.904000760174996,
+        1.9465309554089842,
+        1.971779068919453,
+        1.9855131828604335,
+        1.9926863902156937
+      ]
+    }
+  },
+  "spatial_convergence": [
+    {
+      "cells": 16,
+      "dt": 0.005,
+      "aqueous_l2_error": 0.002875641460338234,
+      "mineral_l2_error": 0.004999444583623267,
+      "max_cell_mass_residual": 6.633506244302367e-11,
+      "worst_cell_audit": {
+        "time": 1.07,
+        "step": 214,
+        "cell_zero_based": 15,
+        "x": 0.96875,
+        "dt": 0.0050000000000001155,
+        "scheme": "bdf2",
+        "storage_rate": 0.10221582482500138,
+        "reaction_loss": -0.03297660504361449,
+        "left_flux": 0.004327451232190739,
+        "right_flux": 0.0,
+        "cell_width": 0.0625,
+        "signed_residual": 6.633506244302367e-11,
+        "files": [
+          "spatial_16_worst_profile_0212.csv",
+          "spatial_16_worst_profile_0213.csv",
+          "spatial_16_worst_profile_0214.csv",
+          "spatial_16_worst_nodes_0214.csv"
+        ]
+      },
+      "mineral_gain_mol": 1.0050902299652062,
+      "mineral_loss_mol": -1.1067061762396284
+    },
+    {
+      "cells": 32,
+      "dt": 0.005,
+      "aqueous_l2_error": 0.0007218358735516237,
+      "mineral_l2_error": 0.0012519288514854698,
+      "max_cell_mass_residual": 9.336498241196978e-11,
+      "worst_cell_audit": {
+        "time": 0.99,
+        "step": 198,
+        "cell_zero_based": 31,
+        "x": 0.984375,
+        "dt": 0.0050000000000000044,
+        "scheme": "bdf2",
+        "storage_rate": 0.10969972398277417,
+        "reaction_loss": -0.03555425473751735,
+        "left_flux": 0.0023170459109966195,
+        "right_flux": 0.0,
+        "cell_width": 0.03125,
+        "signed_residual": 9.336498241196978e-11,
+        "files": [
+          "spatial_32_worst_profile_0196.csv",
+          "spatial_32_worst_profile_0197.csv",
+          "spatial_32_worst_profile_0198.csv",
+          "spatial_32_worst_nodes_0198.csv"
+        ]
+      },
+      "mineral_gain_mol": 1.0162725986551568,
+      "mineral_loss_mol": -1.112985924254797
+    },
+    {
+      "cells": 64,
+      "dt": 0.005,
+      "aqueous_l2_error": 0.00018122196245760555,
+      "mineral_l2_error": 0.0003128857971565835,
+      "max_cell_mass_residual": 1.4052872754355406e-10,
+      "worst_cell_audit": {
+        "time": 0.915,
+        "step": 183,
+        "cell_zero_based": 61,
+        "x": 0.9609375,
+        "dt": 0.0050000000000000044,
+        "scheme": "bdf2",
+        "storage_rate": 0.11686020756954232,
+        "reaction_loss": -0.03787642220362688,
+        "left_flux": 0.0037066288997008564,
+        "right_flux": 0.002472507255554189,
+        "cell_width": 0.015625,
+        "signed_residual": 1.4052872754355406e-10,
+        "files": [
+          "spatial_64_worst_profile_0181.csv",
+          "spatial_64_worst_profile_0182.csv",
+          "spatial_64_worst_profile_0183.csv",
+          "spatial_64_worst_nodes_0183.csv"
+        ]
+      },
+      "mineral_gain_mol": 1.0190757096682217,
+      "mineral_loss_mol": -1.1145666738345357
+    },
+    {
+      "cells": 128,
+      "dt": 0.005,
+      "aqueous_l2_error": 4.593317909794919e-05,
+      "mineral_l2_error": 7.799197827735109e-05,
+      "max_cell_mass_residual": 3.1570357439392183e-10,
+      "worst_cell_audit": {
+        "time": 0.07,
+        "step": 14,
+        "cell_zero_based": 119,
+        "x": 0.93359375,
+        "dt": 0.0050000000000000044,
+        "scheme": "bdf2",
+        "storage_rate": 0.4784010317809054,
+        "reaction_loss": -0.11273283335379751,
+        "left_flux": 0.02624752937514204,
+        "right_flux": 0.023390746572463827,
+        "cell_width": 0.0078125,
+        "signed_residual": -3.1570357439392183e-10,
+        "files": [
+          "spatial_128_worst_profile_0012.csv",
+          "spatial_128_worst_profile_0013.csv",
+          "spatial_128_worst_profile_0014.csv",
+          "spatial_128_worst_nodes_0014.csv"
+        ]
+      },
+      "mineral_gain_mol": 1.0197769567097916,
+      "mineral_loss_mol": -1.1149625566466865
+    }
+  ],
+  "fv_reference_difference": 4.587676956499775e-07,
+  "spatial_time_order": 1.8692413403047354,
+  "data_hashes": {
+    "data/silica/README.md": "095d67a6f13a68cc24e4a949a537696d832dc9be0f94fa19abbefdfb04a413d4",
+    "data/silica/dissolution.csv": "0932929e0842ec1c313a0c8858a724b8ffd46555a2c97fdd6abd9116b1ab199a",
+    "data/silica/dissolution.log.gz": "f4e807b123f5182a0aa71ac870fd4ba0a21e385ae8548a6929c5c4704f8106a9",
+    "data/silica/dissolution_bdf2_0.003125.csv": "ad56dcee2658e4e6a84d73892ba97f2c9b606c8fcacc894b84ed81e4a804bae5",
+    "data/silica/dissolution_bdf2_0.003125.log.gz": "364b178e9ff2fb7da7c1b75e36f2ab2dbe6e2676a089219f958513f818a23911",
+    "data/silica/dissolution_bdf2_0.00625.csv": "883c12b88297d97008147b26e1146d2de96c5f53306d06084943e1135c5f5785",
+    "data/silica/dissolution_bdf2_0.00625.log.gz": "823029852aeca133a965ca99b1d24263b257788b8b07dd3a65cbe471d28b649c",
+    "data/silica/dissolution_bdf2_0.0125.csv": "f9e1009cccdefa03c965eab088c25a763a3ab8511f485e9348d66b7e011485d7",
+    "data/silica/dissolution_bdf2_0.0125.log.gz": "51f639653173a740d4771ebb4ce0b53141b4016407b70511e806f7e045835b26",
+    "data/silica/dissolution_bdf2_0.025.csv": "27a222057431a9c0a56133ab8b0e42d5a024a0a4ced512cf7ddb12bed8bae815",
+    "data/silica/dissolution_bdf2_0.025.log.gz": "9d259f9c546997f4c850591a3c226ed7e1e5833b2d35bd4a7432e7bb59d16ec6",
+    "data/silica/dissolution_bdf2_0.05.csv": "dcc1e0e73a9340854da1f8242ab5a89a275c78f05278885a58ef5539493c1302",
+    "data/silica/dissolution_bdf2_0.05.log.gz": "fe97cef0f28056492a4645ed901f642b47fc63d90584f3b3b8584d7cc589bf3e",
+    "data/silica/dissolution_bdf2_0.1.csv": "61576f2ebc1d253f867f9fe3b3610c878397143f88f6cdc794abe7d9b1119215",
+    "data/silica/dissolution_bdf2_0.1.log.gz": "45e38dd7838301bec1cf38853cf09ac2cfd441c837627e5966c91b22713d33b5",
+    "data/silica/dissolution_implicit-euler_0.003125.csv": "1a2ebac9d36c7ef6f97b1dfc2fcee9ec457949f83232641241d7be109213a71d",
+    "data/silica/dissolution_implicit-euler_0.003125.log.gz": "505c6620f20c0dcaf9a73415fde83a5c09913f2ebda2eed8e3bbdaa1c6f634e1",
+    "data/silica/dissolution_implicit-euler_0.00625.csv": "543c6470ba9288bd9c30a64263881c9e25f1cb31dc60b2885934457b404565a9",
+    "data/silica/dissolution_implicit-euler_0.00625.log.gz": "0be058c13a71100db7a7e3ae4e4a70fba61ff3c1250a47027f87c4e6668228d8",
+    "data/silica/dissolution_implicit-euler_0.0125.csv": "dedff42e8080a7d8f52617eac77f6b569e2fc81caad5ddcbe2063a6c7bfb5b3c",
+    "data/silica/dissolution_implicit-euler_0.0125.log.gz": "9215938ada3d12430f88fc97da99cd0cbd46dda07b67399d7dee3a13b09deb61",
+    "data/silica/dissolution_implicit-euler_0.025.csv": "3602505bc97587f6755f983cbb8c7dddba9cac44af10d9bbfd91158998454458",
+    "data/silica/dissolution_implicit-euler_0.025.log.gz": "0d4ea8fb17ee027e5256b5d152472eb697bc54d43386d886836407042f330208",
+    "data/silica/dissolution_implicit-euler_0.05.csv": "d3f970230766edd15c0f2113a46e2dc9f555eec74fb417186ee838b21315cafd",
+    "data/silica/dissolution_implicit-euler_0.05.log.gz": "c441721b337184995f580443f8bcc7fcd8f349754c3e32433421fea37cab6e41",
+    "data/silica/dissolution_implicit-euler_0.1.csv": "c1f58785c8c06f5c12c50b9dfcb309ea3a46e969dca9bbd3f13569997f141b56",
+    "data/silica/dissolution_implicit-euler_0.1.log.gz": "6e036e68dc457f86b04b99bf1d773aa493859d04338da5283bb4212879a02a7c",
+    "data/silica/dissolution_reference.csv": "61767505fff765a891fd86796b4cb012f6eb8470c2768bea64285857dbaed0fe",
+    "data/silica/fv_1024_t0.csv": "feef98fc2b8ceb77cb284235bcd943df09700ea5f72c053bb67b6b83b990d298",
+    "data/silica/fv_1024_t1.csv": "4a59cf0d196bfff8905f86ad023a646ee90dcf8a8c0c8dc41ba3634d2e8b0e89",
+    "data/silica/fv_1024_t5.csv": "e41796ca66c148af587e6a181a66998d0d0f73d7440173e7290e97290307cbbd",
+    "data/silica/fv_512_t0.csv": "0b40a8aa54185fbc25cb240dbd01aadfdad8e4f57fe201b0cd321dd57efd2c97",
+    "data/silica/fv_512_t1.csv": "88743dec65095c6606ee333dd1d7497eb703b6d632ac60640254e8e162111495",
+    "data/silica/fv_512_t5.csv": "22ad722c6be86de94971cc57f68d6f00024d58055195c001348fa6c281ea60be",
+    "data/silica/jacobian.log.gz": "6f785cb7918d0afe4b4f3c983a168de0e1a9b8ebfcff66408f393c24853cf9a8",
+    "data/silica/precipitation.csv": "650255631d80b6161ab732238f5f799e70a1033564f66c57c7ba2a88b546cb1f",
+    "data/silica/precipitation.log.gz": "18347cade0a912c5cdf3cf3ccf8a27f78d6f1a7f9fcc25ea921a0aa59186155e",
+    "data/silica/precipitation_bdf2_0.003125.csv": "84adb7d14ba58fea858d557eaacbd6dbef98e231bba1b2558184a98c3a11bca7",
+    "data/silica/precipitation_bdf2_0.003125.log.gz": "b88997593337ec747ba80989768965e4944b0fa8723d700cefbf44650afecafe",
+    "data/silica/precipitation_bdf2_0.00625.csv": "2e2d93990e6a29e752d11c7c4ce639e2642ac3a19bfa782051faed2ab54eb01c",
+    "data/silica/precipitation_bdf2_0.00625.log.gz": "fc273169e08e9edb7e79b55da162d6dd6ee377d1f3a92dd4ea5359c4ecf56ac5",
+    "data/silica/precipitation_bdf2_0.0125.csv": "840ec8977f75ce95ba26080ce209a4690052c9b217f411b197f98b8dcb3b2c14",
+    "data/silica/precipitation_bdf2_0.0125.log.gz": "f20d011c15bedb7492bbf3cb51c0331533bdc226d298cc2f08041cf8995ff469",
+    "data/silica/precipitation_bdf2_0.025.csv": "d5ccffb80b2f6dbb5d4106c00264b15098a29a0b8c8aa78c58c3f57a634dba20",
+    "data/silica/precipitation_bdf2_0.025.log.gz": "5d0e677464c59fec5476338c3481384fffb2e78af1b21f11d608324319d1cbe8",
+    "data/silica/precipitation_bdf2_0.05.csv": "42a6d6cdc7b6f869bfb669aa650f415c32f0e72d28e5a1f0e7ffd273e245b375",
+    "data/silica/precipitation_bdf2_0.05.log.gz": "5dc3a06feab76d2b6c6528e0b12d1dabf2575a8d4be8379ac7ff98f319c2b2f4",
+    "data/silica/precipitation_bdf2_0.1.csv": "46c237810bf35282dff26ac06925e7e9e9a9345f1766552f33fdccb082a62b50",
+    "data/silica/precipitation_bdf2_0.1.log.gz": "71155f43a9755b6dc805907eb9a7381750a81d71b5a0b18aa7d576b934d6f1fa",
+    "data/silica/precipitation_implicit-euler_0.003125.csv": "ae10652cc2bea13f354207068c32d728633e92334c50f5296b093960fc5d6923",
+    "data/silica/precipitation_implicit-euler_0.003125.log.gz": "a7752fe6458c9d7072da5e8ca4ff740196246df7083fab6855444f306af49233",
+    "data/silica/precipitation_implicit-euler_0.00625.csv": "8c10e4b1111f1245a5001bb34314a2d0714ec597fb1be3794b0c68d4f31c697e",
+    "data/silica/precipitation_implicit-euler_0.00625.log.gz": "ed2872a0236e56a0e38fd5ad6ada274f422d50d0966533ded86a6a7b9fa30a1f",
+    "data/silica/precipitation_implicit-euler_0.0125.csv": "be8b30fdd3eda5c5a719edc2e248476707b45fc7f74ffc0cb2a2a795496aa07c",
+    "data/silica/precipitation_implicit-euler_0.0125.log.gz": "0a11b8fb907334612c7569c597816babd34d09c0c9308caca7e1b83954f0d0db",
+    "data/silica/precipitation_implicit-euler_0.025.csv": "92fe4c2e8bed47281ab8faee4318600d756306ec1c17d7aa5d3ef2bd9f1c960d",
+    "data/silica/precipitation_implicit-euler_0.025.log.gz": "be2620c0c45c266bdd6050d00743110db7bdc63810b8879fd373cec672ff7332",
+    "data/silica/precipitation_implicit-euler_0.05.csv": "2da650821aac406f1e15bd848deaeb2121095929c48a16662bbef7c7f284bdb6",
+    "data/silica/precipitation_implicit-euler_0.05.log.gz": "a589a1f0de73872d175bdacca9a01116c7521e9bcdf3ee6a08661c8b7008fd62",
+    "data/silica/precipitation_implicit-euler_0.1.csv": "1892b520301073994f301674f5d801e6459a4028d7511c6f6e88ca4a341cd31b",
+    "data/silica/precipitation_implicit-euler_0.1.log.gz": "7a3bd55202db194ffea22426128be3431ce323d67bd90485c64c39995b47cf05",
+    "data/silica/precipitation_reference.csv": "b6b9174a1c1fa52c2f344e57e373a435cbdf6d882afb2dd9a18224fbde7fc0b4",
+    "data/silica/spatial_128.csv": "3e88c3dfece37b56ae35c8e5d4a921dbbfc5d4aef0d004d4ca9a9b1314cf27e3",
+    "data/silica/spatial_128.log.gz": "22535ee9732e824d8e46de5d59b657eba03d108ed8a606283f45f8d7d7559727",
+    "data/silica/spatial_128_nodes_t0.csv": "c27f3cd1510a59c323cabad663d223042a9b85528f6392c7313f839920e5ba11",
+    "data/silica/spatial_128_nodes_t1.csv": "89bbdc5ba037f51a5815476916d239c28c9322e6cfdbed4111c55c7012f6a934",
+    "data/silica/spatial_128_nodes_t5.csv": "2ce85a32843d4ae9329b4cfaf650c4dc41dbd90a1aec68ce3e5f8ac39936f506",
+    "data/silica/spatial_128_t0.csv": "1a1fa34aca3a5e90c14b8077cc8c1dd839c602c48360e9c05aec0a7640008f57",
+    "data/silica/spatial_128_t1.csv": "caa920976910859982a20d80a382d30280b877a81307fbf1d09ec08c8ccd16a1",
+    "data/silica/spatial_128_t5.csv": "64d20dcafe40ae59cfb893e2c23e9f34843041d7185b286b9646f234c5fc3133",
+    "data/silica/spatial_128_worst_nodes_0014.csv": "0c19534591bfcaa15b0982885a2f7036b845d452b56ff1bf482a7c6e7b451820",
+    "data/silica/spatial_128_worst_profile_0012.csv": "e3384e67185a8502833f60c9f92ef510f06b7b54d2d7817886a96efaab8b90b4",
+    "data/silica/spatial_128_worst_profile_0013.csv": "56ae83dec6aacfb26240961080ae76af91c8adeb8db85ad1b2c450f1af1af4e9",
+    "data/silica/spatial_128_worst_profile_0014.csv": "4bc7967a8dad81e9b532c3dd74b94c41d5d08a15480c59954ed557faa9f97dc7",
+    "data/silica/spatial_16.csv": "19aab7e8e656948ae61abd597d8803705886eb6021cd62539619a670be9a73ac",
+    "data/silica/spatial_16.log.gz": "bc433d85bce128518f3fa751a9a49aa9bb90d5a725f1499a903dbb7cfa1999c0",
+    "data/silica/spatial_16_nodes_t0.csv": "be51682b7927988572ec59f418943d455e10071c52a242281349178af1e59765",
+    "data/silica/spatial_16_nodes_t1.csv": "cc98579440bafc87d301c5c670b8adef276a9be5d7253e55d528a764c3f055cc",
+    "data/silica/spatial_16_nodes_t5.csv": "e18563fa5f571bdfb9c302f35edd2738f22e9723d737442dcd028dd0e315b99d",
+    "data/silica/spatial_16_t0.csv": "69de2fd786e698ae5af413b07b4c4782c289376032040bde3811143194c3a56d",
+    "data/silica/spatial_16_t1.csv": "62492bee865a297741280995636e8bbbc6a6d9332c075b9c2da21ba2a0c8f8b1",
+    "data/silica/spatial_16_t5.csv": "c4155487293de6c1f4b15de5191808be74ecd80f3e0a097ae2a60b181310039d",
+    "data/silica/spatial_16_worst_nodes_0214.csv": "578d75ee49c36a0a4205b281a202fbd70fbb74373e2b19202e55845ace37c168",
+    "data/silica/spatial_16_worst_profile_0212.csv": "9898b88821802c69c2c2552e1a1a07dce268f2e1a8779c2213eb43f264caea77",
+    "data/silica/spatial_16_worst_profile_0213.csv": "c16ec260a7d6442261a36fc90509a80c963c732dd25cc604deb372dc2612b6f7",
+    "data/silica/spatial_16_worst_profile_0214.csv": "d5dfea30faf2bc143dfc98682bf6541cb365c0ec4ea498c425c728b419f6d885",
+    "data/silica/spatial_32.csv": "fd4e98084f93cd526995241a8d7a84be7c62bda5e262d293a2413410ace4b0bb",
+    "data/silica/spatial_32.log.gz": "5c767e34e39bd0d6621f02f15dc7c927cd4058b201d3e101010a10b781fff1d1",
+    "data/silica/spatial_32_nodes_t0.csv": "679c518f0f2436dd97b61e038f3eb20eb0b492439da9a693a93fc91530f5c766",
+    "data/silica/spatial_32_nodes_t1.csv": "4a6858b8745925c59a62edaf6b6cae293619d800e470e07d3cbca91cc0a07402",
+    "data/silica/spatial_32_nodes_t5.csv": "f297452ade2844824e4a61a51360d02e1dab7142df630fabe8c2708cfc9794b5",
+    "data/silica/spatial_32_t0.csv": "0df259cba012e43dd259964468e5f60f8130c8ab4febbd18914d275267f08ec9",
+    "data/silica/spatial_32_t1.csv": "eaeb7c94bf43279c514e45fd2221f6e52539fb14f2cc9cb360e889fb378bf273",
+    "data/silica/spatial_32_t5.csv": "fcf230481dfb901103ee0ef8520996c148bdb0c3a48b53ef6c8770148ea236e6",
+    "data/silica/spatial_32_worst_nodes_0198.csv": "091c0e4987d85ad27eb1d28da1f22bf9e78ff7efa199b22277d04f78a88a2d38",
+    "data/silica/spatial_32_worst_profile_0196.csv": "43d32c5d306ed4c3f46073916d36c97bffe487585592ffe1b59d57bc4cb242a1",
+    "data/silica/spatial_32_worst_profile_0197.csv": "b6992485eec7a79ea5e7397ce68cc5316f3e66aed4c3f0b1b5f0cd6377368fde",
+    "data/silica/spatial_32_worst_profile_0198.csv": "00fb4a6fe97eb1226402eb7a1df0c2a2021ccb0bd28112176179a23667c922e1",
+    "data/silica/spatial_64.csv": "bc3e401167734a6a31b974318b7efecf1358f41b8d29a076b8ceb399d715d26e",
+    "data/silica/spatial_64.log.gz": "5e2dbc7c7dbe699ca6f30839a018a4af8af2e750495b19479a0b57c3eb436166",
+    "data/silica/spatial_64_nodes_t0.csv": "cbc32c27fbf911b8680beb737c20318f6b7c2de0127c265fb9cc6ff55693b3b1",
+    "data/silica/spatial_64_nodes_t1.csv": "5b6f32b86008b355b54739ea2034caf222aff8726f9f770768d1963b22b10930",
+    "data/silica/spatial_64_nodes_t5.csv": "c9f1d42b24abd559be64652decd52e8ec041d6594e7aae0cf748b4afd0f130aa",
+    "data/silica/spatial_64_t0.csv": "589bb32d00ca9010a356f4f77524163b9378a4b007a4ae818dd5c7317ac5cd7b",
+    "data/silica/spatial_64_t1.csv": "db9c84b1854ad77e883466796cded0a6f1666f256943e2b4f81ae4555842c69f",
+    "data/silica/spatial_64_t5.csv": "9750c9caa50de3534570d7a27c4167f10744f6b38953505f3f05b989c997aca2",
+    "data/silica/spatial_64_worst_nodes_0183.csv": "91feded3f2e897c75f243e942c0feffe76a032c00e221a873f81e88287435779",
+    "data/silica/spatial_64_worst_profile_0181.csv": "dbf112ff3a0dff93161571e3f0bd815be8c10db3c9e023d2fe26a8d1ccb51cce",
+    "data/silica/spatial_64_worst_profile_0182.csv": "3c5b067ac7c261ad07cff3d25b4bfbd46679f83ff0e51ace8f9d171510bcfe47",
+    "data/silica/spatial_64_worst_profile_0183.csv": "769ffde53b92f7ef446260be5432252a616957cb5709772ae185456dc0e0de40",
+    "data/silica/spatial_time_0.01.csv": "ebb97662bf3a226e33c47dcc4297fa3a36e28475960ba0fa60d8be13a3af4aee",
+    "data/silica/spatial_time_0.01.log.gz": "99d72f36f4a23144fe09e33ac624dc1d3a2b17480356cd4269f3bfbfadb7f23a",
+    "data/silica/spatial_time_0.01_final.csv": "5148acefc6b701cb03c5b6c87b6a4070aea390d9775ccd0f6d650ef6afb550fc",
+    "data/silica/spatial_time_0.02.csv": "7160b6433ecdc4bc8a08b1a112201ea87616481a66ad881e2a38216d3bbd5708",
+    "data/silica/spatial_time_0.02.log.gz": "245ba1f5d1b39e066426eb9dacadfe8da54966969907024de850b8ffc889dddb",
+    "data/silica/spatial_time_0.02_final.csv": "f29af92c2e17db9698089979271b3eeae5a8cb13f08366658fe06eeb7ded49aa",
+    "data/silica/spatial_time_0.04.csv": "1fd30e4de63916107f2cd5b50bb8f9ac09d1c0d41017da20b8ebd322215f6e17",
+    "data/silica/spatial_time_0.04.log.gz": "db16d46576c6b58d722f856c285e3bd2e6a954b4c9fb88bf5bce093f9a7855e6",
+    "data/silica/spatial_time_0.04_final.csv": "9c88b378c147db2eb396aadc7163f31cbfb0d97c1eb9832857d371bd91544e02"
+  },
+  "solver_fingerprint": {
+    "moose_app/examples/silica/batch.i": "46b1608acdb860855bd197d8ec19d71e2e6c781e19a7d837ecde8bd3b9af49a8",
+    "moose_app/examples/silica/dissolution.i": "470995e356d2d897dd7805b37fee5d871a9ccf01ccbad15c6e2b4133a5112c76",
+    "moose_app/examples/silica/spatial.i": "7c5f1fe7ed1d50c1d7ee735fcf311e68f9d297fee1e5dc7a7a5ac6880049cf84",
+    "moose_app/include/base/OlivineCarbonationApp.h": "253ffd82e8bd3b3d02d23740046eb18708fd98ad1aef6af88495259e23dd0a89",
+    "moose_app/include/bcs/ADEnrichedGalerkinCrossPenaltyBC.h": "891620e5abbbc2eb9cca549de9294a7bf9b5f5703a11bed8b489abad699dda08",
+    "moose_app/include/bcs/ADEnrichedGalerkinPenaltyBC.h": "e007a86075888f2d490f562446dff6a895453335e8ce19adafc320d0fb8a6c25",
+    "moose_app/include/bcs/ADReferenceOutwardFlux.h": "1f25b7673159d8a34ee0705b22b27ff0ea0540958c3f418411f751cbdf024a19",
+    "moose_app/include/bcs/ADReferenceTraction.h": "75e2fba9258421b969faaf9c3a4787740aa8e75fa158f875605402b938a09268",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinCrossFluxDG.h": "890ff6c7ef6562dfcee1fdfe1d3233315795ce527970db07336af36306e813b2",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.h": "d2f35de2c1343997ac255c3b75f1246a0e15e1dacab54d916a332064b74e00c3",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinFluxDG.h": "90f566954fd2b6f737eea5bbd7a51be804ae69b2f835d3adc48b3dadedb92e00",
+    "moose_app/include/dgkernels/ADEnrichedGalerkinSymmetryDG.h": "4e90d8d28ed90480d16a91af243639487b16268c37ad3d00d0c6308b200bb48e",
+    "moose_app/include/kernels/ADCarbonationMomentum.h": "5474d13ca2f19d5cb16e8428d0d69b7ad9abeb79de567a3f41c3ed6a2a721776",
+    "moose_app/include/kernels/ADEnrichedGalerkinScalarBalance.h": "8e40dcff26420a0bd96f4e98600d53edf384978f45b2d0793e89182b6ebcda93",
+    "moose_app/include/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.h": "8d79ff13485c545aaae26db5d5b99430c597a35c356f05f38f80b9e636d3db25",
+    "moose_app/include/kernels/ADReferenceGauss.h": "787fc0a6503edd3b8b2418b7c618cfd1370c8b40846b0bbda9933414d3ed27e0",
+    "moose_app/include/kernels/ADReferenceMassStorage.h": "b8e9ff117ea80529a0e71aeabf8694caf03e4044239e4068d72fee14b583ccaa",
+    "moose_app/include/kernels/ADReferenceSpeciesBalance.h": "4f29eeb21a2588aaf18cea8bb73ea4b857d75a8ab11f89fa3ca35f4de6429d8f",
+    "moose_app/include/kernels/ADTransferPotential.h": "d5b7e0bfe00f7df725b58ddade5bb70237644f48975da0be46871e49a36fefd3",
+    "moose_app/include/materials/ADCrossDiffusionVerification.h": "75fbd5474384d827d5252816a5ed22fa282f6f2d768e9d6bf5afbd0080f3e211",
+    "moose_app/include/materials/ADLogarithmicMinerals.h": "ebfb8d4b026cf8081f9f5e59e597e636bb3a4cedbe5458f33dd6858856c6fb26",
+    "moose_app/include/materials/ADOlivineReconstruction.h": "71e529221c7fc1293079e5048f9896e690c6f1939065ddd527ba7e663b5eb397",
+    "moose_app/include/materials/ADReferenceMass.h": "c955094e4d2b1e221123c93b0f47ec759ea15e478ff05eba4e0c98aad8ad82e0",
+    "moose_app/include/materials/ADReferencePullback.h": "aab7620491ea6723c4771c8837af56faf85f743d1a80f4a42f6e65eb3e5b7aea",
+    "moose_app/include/materials/ADReferenceStorageRate.h": "0ad6909a2d52b0d57afa7ef31aab9ad544559c310e4c3e5e011b2b508e0bc83b",
+    "moose_app/include/materials/ADScalarDiffusionReferenceFluxMaterial.h": "d1b85887c3e5ef023e035aa245eba9fef974b763fc6180f056b2c7c02c5c8af7",
+    "moose_app/include/materials/ADSilicaVerificationChemistry.h": "4c31f1a3a3f83f5801001e9c25241aff872affea98c5f0df6fef410cd7da8a65",
+    "moose_app/include/materials/ADSkeletonVelocity.h": "562bb22525e1c8482f2bc2527c09e4ed2f23827c757c744cd26ade1dd64f6d6a",
+    "moose_app/include/materials/ADSolidReferenceKinematics.h": "f0d0c837aee31fb61c3aa644c748512aa1929f5e22d677c9901eaeec56d9fdac",
+    "moose_app/include/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.h": "065043e7d1a2e9678da34f07375bd7470f6aabfa201249b56df72682bae6e159",
+    "moose_app/include/utils/MatchedLogMineralState.h": "40e7014160ed99409b03d496eca321147cedd1ce93ae000f247e510a8162a7dd",
+    "moose_app/lib/.libs/libolivine_carbonation-opt.so": "5add942d5604c54ac8d8c662edb4c24088d4e593f5041191ac2e8023cbaed4a6",
+    "moose_app/olivine_carbonation-opt": "e7dd797846556bd0b65630a65df4d712fe026552f63504ee77a1d59cc20a41d3",
+    "moose_app/src/base/OlivineCarbonationApp.C": "0cf9c13144dd951850ccb98078ea473f906a9380a761c55d2a5a4fea24a9a331",
+    "moose_app/src/bcs/ADEnrichedGalerkinCrossPenaltyBC.C": "d3f05a6884486afea8d5776da62c30149c7ea692288e25bcc4c3048a217dc8a1",
+    "moose_app/src/bcs/ADEnrichedGalerkinPenaltyBC.C": "ca327ce5aa45ee4594f2ffe5789c5cd29b3d9a66e92f02569645961141a6a1c4",
+    "moose_app/src/bcs/ADReferenceOutwardFlux.C": "27db306f401509e584ed94332c9f6a8a0cf9146e4eb18b765a61714d9d960f0f",
+    "moose_app/src/bcs/ADReferenceTraction.C": "f0f7a3ffe371e84632f618e2cdbb5225ed24b1c1567204a330aa11d6ea4f90ee",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossFluxDG.C": "de901e1b754bd30643bec1537bd7fab24d3295ad149e3ee7113d9d53dbc9840f",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinCrossSymmetryDG.C": "3344297bd23a3ee5d40e02bd484cb75a2b0a1b03b85973626fadcce645ff4924",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinFluxDG.C": "8a0747d86c9fe086436910cc4f17552723d7f2b5addbee50863066c138459c3b",
+    "moose_app/src/dgkernels/ADEnrichedGalerkinSymmetryDG.C": "9c530423ff6df4b55a79e359baffcd73306d757052ee4896f7c08e46ec7b2972",
+    "moose_app/src/kernels/ADCarbonationMomentum.C": "430d6fe5b65e3ec2cbfc02be0930bf835c771ff759dc5480fc2a06a52ffd244d",
+    "moose_app/src/kernels/ADEnrichedGalerkinScalarBalance.C": "cb495a5aafd74acb1c26cfa80b6f279aa1d5cc0a88e534a01ae52a5ed9c852a4",
+    "moose_app/src/kernels/ADEnrichedGalerkinScalarEnrichmentBalance.C": "2c6a24159f0caac6bffc15572eb2088e5b1f8df951c986b8b2c4d289d93dc967",
+    "moose_app/src/kernels/ADReferenceGauss.C": "ecf040f51e1f3ebbe708f01410576f9771eecc939628af638906a3becc8d491e",
+    "moose_app/src/kernels/ADReferenceMassStorage.C": "dae16db0d73c49638cf6d91b33ada4d4151a52abadf68c06db059e22c176f734",
+    "moose_app/src/kernels/ADReferenceSpeciesBalance.C": "f6769826857a12fdbc0595e60303f0297cc5ca7424037854e469581ae0cf83e6",
+    "moose_app/src/kernels/ADTransferPotential.C": "43689f0826236dea746f845610b18620a2e56bc828c469aa627fafc7dffd90d0",
+    "moose_app/src/main.C": "29b2614bd0dd20d114cbdd035bf836ff714c5ee36af742bf5d5f0adfdb78a90d",
+    "moose_app/src/materials/ADCrossDiffusionVerification.C": "89d3ad018219db21b5481543d841bcbdcde7ce290b28497e0c652dd202c1ce50",
+    "moose_app/src/materials/ADLogarithmicMinerals.C": "b13603ac2af20a1997aa25329b40934d39c10087e90c8565827c5f4474c81699",
+    "moose_app/src/materials/ADOlivineReconstruction.C": "6e0c92f15b109d8e2bf3b9c1c01d0e228c3835639de52cd10f4dd2b884c05808",
+    "moose_app/src/materials/ADReferenceMass.C": "501e38281869a60aaba77db6dccb50b65031586eb9f166642f6852a7812594af",
+    "moose_app/src/materials/ADReferencePullback.C": "2ea412f66542a3215315b3d8b56278c1d4750836380b11276c2be62f485947d7",
+    "moose_app/src/materials/ADReferenceStorageRate.C": "75a9b5cf30b07e741e24ef850173bf3efaf6c25bd071125053284d9e233cc1b8",
+    "moose_app/src/materials/ADScalarDiffusionReferenceFluxMaterial.C": "6e2edbc1e661c0ff1f6b328bdd33a09ce94b5d6ac3b0dde03c3f0e56f4f484bc",
+    "moose_app/src/materials/ADSilicaVerificationChemistry.C": "b216236dbf110ec912812c0eda1e35e3d914f2a349724dbfbd4b38a1f79b0e62",
+    "moose_app/src/materials/ADSkeletonVelocity.C": "354533eb2b32d9cb31fb6612ac62bcd9ac30c64787502d3aca1deb814cd73949",
+    "moose_app/src/materials/ADSolidReferenceKinematics.C": "05280423f0b5f2239f8eb6662e6e11b1d953b62b4a75b7875519159c5cbf02b4",
+    "moose_app/src/postprocessors/ADEnrichedGalerkinBoundaryFluxIntegral.C": "e6e36f0471bdc80b0ffb396f86203c46276a37fcb638c0953baca8cdc8a4f2c6"
+  },
+  "reuse_basis": "Saved source and linked-artifact fingerprint from completed solver suite."
+}

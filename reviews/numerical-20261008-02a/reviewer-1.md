@@ -1,0 +1,55 @@
+# Independent simulated AI review — reviewer 1
+
+Round: `numerical-20261008-02a`.
+
+Snapshot: `5993a9b39ed1c8e13ef3054637ba2b4511e82aa84cb1630ae790f18b1a27a169`.
+
+Emphasis: derivation, correctness, exact compositional-parent specialization, and the relationship between the synthetic silica calculations and the general theory. This is a fresh Codex simulated review of this snapshot only. Earlier votes were not consulted or credited. This report implies neither author approval nor journal acceptance.
+
+## Snapshot integrity and review boundary
+
+I independently computed SHA-256 of the exact `MANIFEST.json` bytes. It matches both the supplied snapshot ID and `SNAPSHOT_ID`. I then read and hashed every listed payload file and checked its byte count: **277 files, 8,888,630 payload bytes, zero mismatches**. The only files outside the manifest are the manifest itself and its ID file. The candidate `paper/defs.tex` is byte-identical to the included compositional-parent macros.
+
+I read the candidate authority files, source contract, source correspondence, derivation notes, complete 771-line manuscript, implementation/evidence descriptions, and the relevant included original parent sources and macros. The governing comparison used `verification/parent-sources/C/`; the included R/F sources were checked for the stated normalization differences, and B supplied the elastic matched-logarithmic specialization. I read the 19-page PDF text and visually inspected the numerical figures and spatial table on pages 15 and 17. Scientific inputs came exclusively from the frozen payload. No live manuscript, implementation, sibling repository, or other reviewer report was read. The shared workflow catalog is deliberately excluded under the assignment protocol and was not substituted with a live scientific dependency.
+
+## Independent checks versus recorded evidence
+
+**Checks performed in this review:**
+
+- Re-ran the frozen analytical checker in a writable `/tmp` copy, disabling its optional existence probes of the absolute original-source paths. All **52/52 checks pass**, and both the individual check records and candidate input hashes exactly equal the frozen analytical report. Original sibling bytes were not accessed.
+- Independently verified every bundled input/source/data digest referenced by the analytical, silica, silica-Jacobian and implementation reports: respectively 27, 181, 61 and 70 digest checks, with zero mismatches. Read the scripts and relevant C++ materials/residuals rather than treating these reports as proofs of correctness.
+- Independently recomputed closed-reactor Si/H/O inventories and maximum trajectory errors from the raw histories and archived reference. The precipitation and dissolution transfers are `4.999651578083644` and `-4.0009844411897255` mol/m³. Maximum aqueous errors are `8.066050455113327e-6` and `1.6918756589134887e-4` mol/m³. The participating solid/fluid fractions remain strictly positive in these histories.
+- Integrated a separately written scalar extent equation with classical RK4, step `1e-4 s`, to `5 s`, using the manuscript's stoichiometry and equilibrium quotient directly. The aqueous values are `7.339504864721816` and `3.9450923260345045` mol/m³, differing from the archived DOP853 values by approximately `1.83e-13` and `9.15e-14`. Recomputed the Euler/BDF2 errors and orders from the raw refinement CSVs; these agree with Table 3 and its stated finest-pair orders.
+- Independently aggregated the archived 1024-cell reference onto every EG comparison mesh and recalculated aqueous/mineral RMS errors. For 128 elements the results are `4.5933179097923675e-5` and `7.799197828353417e-5` mol/m³, consistent with Table 4. Reconstructed the shared flux and BDF2 storage rate from each mesh's archived worst-step profiles and backbone nodes. The largest recomputed residual is approximately `3.15704e-10 kg/(m³ s)`, matching the reported value up to CSV/roundoff precision.
+
+**Evidence inspected but not newly executed:** the 61-check MOOSE residual suite, the complete 178-check silica execution series, the full finite-volume reference integrations, and the coupled PETSc finite-difference Jacobian test. Their frozen reports, source bindings, input decks and available logs are evidence of the recorded runs. I did not build an external MOOSE checkout or rerun those executable simulations. Only selected spatial profiles and the archived worst-step windows are supplied, so my local-balance reconstruction corroborates the recorded maxima at those windows; it does not independently repeat the script's scan over every original time step. No physical-validation evidence exists or is claimed.
+
+## Derivation and source-fidelity assessment
+
+The candidate is a specialization of the included compositional parent within the declared elastic, positive-mass domain. I found no substantiated governing-law or notation departure requiring correction.
+
+1. **Measures and configurations:** `paper/main.tex:34–95` preserves partial versus intrinsic density, mass fractions, phase-attached increments, and the separate skeleton pullback. The increment includes component-relative flux divergence, while the phase sum reduces to reaction mass production. Scalar distention satisfies `J=a_s Jbar_s` and `a_s phi_s=phi_s0+C_s/rhobar_s0`; compressible true-solid volume is retained rather than set to one. Pure solids have no relative component flux. The mass-based reaction coefficients and current/reference source factors are consistent with the parent.
+
+2. **Transfer work:** `paper/main.tex:128–162` matches C's `eq:MC_neutral_component_euler_identity`, `eq:MC_transfer_work_reference_normalization`, `eq:MC_admissible_conversion_component` and `eq:MC_transfer_work_full_recovery`. The chosen normalization gives the shared skeleton evolution `D_S tau/Dt=|v_S|²/2`. The fluid offset follows by substituting `v_f=v_S+w_f/rho_f`; its solid counterpart vanishes. At `paper/main.tex:363–376`, the reaction force retains the fluid offset multiplied by net aqueous production. The older R/F transfer prescription is correctly documented as different and is not imported over C.
+
+3. **Elastic closure and finite deformation:** `paper/main.tex:164–273` differentiates independent kinematic and density arguments before imposing true mass conservation. The phase energy generates the reported pressure and single-prime stress and satisfies the separate scalar-distention trace restriction. Eliminating local pressure gives the matched-logarithmic mineral residual. The stated compressive uniqueness, stable tensile branch and mineral tangent domain agree with B's included elastic derivation. Fixed-pressure differentiation gives the parent phase Biot coefficient and its volume-fraction rollup. The one-solid energy normalization and shear-modulus conversion are correct. The adopted allocation among three solids is explicitly a constitutive assumption. No plastic evolution is imported.
+
+4. **Aqueous potential, electricity and dissipation:** `paper/main.tex:299–331` derives the EOS and constituent potentials from one Gibbs/Helmholtz pair. The mixing and pressure derivatives are consistent, including the solvent and pure-solid insertion potential. Mass, atom and charge cancellation hold for all seven mechanisms and their net reaction. Common constant permittivity gives the stated Maxwell/equivalent-pressure bookkeeping without a hidden electroneutrality replacement. The reduced transport forces and zero-sum solvent flux retain the parent structure. Substitution of the reaction, diffusion and drag closures into `eq:dissipation` gives the displayed nonnegative products with consistent temperature factors.
+
+5. **Fluid/mixture momentum and weak forms:** `paper/main.tex:412–581` retains both the conversion insertion force and the scalar conversion shift in fluid resistance. The global gradient of tau cancels only on summing phases; the relative insertion force remains. The Piola transforms use `F^{-T}` for stress and `JF^{-1}` for mass flux, with the correct cancellation of J in the reference momentum source. Outward mass-flux, traction and displacement signs agree with integration by parts. The three-dimensional quasi-static count is square: 17 scalar fields and 17 equations. The nonlinear reaction/relative-flux block is explicitly not asserted globally solvable.
+
+6. **Exact numerical restriction and implementation claims:** `paper/main.tex:655–695` suppresses the inactive species and mechanisms as a smaller subsystem, avoiding an unsupported zero-concentration assertion for the full logarithmic nine-species kinetics. Equal intrinsic densities and species-specific molar volumes make the fluid EOS composition-independent on the prescribed unstressed branch. Mineral roots remain one, total stress vanishes, and zero bulk flow satisfies fluid/mixture momentum despite nonzero reaction. Subtracting the silica balance from aqueous storage gives water production `2 M_N r` and opposite relative flux; total volume and mass therefore remain compatible. The potential coordinate is strictly monotone and changes constitutive coordinates without replacing mass storage. The silica C++ material, storage history differences, paired EG rows and facet signs implement this restriction. The manuscript expressly states that these examples do not independently exercise mechanics/electricity, calibrated full-network kinetics, active phases, or experimental validation.
+
+## Required corrections
+
+None identified within the stated scope and evidence boundaries.
+
+## Optional comments
+
+**R1-01 — Mark an older checkpoint limitation as historical.** Location: `docs/rebuild-derivation-notes.md:32–34` and `docs/rebuild-source-contract.md:49` (the weak-form/implementation-map row). These checkpoint descriptions still say discretization/simulation are outside the demonstrated result or describe the map as future-only. The current manuscript and numerical reports clearly supersede that stage, so this does not undermine the scientific derivation or vote. A short historical-stage annotation would help readers of the extracted supplement reconcile the checkpoint with the implemented numerical extension.
+
+**R1-02 — Future numerical-range hardening of the verification coordinate inversion.** Location: `moose_app/src/materials/ADSilicaVerificationChemistry.C:40–51`. The tested compositions are comfortably inside the admissible interval, and the archived Jacobian/evolution evidence supports them. For later broader composition ranges, use stable softplus/logistic evaluation and an explicit finite/convergence check so large positive trial potentials do not overflow `exp(y)` or lose `1-x` by cancellation. This is optional future robustness work, not an observed failure of the supplied examples or a requested expansion of their scope.
+
+The candidate supports the stated theory specialization and restricted numerical-verification conclusions. Its explicit unverified extensions remain unverified; the present vote applies only to the frozen snapshot identified above.
+
+ACCEPT

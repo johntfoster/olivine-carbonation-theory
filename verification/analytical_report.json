@@ -639,7 +639,7 @@
       "tolerance": 0.0,
       "passed": true,
       "details": {
-        "equation_labels": 66
+        "equation_labels": 75
       }
     }
   ],
@@ -649,14 +649,14 @@
     "total": 52
   },
   "inputs": {
-    "paper/main.tex": "d0e2ba00818f0dd09f7c99926e40bc506a4fede86b38ff6007f49802ff7e6b2c",
+    "paper/main.tex": "1cefdb5f2810524935070737f9e6c8b9ea8cc846a01e7dcbf81635da3b327a3c",
     "paper/defs.tex": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130",
-    "paper/references.bib": "6f53dd2f325e4ae97b782761fc51c36370d14ff51dc29ceb11e0778e5edbfd01",
+    "paper/references.bib": "368483102084cf6b17b12acf0f2901f8b4558f5f1a0f6397cdcd213bff94fc8d",
     "paper/source-lineage.json": "1814bb7d48fc9d062c093697ebf85f28ab95a134b3c6ca8ac59304cb35411255",
-    "paper/source-correspondence.md": "1307d188652c76783aa75502e0621d5a1fe275a641f6c261cf378d231cda35be",
+    "paper/source-correspondence.md": "d7dfe4233d0d88804a96f81921042339612a2fcb788ca16829e2fd64e4445af7",
     "verification/check_theory.py": "0df721493a4b4edfb78b8d408ec435907ac15b0f0dacea83a25c3740ae3edbec",
     "verification/build_equation_map.py": "570c48fa86eabcd62cc9ed037244cc409bd68d1f16e891ffdcadb806f52e847a",
-    "verification/equation-map.json": "b59d841375238d4cc6fc87f8e237f85032205afd14ce2903b22964a1e88a9392",
+    "verification/equation-map.json": "be7a12c40f8755dd51fc7b1b4fa73e4532e149c46e62ad7102efa1beae8b32f7",
     "verification/source-equation-excerpts.json": "b547855520e9dd8b3d65ec9d87215b72c817343ecccef82b3fce5faaabc07ba3",
     "verification/parent-sources/C/main.tex": "c3851aeb803b6171213975cdf5370c7a06fe74d53f91fa1b04bfeb14becbc2fc",
     "verification/parent-sources/C/defs.tex": "eb99bfa85b9d27aa952c0c9b5a380a0dc8d4f99c44ba4e83a3cc2b42ae707130",

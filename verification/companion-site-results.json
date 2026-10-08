@@ -1,0 +1,31 @@
+{
+  "status": "local-verified",
+  "scope": "Companion-site presentation of accepted numerical evidence; no new simulation or physical-validation claim.",
+  "date_utc": "2026-10-08T16:20:29.330693+00:00",
+  "scientific_snapshot_id": "c58d03d8ed442723ad6c817f67c07ca808c5e301567fc2c80ed2be586ecae7b7",
+  "local": {
+    "equations": 75,
+    "registered_objects": 26,
+    "scientific_baseline_files_unchanged": 183,
+    "hash_bound_evidence_files": 257,
+    "all_equations_rendered_without_errors": true,
+    "all_object_pages_browser_checked": 26,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "page_or_network_errors": 0,
+    "external_runtime_requests": 0,
+    "filters_and_empty_states": "passed",
+    "source_line_selection": "passed",
+    "shared_link_checker": "passed"
+  },
+  "publication": {
+    "status": "not-yet-checked",
+    "site_url": "https://johntfoster.github.io/olivine-carbonation-theory/",
+    "method": "Pages workflow followed by live browser and exact-byte artifact checks"
+  },
+  "limits": [
+    "Analytical, implementation and silica reports are existing recorded evidence, checked against their hashes.",
+    "Historical hosted Codespaces evidence concerns the earlier f2133b3 application revision.",
+    "Physical validation has not been performed."
+  ]
+}

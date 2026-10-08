@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "files_compared": 261,
+  "errors": [],
+  "limits": "Necessary checks only. Manual diff audit must verify unchanged scientific claims, assumptions and meaning. Regex math detection does not implement the full TeX grammar; prose numerals, macro definitions and command spelling are intentionally conservatively protected. Commands protected through line end may reject adjacent prose edits. PDF/log bytes are rebuilt separately, not required to remain identical."
+}

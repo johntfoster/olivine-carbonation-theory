@@ -1,0 +1,8 @@
+# Numerical-method citations — checked 8 October 2026
+
+- `eg2016`: Publisher metadata verified at https://epubs.siam.org/doi/10.1137/15M1041109 (38(3), A1404–A1429, 2016). Author full text read at https://www.ices.utexas.edu/media/reports/2015/1519.pdf, pp. 3–6, equations (3.2), (3.8)–(3.19), and conservation argument: continuous functions plus element constants, interior penalty, and element conservation. Supports the EG construction and diffusion formulation; the manuscript derives its particular mass-storage and reaction specialization explicitly. No assertion that the linear EG paper proves convergence of the entire nonlinear reacting model.
+- `moosead`: Published full text at https://inldigitallibrary.inl.gov/sites/STI/STI/Sort_26295.pdf, published journal pp. 905–922, 207(7), 2021, DOI 10.1080/00295450.2020.1838877. Read Sections II.A–C and the inner Newton discussion in III.C. Supports forward AD through residual/material chains and nonlinear inner updates. Application Jacobian correctness is separately tested, rather than inferred from this citation.
+- `moose2025`: Complete metadata checked against the official MOOSE citation page https://mooseframework.inl.gov/citing.html, including author order, SoftwareX 31 (2025) 102264 and DOI 10.1016/j.softx.2025.102264. This citation identifies the framework; no uninspected detailed algorithm or performance claim is attributed to the article. The application source and recorded executable runs provide the implementation evidence.
+
+The bibliography supplies public links. External full texts remain external;
+no third-party PDF is redistributed with the supplement.

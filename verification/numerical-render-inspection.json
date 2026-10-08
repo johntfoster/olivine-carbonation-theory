@@ -1,0 +1,36 @@
+{
+  "category": "document-render-QA-not-scientific-validation",
+  "status": "passed",
+  "pdf": "build/main.pdf",
+  "pdf_sha256": "aa5ebc1955c4825b9c5789a72c0f5bb3e0f3eb115b17e94cc7288452906f423c",
+  "source_sha256": "1cefdb5f2810524935070737f9e6c8b9ea8cc846a01e7dcbf81635da3b327a3c",
+  "build_log": "build/main.log",
+  "build_log_sha256": "d037f62b75be7e85a35d3a59608844a6daa7021aeaa1c07d56d2ff26627d1103",
+  "page_count": 19,
+  "inspected_pages": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "render_commands": [
+    "pdftoppm -f 12 -l 15 -scale-to 1200 -png build/main.pdf .agent-runtime/final-numerical-page",
+    "pdftoppm -f 16 -l 18 -scale-to 1300 -png build/main.pdf .agent-runtime/foster-3-page"
+  ],
+  "observations": [
+    "Time integrators and EG space/flux/residual are legible; interior facet subscript is repaired.",
+    "Implementation table, both numerical figures and time/mesh tables fit without clipping or overlap.",
+    "Reference interpretation, restricted branch and reproduction paragraphs remain readable.",
+    "Root inspected the numerical pages; complete-document independent review is recorded separately."
+  ],
+  "latex_diagnostics": {
+    "overfull_boxes": 0,
+    "underfull_boxes": 4,
+    "undefined_references": 0,
+    "multiply_defined_labels": 0
+  },
+  "scientific_review": "not established by render QA"
+}

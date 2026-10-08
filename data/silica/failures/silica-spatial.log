@@ -1,0 +1,53 @@
+CONDA_ENV moose
+CONDA_PREFIX /home/jfoster/miniconda3/envs/moose
+PACKAGE moose-dev 2026.02.20 openmpi https://conda.software.inl.gov/public
+PACKAGE moose-libmesh 2026.02.18_f8a1758 openmpi_0 https://conda.software.inl.gov/public
+PACKAGE moose-tools 2026.02.16 py314hc4e95f2_0 https://conda.software.inl.gov/public
+PACKAGE pandas 3.0.1 py314hb4ffadd_0 conda-forge
+MOOSE_PATH .agent-runtime/moose
+MOOSE_COMMIT abafb58b67a6
+LIBMESH_VERSION 1.9.0-pre
+PANDAS_VERSION 3.0.1
+VERIFIED conda activation, MPI compiler, libMesh, pandas, and framework checkout
+[pge-894801:00118] opal_ifinit: socket() failed with errno=1
+[pge-894801:00118] pmix_ifinit: socket() failed with errno=1
+[1791466913.591323] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591332] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591336] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591339] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591342] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591344] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591347] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591350] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591353] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+[1791466913.591363] [pge-894801:118  :0]            sock.c:114  UCX  WARN  getifaddrs error: Operation not permitted
+
+[31m
+*** ERROR ***
+The initial condition 'q_moose' is being defined on a block that already has an initial condition defined with the same variable and state.[39m
+
+Stack frames: 14
+0: libMesh::print_trace(std::ostream&)
+1: moose::internal::mooseErrorRaw(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, hit::Node const*)
+2: void mooseError<char const (&) [24], std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const (&) [110]>(char const (&) [24], std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const (&) [110])
+3: InitialConditionWarehouse::addObject(std::shared_ptr<InitialConditionBase>, unsigned int, bool)
+4: FEProblemBase::addInitialCondition(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, InputParameters&)
+5: Action::timedAct()
+6: ActionWarehouse::executeActionsWithAction(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+7: ActionWarehouse::executeAllActions()
+8: MooseApp::runInputFile()
+9: MooseApp::run()
+10: moose_app/olivine_carbonation-opt(+0x50e4) [0x6535a1b290e4]
+11: /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x70a343829d90]
+12: __libc_start_main
+13: moose_app/olivine_carbonation-opt(+0x535e) [0x6535a1b2935e]
+--------------------------------------------------------------------------
+MPI_ABORT was invoked on rank 0 in communicator MPI_COMM_WORLD
+  Proc: [[31913,0],0]
+  Errorcode: 1
+
+NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.
+You may or may not see output from other processes, depending on
+exactly when Open MPI kills them.
+--------------------------------------------------------------------------
+ERROR conda.cli.main_run:execute(142): `conda run moose_app/olivine_carbonation-opt -i moose_app/examples/silica/spatial.i Outputs/file_base=.agent-runtime/silica-spatial Executioner/end_time=0.1` failed. (See above for error)

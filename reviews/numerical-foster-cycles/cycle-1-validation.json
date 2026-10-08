@@ -1,0 +1,13 @@
+{
+  "invariants_passed": true,
+  "files_compared": 261,
+  "manual_claim_diff": "passed; three equivalent prose substitutions",
+  "build_command": "make paper",
+  "exit_code": 0,
+  "pdf_sha256": "522ed30a1e0965654bf7cc07a671260a22bfa730736a4e8813a2dab1a65b6248",
+  "page_images_inspected": [
+    1,
+    14
+  ],
+  "observations": "Abstract, attribution, implementation bridge, restricted branch and neighboring displays legible; no clipping/overlap."
+}

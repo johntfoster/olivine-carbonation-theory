@@ -70,6 +70,15 @@ The classification is explicit: inherited, specialization, derived, or applicati
 | `eq:weak_tau` | derived | `C:eq:solid_reference_solid_component_balance`, `C:eq:MC_admissible_conversion_component`, `C:eq:solid_reference_overall_momentum` |
 | `eq:weak_momentum` | derived | `C:eq:solid_reference_solid_component_balance`, `C:eq:MC_admissible_conversion_component`, `C:eq:solid_reference_overall_momentum` |
 | `eq:weak_gauss` | derived | `C:eq:gauss_law`, `C:eq:electrostatic_boundary_conditions` |
+| `eq:discrete_euler` | application | `C:eq:solid_reference_fluid_component_balance`, `C:eq:solid_reference_solid_component_balance` |
+| `eq:discrete_bdf` | application | `C:eq:solid_reference_fluid_component_balance`, `C:eq:solid_reference_solid_component_balance` |
+| `eq:eg_space` | application | `C:eq:solid_reference_fluid_component_balance` |
+| `eq:eg_flux` | application | `C:eq:solid_reference_fluid_component_balance` |
+| `eq:eg_residual` | application | `C:eq:solid_reference_fluid_component_balance` |
+| `eq:silica_rate` | derived | `C:eq:MC_onsager_reaction_rate`, `C:eq:MC_affinity_projection`, `C:eq:MC_absolute_neutral_component_potential` |
+| `eq:silica_coordinate` | derived | `C:eq:MC_absolute_neutral_component_potential`, `C:eq:MC_relative_transport_closures` |
+| `eq:silica_diffusion` | derived | `C:eq:MC_absolute_neutral_component_potential`, `C:eq:MC_relative_transport_closures` |
+| `eq:silica_extent` | derived | `C:eq:solid_reference_fluid_component_balance`, `C:eq:solid_reference_solid_component_balance` |
 
 ## Restrictions
 

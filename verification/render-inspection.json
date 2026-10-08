@@ -41,5 +41,8 @@
     "undefined_references": 0,
     "multiply_defined_labels": 0
   },
-  "scientific_review": "not claimed; required notation fix implemented, independent acceptance remains pending"
+  "scientific_review": "not claimed; required notation fix implemented, independent acceptance remains pending",
+  "status": "historical-theory-checkpoint",
+  "current_candidate_QA": "verification/numerical-render-inspection.json",
+  "historical_note": "The PDF/log digests and 13-page count refer to the earlier theory checkpoint, not the current numerical manuscript."
 }

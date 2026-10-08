@@ -30,11 +30,11 @@ Meaningful source checks include:
 - One source-normalized exchange potential, algebraic transfer-work recovery, and nonzero fluid phase offset for phase-changing reaction power.
 - Source corrected fluid resistance, insertion-force cancellation, conversion-free Darcy limit, and source reaction/diffusion/drag entropy production.
 
-Material numbers are synthetic inputs recorded in the script/report, not empirical measurements. Chemical calibration, continuum solutions, time/mesh convergence, phase appearance, well-posedness of the coupled reaction/flow system and experimental validation are not established. The portable source map and passing tests do not replace the independent equation-by-equation source-fidelity audit.
+Material numbers are synthetic inputs recorded in the script/report, not empirical measurements. This analytical report alone establishes no continuum solution or convergence result. Numerical evidence is recorded separately below; chemical calibration, phase appearance, general well-posedness and experimental validation remain unestablished. The portable source map and passing tests do not replace the independent equation-by-equation source-fidelity audit.
 
-## Future implementation
+## Residual responsibilities
 
-`implementation-map.md` gives the residual/material boundary and source equations. No MOOSE source or executable was created. The 17-field count applies to the three-dimensional quasi-static finite-rate branch; using four fast aqueous equilibria replaces four rate laws, not four mass balances.
+`implementation-map.md` gives the implemented residual/material boundary and source equations. The 17-field count applies to the three-dimensional quasi-static finite-rate branch; using four fast aqueous equilibria replaces four rate laws, not four mass balances.
 
 ## Authorized numerical implementation
 
@@ -42,5 +42,18 @@ MOOSE residual implementation was authorized on 7 October 2026. Run `make moose`
 and `make test` in the pinned toolchain. `implementation-results.json` contains
 quantitative executable checks, source hashes, commands and category-specific
 errors/tolerances. The implementation map now names the actual AD residual,
-material and boundary objects. The earlier future-implementation statements
-above describe the preceding theory-only stage.
+material and boundary objects. The analytical checks remain distinct from executable numerical verification.
+
+## Actual mineral reaction examples
+
+Run `make verification-examples` after `make moose`. The script solves actual
+closed-reactor precipitation and dissolution and a coupled EG reaction-diffusion
+column for the silica-forming mechanism. `silica-results.json` records the
+independent extent/FV comparisons, time/mesh studies, atom conservation, element
+flux balance, commands and exact source/data hashes. `data/silica/` contains the
+raw histories, selected profiles, reference data and compressed solver logs.
+The test is an exact synthetic binary-aqueous, equal-density, unstressed
+restriction, not a calibrated full carbonation calculation. The computational
+coordinate is an invertible chemical-potential difference; complete parent
+mass storage and source normalization are retained. See the plan and manuscript
+for the inactive-mechanism and solvent-flux restrictions.

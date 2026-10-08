@@ -1,0 +1,12 @@
+{
+  "invariants_passed": true,
+  "files_compared": 261,
+  "manual_claim_diff": "passed; EG test/gradient/local balance/gauge explanations equivalent",
+  "build_command": "make paper",
+  "exit_code": 0,
+  "pdf_sha256": "3f11dfc3b91f16224251540db67d547f75a00d39e276ec9b2ad33e13cd57e4ee",
+  "page_images_inspected": [
+    13
+  ],
+  "observations": "Time displays, EG space/flux/residual, local conservation and gauge fit and are legible."
+}

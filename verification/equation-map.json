@@ -1695,6 +1695,197 @@
           "sha256": "af58b4477c4beb49f80ab168711f20be7d65f91b97c5e9ece3cfae878cc59dcb"
         }
       ]
+    },
+    {
+      "label": "eq:discrete_euler",
+      "classification": "application",
+      "line": 589,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        },
+        {
+          "source": "C",
+          "label": "eq:solid_reference_solid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 423,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
+    },
+    {
+      "label": "eq:discrete_bdf",
+      "classification": "application",
+      "line": 589,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        },
+        {
+          "source": "C",
+          "label": "eq:solid_reference_solid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 423,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
+    },
+    {
+      "label": "eq:eg_space",
+      "classification": "application",
+      "line": 602,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
+    },
+    {
+      "label": "eq:eg_flux",
+      "classification": "application",
+      "line": 611,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
+    },
+    {
+      "label": "eq:eg_residual",
+      "classification": "application",
+      "line": 619,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
+    },
+    {
+      "label": "eq:silica_rate",
+      "classification": "derived",
+      "line": 663,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:MC_onsager_reaction_rate",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 3662,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        },
+        {
+          "source": "C",
+          "label": "eq:MC_affinity_projection",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 2992,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        },
+        {
+          "source": "C",
+          "label": "eq:MC_absolute_neutral_component_potential",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 605,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        }
+      ]
+    },
+    {
+      "label": "eq:silica_coordinate",
+      "classification": "derived",
+      "line": 673,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:MC_absolute_neutral_component_potential",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 605,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        },
+        {
+          "source": "C",
+          "label": "eq:MC_relative_transport_closures",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 3819,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        }
+      ]
+    },
+    {
+      "label": "eq:silica_diffusion",
+      "classification": "derived",
+      "line": 673,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:MC_absolute_neutral_component_potential",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 605,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        },
+        {
+          "source": "C",
+          "label": "eq:MC_relative_transport_closures",
+          "path": "verification/parent-sources/C/sections/multicomponent_solids.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/multicomponent_solids.tex",
+          "line": 3819,
+          "sha256": "c98ca183efbbac67ea25ccc273e9847f4eb78528ec32ebe8f60a2d761d79fb6f"
+        }
+      ]
+    },
+    {
+      "label": "eq:silica_extent",
+      "classification": "derived",
+      "line": 689,
+      "parents": [
+        {
+          "source": "C",
+          "label": "eq:solid_reference_fluid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 394,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        },
+        {
+          "source": "C",
+          "label": "eq:solid_reference_solid_component_balance",
+          "path": "verification/parent-sources/C/sections/pulled_back_solid_skeleton.tex",
+          "original_path": "/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow/sections/pulled_back_solid_skeleton.tex",
+          "line": 423,
+          "sha256": "2c57eace708a0a5ac69d9ec1970a38d7645a21e2db34e73ffaa8b73d0034bddd"
+        }
+      ]
     }
   ]
 }
