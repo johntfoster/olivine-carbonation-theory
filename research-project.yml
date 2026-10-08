@@ -72,6 +72,6 @@
     "finite_deformation": "Finite-deformation mass/mechanics/transfer/Gauss assembly and three-mineral roots/Biot coefficient passed quantitative checks. Physical validation remains absent.",
     "physical_validation": "Not performed."
   },
-  "next_milestone": "Numerical manuscript acceptance is complete for snapshot c58d03d8. Complete the current companion-site equation/code/evidence publication goal; full reacting aqueous closure and physical calibration remain open.",
+  "next_milestone": "Numerical manuscript accepted and equation/code/evidence companion published for immutable scientific snapshot c58d03d8. Full reacting aqueous constitutive material, physical calibration and experimental validation remain open.",
   "scientific_scope": "Theory and MOOSE implementation of finite-deformation reactive poromechanics: three compressible elastic solids (forsterite, magnesite, silica) and one aqueous CO2-bearing multicomponent fluid; no separate gas phase or plasticity."
 }

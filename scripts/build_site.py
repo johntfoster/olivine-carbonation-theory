@@ -59,7 +59,7 @@ def object_link(obj, prefix=''):
 def page(title, body, prefix='', wide=False):
     nav = [('index.html', 'Overview'), ('equations.html', 'Equations'),
            ('kernels.html', 'C++ objects'), ('verification.html', 'Evidence'),
-           ('reproduction.html', 'Reproduce')]
+           ('data.html', 'Data & logs'), ('reproduction.html', 'Reproduce')]
     links = ''.join(f'<a href="{prefix}{url}">{label}</a>' for url, label in nav)
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -298,7 +298,7 @@ def build(output):
                                ('moose_app/test/tests', ['*.i', 'tests']), ('moose_app/examples', ['*.i']),
                                ('scripts', ['*.py']), ('.devcontainer', ['Dockerfile*', '*.json', '*.sh']),
                                ('.github/workflows', ['*.yml']), ('environment', ['*.json', '*.md']),
-                               ('verification', ['*.json', '*.md']), ('data/silica', ['*.csv', '*.md', '*.gz']),
+                               ('verification', ['*.json', '*.md']), ('data/silica', ['*.csv', '*.md', '*.gz', '*.log']),
                                ('reviews/numerical-20261008-final', ['*.json', '*.md'])]:
         for pattern in patterns:
             allow.extend((ROOT / directory).rglob(pattern))
@@ -334,6 +334,20 @@ def build(output):
         p = output / name
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(page(title, body, prefix, wide))
+
+    data_body = '<p class="eyebrow">Recorded simulations · downloadable evidence</p><h1>Data and actual solver logs.</h1><p>Download the integrated histories, independent references, spatial profiles and compressed output logs used by the verification reports. The saved worst-cell files retain the three time histories and current nodal field needed to reconstruct the reported local balance.</p><p>' + source_link('data/silica/README.md', 'Data schema and reproduction notes') + ' · <a href="verification.html#batch">Reactor evidence</a> · <a href="verification.html#column">Column evidence</a> · <a href="downloads/numerical-supplement.zip">Complete accepted supplement</a></p>'
+    for title, paths in [('Trajectories, references and cell audits', [p for p in manifest if p.startswith('data/silica/') and p.endswith('.csv')]),
+                         ('Successful solver logs and Jacobian output', [p for p in manifest if p.startswith('data/silica/') and p.endswith('.gz')]),
+                         ('Retained failed-attempt logs', [p for p in manifest if p.startswith('data/silica/failures/')])]:
+        data_body += f'<section><h2>{title}</h2>'
+        if title.startswith('Retained'):
+            data_body += '<p>These are earlier failed attempts, retained for reproducibility. No verification success is credited to these logs.</p>'
+        data_body += '<div class="table-scroll"><table><thead><tr><th>Download exact bytes</th><th>Inspect as HTML</th><th>Size</th><th>SHA-256</th></tr></thead><tbody>'
+        for path in paths:
+            viewer = 'Compressed text; decompress locally' if path.endswith('.gz') else source_link(path, 'View')
+            data_body += f'<tr><td><a href="raw/{path}">{ESC(Path(path).name)}</a></td><td>{viewer}</td><td>{(ROOT/path).stat().st_size:,} B</td><td><code class="hash">{manifest[path]}</code></td></tr>'
+        data_body += '</tbody></table></div></section>'
+    write('data.html', 'Data and logs', data_body)
 
     totals = {c: len(r['checks']) for c, r in reports.items()}
     cards = ''.join(f'<a class="stat" href="verification.html#{c}"><strong>{totals[c]}</strong><span>{label}</span><small>Recorded checks · all pass</small></a>' for c, label in [('analytical', 'Analytical and source checks'), ('residuals', 'Residual and manufactured tests'), ('silica', 'Reaction and transport checks')])
@@ -397,7 +411,7 @@ def build(output):
         body += '</section><p><a href="../kernels.html">← All objects</a> · <a href="../equations.html">All equations →</a></p>'
         write('objects/' + obj['name'] + '.html', obj['title'], body, prefix, True)
 
-    body = '<p class="eyebrow">Recorded scientific evidence · 8 October 2026</p><h1>What has been checked.</h1><p>Analytical consistency, executable residual tests, convergence, nonlinear reaction simulations and experimental validation are separate claims. Every number below comes from a hash-bound report included with the site.</p><div class="stats">' + cards + '</div><p class="jump-links"><a href="#batch">Reactor</a> · <a href="#column">Column</a> · <a href="#jacobian">Jacobian</a> · <a href="#analytical">Analytical</a> · <a href="#residuals">Residuals</a> · <a href="#silica">All reaction checks</a> · <a href="#acceptance">Review snapshot</a></p>'
+    body = '<p class="eyebrow">Recorded scientific evidence · 8 October 2026</p><h1>What has been checked.</h1><p>Analytical consistency, executable residual tests, convergence, nonlinear reaction simulations and experimental validation are separate claims. Every number below comes from a hash-bound report included with the site.</p><div class="stats">' + cards + '</div><p class="jump-links"><a href="#batch">Reactor</a> · <a href="#column">Column</a> · <a href="#jacobian">Jacobian</a> · <a href="#analytical">Analytical</a> · <a href="#residuals">Residuals</a> · <a href="#silica">All reaction checks</a> · <a href="#acceptance">Review snapshot</a> · <a href="data.html">Data &amp; solver logs</a></p>'
     silica = reports['silica']
     body += '<section id="batch"><p class="eyebrow">Example 1 · reaction and time integration</p><h2>Closed reactor: precipitation and dissolution.</h2><p>Two actual MOOSE simulations start above or below the silica equilibrium quotient. Each solves complete aqueous and mineral mass residuals. An independently coded DOP853 extent equation supplies the reference trajectory.</p><img class="plot" src="assets/silica-batch.svg" alt="Recorded closed-reactor aqueous trajectories and mineral changes"><div class="table-scroll"><table><thead><tr><th>Initial direction</th><th>Initial aqueous Si</th><th>Final aqueous Si</th><th>Mineral change</th><th>Maximum trajectory error</th></tr></thead><tbody>'
     for case, item in silica['batch'].items():
@@ -412,7 +426,7 @@ def build(output):
         links = ' · '.join(f'<a href="raw/data/silica/{filename}">{"nodes" if "nodes" in filename else "profile " + filename[-8:-4]}</a>' for filename in audit['files'])
         body += f'<tr><td>{row["cells"]}</td><td>{row["aqueous_l2_error"]:.7g}</td><td>{row["mineral_l2_error"]:.7g}</td><td>{row["max_cell_mass_residual"]:.7g}</td><td>Cell {audit["cell_zero_based"]} at {audit["time"]:g} s<br>{links}</td></tr>'
     global_drift = max(c['error'] for c in silica['checks'] if re.search(r'(Si|H|O)_conservation$', c['name']))
-    body += f'</tbody></table></div><p>Fixed time step 0.005 s; final time 5 s. The independently coded FV references at 512 and 1024 cells differ by {silica["fv_reference_difference"]:.6g} mol/m³. A separate fixed-mesh time study gives order {silica["spatial_time_order"]:.4f}. Maximum recorded global elemental drift across the reaction suite is {global_drift:.6g} (relative).</p><aside class="note">The saved worst-cell profiles include the three BDF2 histories and the current nodal field. They support the displayed cell balance. Complete intermediate profiles require rerunning the simulations; see the data README.</aside><p>' + source_link('moose_app/examples/silica/spatial.i', 'Column input') + ' · ' + source_link('data/silica/README.md', 'Data and solver-log index') + ' · ' + source_link('scripts/run_silica_verification.py', 'Independent ODE/FV references and cell-balance audit') + ' · <a href="objects/ADEnrichedGalerkinFluxDG.html">Implemented element-face flux</a>.</p></section>'
+    body += f'</tbody></table></div><p>Fixed time step 0.005 s; final time 5 s. The independently coded FV references at 512 and 1024 cells differ by {silica["fv_reference_difference"]:.6g} mol/m³. A separate fixed-mesh time study gives order {silica["spatial_time_order"]:.4f}. Maximum recorded global elemental drift across the reaction suite is {global_drift:.6g} (relative).</p><aside class="note">The saved worst-cell profiles include the three BDF2 histories and the current nodal field. They support the displayed cell balance. Complete intermediate profiles require rerunning the simulations; see the data README.</aside><p>' + source_link('moose_app/examples/silica/spatial.i', 'Column input') + ' · ' + source_link('data/silica/README.md', 'Data schema and saved-output scope') + ' · <a href="data.html">Download all CSVs and solver logs</a> · ' + source_link('scripts/run_silica_verification.py', 'Independent ODE/FV references and cell-balance audit') + ' · <a href="objects/ADEnrichedGalerkinFluxDG.html">Implemented element-face flux</a>.</p></section>'
     body += '<section id="jacobian"><h2>Coupled nonlinear Jacobian</h2><p>PETSc finite-difference comparison for the coupled 8-cell silica system, one time step. The four matrix comparisons are ' + ', '.join(f'{v:.6g}' for v in jac['relative_fd_differences']) + f'; tolerance {jac["tolerance"]:g}. All pass; command exit code {jac["exit_code"]}.</p><p>' + source_link('verification/silica-jacobian-results.json', 'Exact command, source hashes and output artifacts') + ' · ' + source_link('scripts/check_silica_jacobian.py', 'Check generator') + '</p></section>'
     for category, report in reports.items():
         desc = {'analytical': '49 analytical consistency checks and 3 source/document integrity checks. These do not constitute PDE verification.', 'residuals': 'Actual residual, finite-deformation, Jacobian, boundary-sign and manufactured-solution checks, including 1D/2D/3D and cross-diffusion refinement.', 'silica': '178 checks from 33 actual MOOSE reaction/transport solves. The latest report reanalyzes completed solves with saved source and linked-artifact fingerprints; this site build does not rerun them.'}[category]
@@ -421,6 +435,8 @@ def build(output):
     for reviewer in acceptance['reviewers']:
         body += '<li>' + source_link(reviewer['report'], f'Reviewer {reviewer["seat"]}: ACCEPT') + '</li>'
     body += '</ul><p><a href="downloads/manuscript.pdf">Accepted PDF</a> · <a href="downloads/numerical-supplement.zip">Hash-verified numerical supplement</a> · ' + source_link('reviews/numerical-20261008-final/acceptance-record.json', 'Acceptance record') + '</p></section><aside class="note"><strong>Physical validation has not been performed.</strong> Test constants are synthetic. The full carbonation network, calibrated material response and disappearance/nucleation of phases are not verified by these examples.</aside>'
+    audit = load('verification/companion-site-results.json')['publication']
+    body += f'<section id="site-audit"><h2>Companion-site publication audit</h2><p>The initial equation/code/evidence deployment at revision <code>{audit["verified_commit"][:7]}</code> passed Pages build and deployment, all {audit["deployed_files_matched"]} deployed-file byte comparisons, rendering of 75 equations, all 26 object reviews and representative mobile navigation. This is a presentation audit; it does not create new scientific validation.</p><p><a href="{audit["pages_run_url"]}">Verified Pages run ↗</a> · ' + source_link('verification/companion-site-results.json', 'Publication audit and scope') + ' · ' + source_link('verification/companion-site-artifact-audit.json', 'Every fetched artifact and digest') + ' · <a href="site-provenance.json">Current site revision and source bindings</a></p></section>'
     write('verification.html', 'Evidence', body, wide=True)
 
     write('model.html', 'Model scope', '<p class="eyebrow">Scientific scope</p><h1>A compositional special case.</h1><p>Forsterite A, magnesite B and silica C are compressible elastic solids. All nine aqueous species belong to one fluid phase, with dependent water mass fraction. The theory uses the author’s existing compositional notation and transfer-work normalization.</p><p>The implemented residuals and mineral constitutive law are separately verified. The nonlinear examples restrict chemistry to mechanism (3), H₄SiO₄ ⇌ SiO₂ + 2 H₂O, with positive inert A and B. They retain complete mass storage but set F=I, J=1, p=0 and electric field, bulk flow and transfer-work field to zero. The other reactions and aqueous species are excluded from this test subsystem.</p><p>The full reacting nine-species constitutive material and its calibrated response remain open. Phase disappearance, nucleation, plasticity and a separate gas phase are outside this implementation.</p><p><a href="equations.html">Read all numbered equations</a> · <a href="downloads/manuscript.pdf">Read the manuscript</a> · ' + source_link('paper/source-correspondence.md', 'Parent-source correspondence') + ' · ' + source_link('verification/implementation-map.md', 'Theory/code contract') + '</p>')

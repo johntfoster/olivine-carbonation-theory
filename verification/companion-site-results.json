@@ -1,5 +1,5 @@
 {
-  "status": "local-verified",
+  "status": "live-verified",
   "scope": "Companion-site presentation of accepted numerical evidence; no new simulation or physical-validation claim.",
   "date_utc": "2026-10-08T16:20:29.330693+00:00",
   "scientific_snapshot_id": "c58d03d8ed442723ad6c817f67c07ca808c5e301567fc2c80ed2be586ecae7b7",
@@ -19,9 +19,22 @@
     "shared_link_checker": "passed"
   },
   "publication": {
-    "status": "not-yet-checked",
+    "status": "passed",
+    "verified_commit": "00f71894b10dca40ff15778b569296260ae28dee",
+    "pages_run": 37808582120,
+    "pages_run_url": "https://github.com/johntfoster/olivine-carbonation-theory/actions/runs/37808582120",
+    "pages_build": "success",
+    "pages_deployment": "success",
     "site_url": "https://johntfoster.github.io/olivine-carbonation-theory/",
-    "method": "Pages workflow followed by live browser and exact-byte artifact checks"
+    "deployed_files_matched": 523,
+    "live_desktop_pages_checked": 32,
+    "live_mobile_pages_checked": 5,
+    "browser_errors": 0,
+    "missing_or_different_artifacts": 0,
+    "equations_rendered": 75,
+    "equation_object_pages_checked": 26,
+    "artifact_audit": "verification/companion-site-artifact-audit.json",
+    "scope": "Audit of the initial scientific website deployment. The later data-index/audit publication preserves the same scientific payload; inspect site-provenance.json and Actions for the current presentation revision."
   },
   "limits": [
     "Analytical, implementation and silica reports are existing recorded evidence, checked against their hashes.",
